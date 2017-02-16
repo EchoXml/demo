@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.echo.model.Book;
+import com.echo.model.BookRec;
 
 public interface BookDao {
 
@@ -51,4 +52,15 @@ public interface BookDao {
      * @return
      */
     int delBook(@Param("bookId") Long bookId);
+    
+    /**
+     * 获取库存图书信息
+     * @return
+     */
+    BookRec getBookRec();
+    
+    /**
+     * 更新图书信息
+     */
+    int updateBook(@Param("bookId") Long bookId,@Param("name") String name,@Param("number") int number);
 }

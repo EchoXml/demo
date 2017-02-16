@@ -1,5 +1,7 @@
 package com.echo.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,6 @@ public class UserInfoServiceImpl  implements UserInfoService{
 
 	@Override
 	public UserInfo login(UserInfo userInfo) {
-		
 		return userInfoDao.queryByNameAndPwd(userInfo);
 	}
 
@@ -42,6 +43,11 @@ public class UserInfoServiceImpl  implements UserInfoService{
 			result.setData(RegisterStateEnum.ERROR);
 		}
 		return result;
+	}
+
+	@Override
+	public List<UserInfo> getAllUser() {
+		return userInfoDao.getAllUser();
 	}
 
 

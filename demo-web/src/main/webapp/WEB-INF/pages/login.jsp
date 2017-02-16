@@ -78,7 +78,7 @@
     <!-- /.social-auth-links -->
 
     <a href="#">忘记密码</a><br>
-    <a href="<%=basePath%>adminlte/register" class="text-center">注册成为会员</a>
+    <a href="<%=basePath%>user/register" class="text-center">注册成为会员</a>
 
   </div>
   <!-- /.login-box-body -->
@@ -117,10 +117,10 @@
 				'password':password,
 			},
 			success:function(data){
-				//var jsonObj=$.parseJSON(data);
+				//console.info(JSON.stringify(data));
 				msg.css("font-size","12px");
 			    if(data=="true"){
-					location.href="<%=basePath%>adminlte/index";
+					location.href="<%=basePath%>page/index";
 				}else{
 					msg.text("*用户名与密码不匹配").css("color","red");
 				}

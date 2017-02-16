@@ -13,6 +13,7 @@ import com.echo.dao.BookDao;
 import com.echo.dto.AppointExcuetion;
 import com.echo.model.Appointment;
 import com.echo.model.Book;
+import com.echo.model.BookRec;
 import com.echo.enums.AppointStateEnum;
 import com.echo.enums.DelStateEnum;
 import com.echo.service.BookService;
@@ -90,6 +91,16 @@ public class BookServiceImpl implements BookService {
 			return DelStateEnum.ERROR;
 		}
 		
+	}
+
+	@Override
+	public BookRec getBookRec() {
+		return bookDao.getBookRec();
+	}
+
+	@Override
+	public int updateBook(Long bookId, String name, int number) {
+		return bookDao.updateBook(bookId, name, number);
 	}
 
 

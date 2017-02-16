@@ -13,13 +13,13 @@
 		<!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
 		
 		<mvc:interceptor>
-			<mvc:mapping path="/adminlte/**" />
+			<mvc:mapping path="/page/**" />
 			<mvc:mapping path="/book/**" />
-			<mvc:mapping path="/user/logout.do" /> 
-  			<mvc:exclude-mapping path="/adminlte/login"/>
-  			<mvc:exclude-mapping path="/adminlte/register"/>
+		<!-- 	<mvc:mapping path="/user/logout.do" />  -->
+  			<mvc:exclude-mapping path="/page/login"/>
+  			<mvc:exclude-mapping path="/page/register"/>
   			<mvc:exclude-mapping path="/user/ajax/login.do"/>
-  			<mvc:exclude-mapping path="/adminlte/register.do"/>
+  			<mvc:exclude-mapping path="/user/ajax/register.do"/>
   			<!-- <mvc:exclude-mapping path="/resources/**"/> -->
 			<!-- <mvc:exclude-mapping path="/user_login" /> <mvc:exclude-mapping path="/user_logout" 
 				/> -->

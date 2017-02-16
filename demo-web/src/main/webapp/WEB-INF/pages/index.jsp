@@ -52,7 +52,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.jsp" class="logo">
+    <a href="<%=basePath%>user/index" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>后</b>台</span>
       <!-- logo for regular state and mobile devices -->
@@ -294,14 +294,14 @@
         <li class="header">导航栏</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>仪表盘</span>
+            <i class="fa fa-dashboard"></i> <span>仪表板</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> 仪表盘 v1</a></li>
-            <li><a href="/SsmDemo/adminlte/index2"><i class="fa fa-circle-o"></i> 仪表盘 v2</a></li>
+            <li class="active"><a href="<%=basePath %>page/index"><i class="fa fa-circle-o"></i> 信息中心 v1</a></li>
+            <li><a href="<%=basePath %>page/index2"><i class="fa fa-circle-o"></i> 信息中心 v2</a></li>
           </ul>
           
         </li>
@@ -314,7 +314,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-user"></i> 用户列表</a></li>
+            <li class="active"><a href="<%=basePath%>page/userList"><i class="fa fa-user"></i> 用户列表</a></li>
           </ul>
           
         </li>
@@ -327,7 +327,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<%=basePath%>adminlte/bookList"><i class="fa  fa-book"></i> 图书列表</a></li>
+            <li class="active"><a href="<%=basePath%>page/bookList"><i class="fa  fa-book"></i> 图书列表</a></li>
           </ul>
           
         </li>
@@ -336,17 +336,16 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        仪表盘
+        仪表板
         <small>控制面板</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li class="active">仪表盘</li>
+        <li class="active">仪表板</li>
       </ol>
     </section>
 

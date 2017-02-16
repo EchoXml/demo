@@ -23,6 +23,13 @@
         WHERE
            username=#{username} and  `password`=#{password}
     </select>
+    <!-- 查询所有用户对象 -->
+    <select id="getAllUser" resultType="userinfo">
+       SELECT
+           *
+        FROM
+            userinfo
+    </select>
 	<!-- 新增一条用户记录 -->
     <insert id="addUserInfo" parameterType="userinfo">
     	INSERT into userinfo(username,password,nickname) 

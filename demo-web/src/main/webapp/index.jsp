@@ -6,5 +6,5 @@
 			+ path + "/";
 %>
 <script>
-	location.href="<%=basePath%>adminlte/login";
+	location.href="<%=basePath%>page/login";
 </script>

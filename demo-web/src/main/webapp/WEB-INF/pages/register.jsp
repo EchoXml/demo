@@ -94,7 +94,7 @@
 					class="fa fa-weibo"></i>使用微博注册</a>
 			</div>
 
-			<a href="<%=basePath%>adminlte/login" class="text-center">我已有账号</a>
+			<a href="<%=basePath%>user/login" class="text-center">我已有账号</a>
 		</div>
 		<!-- /.form-box -->
 	</div>
@@ -133,7 +133,7 @@
 				//判断是否注册成功
 				if(data.success==true){
 					console.info("注册成功");
-					location.href="<%=basePath%>user/login";
+					location.href="<%=basePath%>page/login";
 				}else{
 					alert("注册失败！请及时与管理员联系！");	
 					console.info("注册失败");

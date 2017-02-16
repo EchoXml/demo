@@ -1,6 +1,7 @@
 package com.echo.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -14,6 +15,8 @@ public class UserInfo implements Serializable {
 	private String nickname;
 
 	private Integer status;
+	
+	private Date createDate;
 
 	public Integer getUserId() {
 		return userId;
@@ -55,23 +58,34 @@ public class UserInfo implements Serializable {
 		this.status = status;
 	}
 
-	public UserInfo(Integer userId, String username, String password, String nickname, Integer status) {
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
+	public UserInfo() {
+	}
+
+	public UserInfo(Integer userId, String username, String password, String nickname, Integer status,
+			Date createDate) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.nickname = nickname;
 		this.status = status;
-	}
-
-	public UserInfo() {
+		this.createDate = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", nickname=" + nickname
-				+ ", status=" + status + "]";
+		return "UserInfo [userId=" + userId + ", username=" + username + ", password=" + password + ", nickname="
+				+ nickname + ", status=" + status + ", createDate=" + createDate + "]";
 	}
+	
 	
 	
 

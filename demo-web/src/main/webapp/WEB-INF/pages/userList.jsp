@@ -12,7 +12,7 @@
 <base href="<%=basePath%>resources/adminlte/">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>图书列表</title>
+<title>用户列表</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -42,10 +42,10 @@
   <![endif]-->
 </head>
 <script type="text/javascript"></script>
-<%-- <c:if test="${not empty addBookMsg }">
+<c:if test="${not empty addBookMsg }">
 	<script type="text/javascript">alert("${addBookMsg}");</script>
 	<%request.removeAttribute("addBookMsg"); %>
-</c:if> --%>
+</c:if>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<header class="main-header">
@@ -288,7 +288,7 @@
 									class="fa fa-circle-o"></i> 信息中心 v2</a></li>
 						</ul></li>
 					<!-- 用户信息管理 -->
-					<li class="treeview"><a href="#"> <i class="fa  fa-users"></i>
+					<li class="active treeview"><a href="#"> <i class="fa  fa-users"></i>
 							<span>用户管理</span> <span class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
@@ -297,16 +297,16 @@
 							<li class="active"><a href="<%=basePath%>page/userList"><i
 									class="fa fa-user"></i> 用户列表</a></li>
 						</ul></li>
-					<!-- 图书信息管理 -->
-					<li class="active treeview"><a href="#"> <i
+					<!-- 用户信息管理 -->
+					<li class="treeview"><a href="#"> <i
 							class="fa  fa-book"></i> <span>图书管理</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li class="active"><a href="<%=basePath%>page/bookList"><i
-									class="fa  fa-book"></i> 图书列表</a></li>
+							<li class=""><a href="<%=basePath%>page/bookList"><i
+									class="fa  fa-book"></i>图书列表</a></li>
 						</ul></li>
 				</ul>
 			</section>
@@ -318,12 +318,12 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					数据表格 <small>图书列表</small>
+					数据表格 <small>用户列表</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="<%=basePath%>page/index"><i class="fa fa-dashboard"></i> 主页</a></li>
-					<li><a href="<%=basePath%>page/bookList">图书管理</a></li>
-					<li class="active">图书列表</li>
+					<li><a href="<%=basePath%>page/userList">用户管理</a></li>
+					<li class="active">用户列表</li>
 				</ol>
 			</section>
 
@@ -333,7 +333,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">图书列表</h3>
+								<h3 class="box-title">用户列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -341,15 +341,18 @@
 									<thead>
 										<tr>
 											<th>序号</th>
-											<th>图书编号</th>
-											<th>图书名称</th>
-											<th>馆藏数量</th>
+											<th>用户编号</th>
+											<th>用户名</th>
+											<th>密码</th>
+											<th>昵称</th>
+											<th>注册时间</th>
+											<th>状态</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<td><a href="javascript:add();">新增图书</a></td>
+											<td><a href="javascript:add();">新增用户</a></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -552,29 +555,33 @@
 	<!-- ./wrapper -->
 
 	<!-- 模态框（Modal） -->
-		<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 			<div class="modal-dialog" role="document">
-				<form id="formBook" action="" method="post">
+				<form action="<%=basePath%>book/addBook.do" method="post">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title"  id="titleBook">新增图书</h4>
+							<h4 class="modal-title" id="exampleModalLabel">新增用户</h4>
 						</div>
 						<div class="modal-body">
 
 							<div class="form-group">
-								<label for="recipient-name" class="control-label">图书名称：</label>
-								<input type="text" id="bookName" class="form-control" name="name" required="required">
+								<label for="recipient-name" class="control-label">用户名：</label>
+								<input type="text" class="form-control" name="username" required="required">
 							</div>
 							<div class="form-group">
-								<label for="message-text" class="control-label" >馆藏数量:</label>
-								<input class="form-control" id="bookNum" type="number" name="number" min="1" required="required"></input>
+								<label for="message-text" class="control-label" >密码:</label>
+								<input class="form-control" type="number" name="password"  required="required"></input>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="control-label" >昵称:</label>
+								<input class="form-control" type="number" name="nickname"  required="required"></input>
 							</div>
 
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-							<button type="submit" class="btn btn-primary" id="btnBook">新增</button>
+							<button type="submit" class="btn btn-primary">新增</button>
 						</div>
 					</div>
 				</form>
@@ -600,7 +607,7 @@
 	<script>
 		function del(id){
 	    	console.log("删除的ID:"+id);
-	    	var url="<%=basePath%>book/ajax/delBook/"+id;
+	    	<%-- var url="<%=basePath%>book/ajax/delBook/"+id;
 	    	$.get(url,function(data){
 	    		console.info(JSON.stringify(data));
 	    		if(data.success==true){
@@ -609,38 +616,25 @@
 	    			alert("删除失败！");
 	    		}
 	    		
-	    	});
+	    	}); --%>
 	    }
 	    
-	    function update(id,name,number){
-	    	var url="<%=basePath%>book/"+id+"/updateBook.do";
-	    	$('#formBook').attr("action",url);
-	    	$("#titleBook").text("修改信息");
-	    	$("#btnBook").text("修改");
-	    	$('#bookModal').modal('show');
-	    	$("#bookName").val(name);
-	    	$("#bookNum").val(number);
-	    	/* console.log("更新的ID:"+id);
-	    	
+	    function update(id){
+	    	console.log("更新的ID:"+id);
+	    	<%-- var url="<%=basePath%>book/ajax/delBook/"+id;
 	    	a.get(url,function(data){
-	    		console.info(JSON.stringify(data));
-	    	}); */
+	    		
+	    	}); --%>
 	    }
 	    
-	    //新增图书
+	    //新增用户
 	    function add() {
-	    	var url="<%=basePath%>book/addBook.do";
-	    	$('#formBook').attr("action",url);
-	    	$("#titleBook").text("新增图书");
-	    	$("#btnBook").val("新增");
-	    	$("#bookName").val("");
-	    	$("#bookNum").val("");
-	    	$('#bookModal').modal('show');
+	    	$('#addBookModal').modal('show');
 		}
 	$(function() {
 	    $.get("<%=basePath%>book/ajax/getBooks", function(data) {
 				console.info(JSON.stringify(data));
-				var t = $("#bookTable").DataTable({
+				var t = $("#userTable").DataTable({
 					"language" : { //表格国际化
 						"processing" : "处理中...",
 						"lengthMenu" : "显示 _MENU_ 项结果",
@@ -678,11 +672,15 @@
 					"columns" : [ {
 						"data" : null
 					}, {
-						"data" : "bookId"
+						"data" : "username"
 					}, {
-						"data" : "name"
+						"data" : "password"
 					}, {
-						"data" : "number"
+						"data" : "nickname"
+					}, {
+						"data" : "createDate"
+					}, {
+						"data" : "status"
 					}, {
 						"data" : null
 					} ],
@@ -695,7 +693,7 @@
 				        "targets": 4,
 				        "render": function(data, type, row, meta) {
 				        	var result="<a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a>";
+				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+")' ></a>";
 				            return result;
 				        }
 					}],

@@ -27,6 +27,13 @@
             book_id
         LIMIT #{offset}, #{limit}
     </select>
+    
+    <select id="getBookRec" resultType="bookrec">
+    	SELECT
+    		*
+    	FROM
+    		BOOKREC
+    </select>
 
     <update id="reduceNumber">
         UPDATE book
@@ -34,6 +41,13 @@
         WHERE
             book_id = #{bookId}
         AND number > 0
+    </update>
+    
+     <update id="updateBook">
+        UPDATE book
+        SET number =#{number},name=#{name}
+        WHERE
+            book_id = #{bookId}
     </update>
     
     <update id="addNumber">

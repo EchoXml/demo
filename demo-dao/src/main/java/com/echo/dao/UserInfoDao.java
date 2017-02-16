@@ -1,5 +1,7 @@
 package com.echo.dao;
 
+import java.util.List;
+
 import com.echo.model.UserInfo;
 
 public interface UserInfoDao {
@@ -24,5 +26,11 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	Integer addUserInfo(UserInfo userInfo);
+	
+	/**
+	 * 获取所有用户信息
+	 * @return
+	 */
+	List<UserInfo> getAllUser();
 
 }

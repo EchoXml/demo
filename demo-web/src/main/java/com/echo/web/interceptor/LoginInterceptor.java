@@ -42,14 +42,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 			logger.info("请求被拦截，用户处于未登录状态");
 			 return toLogin(response);  
 		}else  {
-			if (request.getServletPath().endsWith("logout.do")) {
-				request.getSession().invalidate();
-				logger.info("执行注销操作....");
-				return toLogin(response);  
-			}else{
+//			if (request.getServletPath().endsWith("logout.do")) {
+//				request.getSession().invalidate();
+//				logger.info("执行注销操作....");
+//				return toLogin(response);  
+//			}else{
 				logger.info("请求被放行，登录用户信息如下："+userInfo);
 				return true;
-			}
+//			}
 		}
 	
 	}

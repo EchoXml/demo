@@ -1,4 +1,6 @@
 package com.echo.service;
+import java.util.List;
+
 import com.echo.dto.Result;
 import com.echo.model.UserInfo;
 import com.echo.enums.RegisterStateEnum;
@@ -30,6 +32,12 @@ public interface UserInfoService {
 	 * @return
 	 */
 	Result<RegisterStateEnum> register(UserInfo userInfo);
+	
+	/**
+	 * 获取所有用户信息
+	 * @return
+	 */
+	List<UserInfo> getAllUser();
 	
 	
 }

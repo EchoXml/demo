@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.echo.dto.AppointExcuetion;
 import com.echo.enums.DelStateEnum;
 import com.echo.model.Book;
+import com.echo.model.BookRec;
 
 /**
  * 图书业务接口
@@ -55,6 +56,18 @@ public interface BookService {
      * @return
      */
     DelStateEnum delBook(@Param("bookId") Long bookId);
+    
+    
+    /**
+     * 获取库存图书信息
+     * @return
+     */
+    BookRec getBookRec();
+    
+    /**
+     * 更新图书信息
+     */
+    int updateBook(@Param("bookId") Long bookId,String name,int number);
     
   
 
