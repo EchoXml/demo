@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2017-02-15 18:40:48
+Date: 2017-02-16 15:26:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,12 +56,12 @@ CREATE TABLE `book` (
   `name` varchar(100) NOT NULL COMMENT '图书名称',
   `number` int(11) NOT NULL COMMENT '馆藏数量',
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1032 DEFAULT CHARSET=utf8 COMMENT='图书表';
+) ENGINE=InnoDB AUTO_INCREMENT=1038 DEFAULT CHARSET=utf8 COMMENT='图书表';
 
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES ('1001', '数据结构', '66');
+INSERT INTO `book` VALUES ('1001', '数据结构', '32');
 INSERT INTO `book` VALUES ('1002', '设计模式', '67');
 INSERT INTO `book` VALUES ('1003', '编译原理', '67');
 INSERT INTO `book` VALUES ('1008', '我的奋斗', '30');
@@ -70,7 +70,9 @@ INSERT INTO `book` VALUES ('1023', 'MySQL从入门到放弃', '10');
 INSERT INTO `book` VALUES ('1024', '货币战争', '10');
 INSERT INTO `book` VALUES ('1025', 'Java从入门到放弃', '10');
 INSERT INTO `book` VALUES ('1029', '圣经', '20');
-INSERT INTO `book` VALUES ('1031', '圣经', '20');
+INSERT INTO `book` VALUES ('1032', 'HADOOP从入门到放弃', '10');
+INSERT INTO `book` VALUES ('1033', '张三的歌', '10');
+INSERT INTO `book` VALUES ('1037', 'JAVA', '2');
 
 -- ----------------------------
 -- Table structure for bookrec
@@ -84,7 +86,7 @@ CREATE TABLE `bookrec` (
 -- ----------------------------
 -- Records of bookrec
 -- ----------------------------
-INSERT INTO `bookrec` VALUES ('10', '310');
+INSERT INTO `bookrec` VALUES ('12', '278');
 
 -- ----------------------------
 -- Table structure for userinfo
@@ -96,23 +98,22 @@ CREATE TABLE `userinfo` (
   `password` varchar(255) NOT NULL,
   `nickname` varchar(255) NOT NULL,
   `status` int(255) NOT NULL DEFAULT '1',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `username_2` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of userinfo
 -- ----------------------------
-INSERT INTO `userinfo` VALUES ('1', 'zhangsan', 'zhangsan', '张三', '1');
-INSERT INTO `userinfo` VALUES ('2', 'lisi', 'lisi', '李四', '1');
-INSERT INTO `userinfo` VALUES ('3', 'wangwu', 'wangwu', '王五', '1');
-INSERT INTO `userinfo` VALUES ('4', 'admin', 'admin', '管理员账户', '1');
-INSERT INTO `userinfo` VALUES ('14', 'admin2', 'admin2', 'admin', '1');
-INSERT INTO `userinfo` VALUES ('16', 'echosoul', 'echoecho', 'echo', '1');
-INSERT INTO `userinfo` VALUES ('18', 'zhangsan2', 'zhangsan', 'lisi', '1');
-INSERT INTO `userinfo` VALUES ('19', 'testest', 'testtest', '测试账号', '1');
-INSERT INTO `userinfo` VALUES ('20', 'tangba', 'tangba', '唐八', '1');
-INSERT INTO `userinfo` VALUES ('21', 'EchoXml', 'zzzzzzzz', '牡蛎', '1');
+INSERT INTO `userinfo` VALUES ('1', 'zhangsan', 'zhangsan', '张三', '1', '2017-02-07 19:51:18');
+INSERT INTO `userinfo` VALUES ('3', 'wangwu', 'wangwu', '王五', '1', '2017-02-02 19:52:01');
+INSERT INTO `userinfo` VALUES ('4', 'admi', 'admin', '管理员账户', '1', '2017-02-16 15:11:06');
+INSERT INTO `userinfo` VALUES ('16', 'echoecho', 'echoecho', 'echo', '-2', '2017-02-16 15:07:14');
+INSERT INTO `userinfo` VALUES ('20', 'tangba', 'tangba', '唐八', '1', '2017-02-06 19:52:25');
+INSERT INTO `userinfo` VALUES ('21', 'EchoXml', 'zzzzzzzz', '牡蛎', '1', '2017-02-07 19:52:30');
+INSERT INTO `userinfo` VALUES ('23', 't95921', 'zzzzzzzz', 't95921', '1', '2017-02-16 14:07:37');
 DROP TRIGGER IF EXISTS `book_ai`;
 DELIMITER ;;
 CREATE TRIGGER `book_ai` BEFORE INSERT ON `book` FOR EACH ROW UPDATE bookrec b SET b.bookNum=b.bookNum+1,
