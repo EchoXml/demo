@@ -179,6 +179,5 @@
   	<module>demo-dao</module>
   	<module>demo-service</module>
   	<module>demo-util</module>
-    <module>demo-job</module>
   </modules>
 </project>

@@ -3,10 +3,12 @@ package com.echo.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.echo.util.DateUtil;
+
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer userId;
+	private Long userId;
 
 	private String username;
 
@@ -17,12 +19,16 @@ public class UserInfo implements Serializable {
 	private Integer status;
 	
 	private Date createDate;
+	
+	private String createDateStr;
+	
+	private String statusStr;
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -56,6 +62,7 @@ public class UserInfo implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+		setStatusStr();
 	}
 
 	public Date getCreateDate() {
@@ -64,12 +71,13 @@ public class UserInfo implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+		setCreateDateStr();
 	}
 	
 	public UserInfo() {
 	}
 
-	public UserInfo(Integer userId, String username, String password, String nickname, Integer status,
+	public UserInfo(Long userId, String username, String password, String nickname, Integer status,
 			Date createDate) {
 		super();
 		this.userId = userId;
@@ -84,6 +92,36 @@ public class UserInfo implements Serializable {
 	public String toString() {
 		return "UserInfo [userId=" + userId + ", username=" + username + ", password=" + password + ", nickname="
 				+ nickname + ", status=" + status + ", createDate=" + createDate + "]";
+	}
+
+	public String getCreateDateStr() {
+		return this.createDateStr;
+	}
+
+	private void setCreateDateStr() {
+		this.createDateStr=DateUtil.unixTimestampToDate(getCreateDate().getTime());
+	}
+
+	public String getStatusStr() {
+		return statusStr;
+	}
+
+	private void setStatusStr() {
+		switch (this.status) {
+		case 1:
+			this.statusStr="正常";
+			break;
+		case -1:
+			this.statusStr="禁用";
+			break;
+		case -2:
+			this.statusStr="异常";
+			break;
+		default:
+			this.statusStr="未知";
+			break;
+		}
+		
 	}
 	
 	

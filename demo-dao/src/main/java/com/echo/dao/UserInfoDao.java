@@ -32,5 +32,17 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	List<UserInfo> getAllUser();
+	
+	/**
+	 * 更新用户信息
+	 * @return
+	 */
+	int updateUser(UserInfo userInfo);
+	
+	/**
+	 * 删除指定用户编号的用户信息
+	 * @return
+	 */
+	int delUserById(Long userId);
 
 }

@@ -50,5 +50,15 @@ public class UserInfoServiceImpl  implements UserInfoService{
 		return userInfoDao.getAllUser();
 	}
 
+	@Override
+	public int updateUser(UserInfo userInfo) {
+		return userInfoDao.updateUser(userInfo);
+	}
+
+	@Override
+	public int delUserById(Long userId) {
+		return userInfoDao.delUserById(userId);
+	}
+
 
 }

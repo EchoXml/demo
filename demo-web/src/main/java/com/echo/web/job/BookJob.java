@@ -23,7 +23,7 @@ public class BookJob {
 	/**
 	 * 每十分钟打印图书相关记录
 	 */
-	@Scheduled(cron = "* */10 * * * ?")
+	@Scheduled(cron = "0 */10 * * * ?")
 	public void printInfo(){
 		logger.info("定时任务开启");
 		logger.info("图书总信息如下："+bookService.getBookRec());

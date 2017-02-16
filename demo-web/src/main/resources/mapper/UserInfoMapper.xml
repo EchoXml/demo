@@ -32,7 +32,37 @@
     </select>
 	<!-- 新增一条用户记录 -->
     <insert id="addUserInfo" parameterType="userinfo">
-    	INSERT into userinfo(username,password,nickname) 
-    	values(#{username},#{password},#{nickname})
+    	INSERT into userinfo(username,password,nickname,status) 
+    	values(#{username},#{password},#{nickname},status)
     </insert>
+    
+    <!-- 删除指定编号的用户记录 -->
+    <delete id="delUserById">
+    	DELETE  from userinfo where userinfo.user_id=#{userId}
+    </delete>
+    
+    <!-- 修改用户信息 -->
+    <update id="updateUser" parameterType="userinfo">
+    	update userinfo
+    	<set>
+    		<if test="#{username}!=null">
+    		username=#{username},
+    		</if>
+    		<if test="#{nickname}!=null">
+    		nickname=#{nickname},
+    		</if>
+    		<if test="#{password}!=null">
+    		password=#{password},
+    		</if>
+    		<if test="#{username}!=null">
+    		status=#{status}
+    		</if>
+    	</set>
+    	<where>
+    		<if test="#{userId}!=null">
+    		user_id=#{userId}
+    		</if>
+    	</where>
+    	
+    </update>
 </mapper>

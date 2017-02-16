@@ -210,7 +210,7 @@
 									class="img-circle" alt="User Image">
 
 									<p>
-										${loginUser.nickname} - 系统管理员 <small>注册日期 2012.12.12</small>
+										${loginUser.nickname} - 系统管理员 <small>注册日期 ${loginUser.createDateStr}</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
@@ -256,7 +256,7 @@
 					</div>
 					<div class="pull-left info">
 						<p>${loginUser.nickname}</p>
-						<a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+						<a href="javascript:void(0);"><i class="fa fa-circle text-success"></i> 在线</a>
 					</div>
 				</div>
 				<!-- search form -->
@@ -337,7 +337,7 @@
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
-								<table id="bookTable" class="table table-bordered table-striped">
+								<table id="userTable" class="table table-bordered table-striped">
 									<thead>
 										<tr>
 											<th>序号</th>
@@ -555,33 +555,43 @@
 	<!-- ./wrapper -->
 
 	<!-- 模态框（Modal） -->
-		<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 			<div class="modal-dialog" role="document">
-				<form action="<%=basePath%>book/addBook.do" method="post">
+				<form action="<%=basePath%>user/addUser.do" id="formUser" method="post">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="exampleModalLabel">新增用户</h4>
+							<h4 class="modal-title" id="titleUser">新增用户</h4>
 						</div>
 						<div class="modal-body">
 
 							<div class="form-group">
 								<label for="recipient-name" class="control-label">用户名：</label>
-								<input type="text" class="form-control" name="username" required="required">
+								<input type="text" class="form-control" name="username"  id="username"  required="required">
 							</div>
 							<div class="form-group">
 								<label for="message-text" class="control-label" >密码:</label>
-								<input class="form-control" type="number" name="password"  required="required"></input>
+								<input class="form-control" name="password" id="password"  required="required"></input>
 							</div>
 							<div class="form-group">
 								<label for="message-text" class="control-label" >昵称:</label>
-								<input class="form-control" type="number" name="nickname"  required="required"></input>
+								<input class="form-control" name="nickname" id="nickname"  required="required"></input>
 							</div>
-
+							<div class="form-group">
+								<label for="message-text" class="control-label" >状态:</label>
+								<select class="form-control" name="status" id="status"  required="required">
+									<option value="1">正常</option>
+									<option value="-1">禁用</option>
+									<option value="-2">异常</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="control-label" id="msg"></label>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-							<button type="submit" class="btn btn-primary">新增</button>
+							<button type="submit" disabled="disabled" id="btnUser" class="btn btn-primary">新增</button>
 						</div>
 					</div>
 				</form>
@@ -607,32 +617,84 @@
 	<script>
 		function del(id){
 	    	console.log("删除的ID:"+id);
-	    	<%-- var url="<%=basePath%>book/ajax/delBook/"+id;
-	    	$.get(url,function(data){
-	    		console.info(JSON.stringify(data));
-	    		if(data.success==true){
-	    			window.location.reload();
-	    		}else{
-	    			alert("删除失败！");
-	    		}
-	    		
-	    	}); --%>
+	    	var result=confirm("确认删除该用户?该操作无法撤销！");
+	    	if(result){
+	    		var url="<%=basePath%>user/ajax/delUser/"+id;
+		    	$.get(url,function(data){
+		    		console.info(JSON.stringify(data));
+		    		if(data.success==true){
+		    			window.location.reload();
+		    		}else{
+		    			alert("删除失败！");
+		    		}
+		    	});
+	    		console.log("删除");
+	    	}else{
+	    		console.log("撤销");
+	    	}
 	    }
 	    
-	    function update(id){
+		/* 更改既有用户信息  */
+	    function update(id,name,password,nickname,status){
 	    	console.log("更新的ID:"+id);
-	    	<%-- var url="<%=basePath%>book/ajax/delBook/"+id;
-	    	a.get(url,function(data){
-	    		
-	    	}); --%>
+	    	var url="<%=basePath%>user/"+id+"/updateUser.do";
+	    	$('#formUser').attr("action",url);
+	    	$("#titleUser").text("修改用户");
+	    	$("#btnUser").val("修改");
+	    	$("#msg").text("");
+	    	$("#username").val(name).attr("readonly","readonly");
+	    	$("#password").val(password);
+	    	$("#nickname").val(nickname);
+			$("#status").val(status);
+	    	$('#addUserModal').modal('show');
 	    }
+	    
+	   <%--  /*检验用户名是否可以被注册*/
+		function checkUsername() {
+			var username=$("#username").val();
+			var eg=/^\w{6,15}$/;
+			var msg=$("#msg");
+			if(!eg.test(username)){
+				$("#btnUser").attr("disabled","disabled");
+				msg.text("请输入正确的用户名！").css("color","red").css("font-size","12px");
+				return false;
+			}
+			$.ajax({
+				url:'<%=basePath%>user/ajax/checkUsername',
+					type : 'get',
+					dataType : 'json',
+					data : {
+						'username' : username
+					},
+					success : function(data) {
+						msg.text(data.msg).css("font-size", "12px");
+						if (data.isExsit == true) {
+							msg.css("color", "red");
+							$("#btnUser").attr("disabled");
+						} else {
+							msg.css("color", "blue");
+							$("#btnUser").removeAttr("disabled");
+						}
+					},
+					error : function(data) {
+						alert("error" + data);
+					}
+				});
+			} --%>
 	    
 	    //新增用户
 	    function add() {
-	    	$('#addBookModal').modal('show');
+	    	var url="<%=basePath%>user/addUser.do";
+	    	$('#formUser').attr("action",url);
+	    	$("#titleUser").text("新增用户");
+	    	$("#btnUser").val("新增");
+	    	$("#username").val("").removeAttr("disabled");
+	    	$("#password").val("");
+	    	$("#nickname").val("");
+	    	$('#addUserModal').modal('show');
 		}
 	$(function() {
-	    $.get("<%=basePath%>book/ajax/getBooks", function(data) {
+	    $.get("<%=basePath%>user/ajax/getUsers", function(data) {
 				console.info(JSON.stringify(data));
 				var t = $("#userTable").DataTable({
 					"language" : { //表格国际化
@@ -672,15 +734,17 @@
 					"columns" : [ {
 						"data" : null
 					}, {
+						"data" : "userId"
+					}, {
 						"data" : "username"
 					}, {
 						"data" : "password"
 					}, {
 						"data" : "nickname"
 					}, {
-						"data" : "createDate"
+						"data" : "createDateStr"
 					}, {
-						"data" : "status"
+						"data" : "statusStr"
 					}, {
 						"data" : null
 					} ],
@@ -690,11 +754,12 @@
 						"targets" : 0
 					} ,{
 						 //   指定第最后一列
-				        "targets": 4,
+				        "targets": 7,
 				        "render": function(data, type, row, meta) {
-				        	var result="<a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+")' ></a>";
+				        	var result="<a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.password+"\",\""+data.nickname+"\","+data.status+")' ></a>";
 				            return result;
+				           /*   */
 				        }
 					}],
 					"order" : [ [ 1, 'asc' ] ]
@@ -712,6 +777,8 @@
 				;
 			});
 		});
+	
+
 	</script>
 </body>
 </html>

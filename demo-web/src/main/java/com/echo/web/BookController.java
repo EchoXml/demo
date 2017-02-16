@@ -51,7 +51,7 @@ public class BookController {
 		}else{
 			m.addObject("addBookMsg", "服务器异常！");
 		}
-		m.setViewName("forward:list");
+		 m.setViewName("forward:/page/bookList");
 		return m;
 		
 	}
