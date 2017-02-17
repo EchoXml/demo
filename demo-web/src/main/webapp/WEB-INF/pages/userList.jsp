@@ -208,7 +208,6 @@
 								<!-- User image -->
 								<li class="user-header"><img src="dist/img/userzx.jpg"
 									class="img-circle" alt="User Image">
-
 									<p>
 										${loginUser.nickname} - 系统管理员 <small>注册日期 ${loginUser.createDateStr}</small>
 									</p></li>
