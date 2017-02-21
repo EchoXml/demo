@@ -1,6 +1,7 @@
 package com.echo.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class UserInfoServiceImpl  implements UserInfoService{
 	
 	@Override
 	public String checkUserNameExsit(String username) {
-		Integer check=userInfoDao.queryByUserName(username);
-		if (check==1) {//数据库已存在该用户名
+		UserInfo check=userInfoDao.queryByUserName(username);
+		if (check==null) {//数据库已存在该用户名
 			return "{\"isExsit\":true,\"msg\":\"该用户名已存在\"}";
 		}
 		return "{\"isExsit\":false,\"msg\":\"该用户名可以被使用\"}";
@@ -58,6 +59,21 @@ public class UserInfoServiceImpl  implements UserInfoService{
 	@Override
 	public int delUserById(Long userId) {
 		return userInfoDao.delUserById(userId);
+	}
+
+	@Override
+	public UserInfo getUserInfoByUserName(String username) {
+		return userInfoDao.queryByUserName(username);
+	}
+
+	@Override
+	public Set<String> getPermissions(String username) {
+		return userInfoDao.getPermissions(username);
+	}
+
+	@Override
+	public Set<String> getRoles(String username) {
+		return userInfoDao.getRoles(username);
 	}
 
 

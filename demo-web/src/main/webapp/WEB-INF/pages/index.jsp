@@ -6,6 +6,7 @@
 			+ path + "/";
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
 <%@page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -218,7 +219,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/userzx.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">${loginUser.nickname}</span>
+              <span class="hidden-xs"><shiro:principal />  </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -226,7 +227,7 @@
                 <img src="dist/img/userzx.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  ${loginUser.nickname} - 系统管理员
+                  <shiro:principal />   - 系统管理员
                   <small>注册日期  2012.12.12</small>
                 </p>
               </li>
@@ -274,7 +275,7 @@
           <img src="dist/img/userzx.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>${loginUser.nickname}</p>
+          <p><shiro:principal />  </p>
           <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
         </div>
       </div>
@@ -485,7 +486,7 @@
                 <p class="message">
                   <a href="#" class="name">
                     <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                    ${loginUser.nickname}
+                    <shiro:principal />  
                   </a>
                   I would like to meet you to discuss the latest news about
                   the arrival of the new theme. They say it is going to be one the

@@ -1,5 +1,6 @@
 package com.echo.service;
 import java.util.List;
+import java.util.Set;
 
 import com.echo.dto.Result;
 import com.echo.model.UserInfo;
@@ -18,6 +19,13 @@ public interface UserInfoService {
 	 * @return
 	 */
 	String checkUserNameExsit(String username);
+	
+	/**
+	 * 检查用户名是否存在
+	 * @param username 用户名
+	 * @return
+	 */
+	UserInfo getUserInfoByUserName(String username);
 	
 	/**
 	 * 用户登录操作
@@ -50,6 +58,20 @@ public interface UserInfoService {
 	 * @return
 	 */
 	int delUserById(Long userId);
+	
+	/**
+	 * 获取用户权限列表
+	 * @param username 用户名
+	 * @return
+	 */
+	Set<String> getPermissions(String username);
+	
+	/**
+	 * 获取用户角色列表
+	 * @param username 用户名
+	 * @return
+	 */
+	Set<String> getRoles(String username);
 	
 	
 }

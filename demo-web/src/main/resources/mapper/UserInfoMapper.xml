@@ -4,11 +4,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.echo.dao.UserInfoDao">
     <!-- 目的：为dao接口方法提供sql语句配置 -->
-    <!-- 查询数据库中是否存在该用户名 -->
-    <select id="queryByUserName" resultType="int" parameterType="String">
+    <!-- 查询数据库中是否存在该用户 -->
+    <select id="queryByUserName" resultType="userinfo" >
         <!-- 具体的sql -->
         SELECT
-           count(1)
+           *
         FROM
             userinfo
         WHERE
@@ -65,4 +65,15 @@
     	</where>
     	
     </update>
+    <!-- 获取用户角色 -->
+    <select id="getRoles" parameterType="String" resultType="String">
+		select r.role_name from userinfo u,role r 
+		where u.role_id=r.role_id and u.username=#{username}
+	</select>
+	<!-- 获取用户权限 -->
+	<select id="getPermissions" parameterType="String" resultType="String">
+		select p.permission_name from userinfo u,permission p 
+		where u.role_id=p.role_id
+		and u.username=#{username}
+	</select>
 </mapper>

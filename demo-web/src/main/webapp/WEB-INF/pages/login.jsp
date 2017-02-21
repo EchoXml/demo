@@ -43,17 +43,16 @@
   <div class="login-box-body">
     <p class="login-box-msg">登录以启动会话</p>
 
-<!--     <form action="index2.html" method="post"> -->
+	<form action="<%=basePath%>user/login.do" method="post">
       <div class="form-group has-feedback">
-        <input type="email" name="username"  class="form-control" placeholder="电子邮件">
+        <input  name="username"  class="form-control" placeholder="电子邮件" required="required">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="密码">
+        <input type="password" name="password" class="form-control" placeholder="密码" required="required">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div id="msg" class="row" style="text-align: center">
-      </div>
+      <div class="row" style="text-align: center"><font color="red" size="1px">${requestScope.msg }</font></div>
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
@@ -64,12 +63,11 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="button" onclick="doLogin();" class="btn btn-primary btn-block btn-flat">登录</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
         <!-- /.col -->
       </div>
-<!--     </form>
- -->
+    </form>
     <div class="social-auth-links text-center">
       <p>- OR -</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-qq"></i>QQ登录</a>
@@ -100,7 +98,7 @@
     });
   });
   
-  function doLogin(){
+<%--   function doLogin(){
 		var username=$("input[name='username']").val();
 		var password=$("input[name='password']").val();
 		var msg=$("#msg");
@@ -129,7 +127,7 @@
 				alert("error"+data);	
 			}
 		});
-	}
+	} --%>
 </script>
 </body>
 </html>

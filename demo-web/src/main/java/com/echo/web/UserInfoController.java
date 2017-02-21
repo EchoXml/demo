@@ -1,10 +1,16 @@
 package com.echo.web;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +27,8 @@ import com.echo.model.UserInfo;
 import com.echo.enums.DelStateEnum;
 import com.echo.enums.RegisterStateEnum;
 import com.echo.service.UserInfoService;
+import com.echo.util.EncryptionUtil;
+import com.echo.util.PropertiesUtil;
 
 
 @Controller
@@ -37,20 +45,38 @@ public class UserInfoController {
 	 * @param model
 	 * @param response
 	 */
-	@RequestMapping(value="/ajax/login.do",method=RequestMethod.POST)
-	@ResponseBody
-	public boolean doLogin(UserInfo userInfo,Model model,HttpServletResponse response,HttpSession session){
-		logger.info(userInfo.getUsername()+"\t"+userInfo.getPassword());
-		UserInfo loginUser=userInfoService.login(userInfo);
-		if (loginUser!=null) {
-			model.addAttribute("loginUser",loginUser);
-			session.setAttribute("loginUser", loginUser);
-			return true; 
-		}else{
-			return false;
+	@RequestMapping(value="/login.do",method={RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView doLogin(UserInfo userInfo,HttpServletRequest request){
+		Md5Pwd(userInfo);
+		Subject subject=SecurityUtils.getSubject();
+		UsernamePasswordToken token=new UsernamePasswordToken(userInfo.getUsername(), userInfo.getPassword());
+		ModelAndView m=new ModelAndView();
+		try{
+			subject.login(token);
+			m.setViewName("redirect:/page/index");
+		}catch(Exception e){
+			e.printStackTrace();
+			request.setAttribute("msg", "用户名或者密码错误！");
+			m.setViewName("forward:/page/login");
 		}
+		logger.info(userInfo.getUsername()+"\t"+userInfo.getPassword());
+		return m;
 	
 		
+	}
+
+
+	private void Md5Pwd(UserInfo userInfo) {
+		PropertiesUtil propertiesUtil;
+		try {
+			//密码加密验证
+			propertiesUtil = new PropertiesUtil("project.properties");
+			String salt=propertiesUtil.getValue("salt");
+			userInfo.setPassword(EncryptionUtil.md5(userInfo.getPassword(), salt));
+		} catch (IOException e) {
+			logger.info("项目配置文件未找到！");
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -58,9 +84,9 @@ public class UserInfoController {
 	 * 注销操作
 	 */
 	@RequestMapping(value="/logout.do")
-	public String doLogout(HttpSession session){
-//		session.setComplete();
-		session.invalidate();
+	public String doLogout(){
+		Subject subject=SecurityUtils.getSubject();
+		subject.logout();
 		return "login.jsp";
 	}
 	
@@ -76,6 +102,7 @@ public class UserInfoController {
 		if (userInfo.getStatus()==null) {
 			userInfo.setStatus(1);
 		}
+		Md5Pwd(userInfo);
 		Result<RegisterStateEnum> result=userInfoService.register(userInfo);
 		return result;
 	}
@@ -87,12 +114,13 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value="/addUser.do",method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView addUser(UserInfo userInfo) {
+		Md5Pwd(userInfo);
 		ModelAndView m=new ModelAndView();
 		Result<RegisterStateEnum> result=userInfoService.register(userInfo);
 		if (result.isSuccess()) {
-			m.addObject("addUserMsg", "添加成功！");
+			m.addObject("msg", "添加成功！");
 		}else {
-			m.addObject("addUserMsg","添加失败！");
+			m.addObject("msg","添加失败！");
 		}
 		m.setViewName("forward:/page/userList");
 		return m;

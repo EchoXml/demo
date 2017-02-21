@@ -23,6 +23,8 @@ public class UserInfo implements Serializable {
 	private String createDateStr;
 	
 	private String statusStr;
+	
+	private Integer roleId;
 
 	public Long getUserId() {
 		return userId;
@@ -122,6 +124,14 @@ public class UserInfo implements Serializable {
 			break;
 		}
 		
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 	
 	

@@ -23,7 +23,7 @@ public class PageController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method={RequestMethod.GET,RequestMethod.POST})
 	public String login(){
         return "login.jsp";
 	}
@@ -32,7 +32,7 @@ public class PageController {
 	 * 跳转注册界面
 	 * @return
 	 */
-	@RequestMapping(value="/register",method=RequestMethod.GET)
+	@RequestMapping(value="/register",method={RequestMethod.GET,RequestMethod.POST})
 	public String toRegister(){
 		return "register.jsp";
 	}
@@ -41,7 +41,7 @@ public class PageController {
 	 * 跳转后台首页
 	 * @return
 	 */
-	@RequestMapping("/index")
+	@RequestMapping(value="/index",method={RequestMethod.GET,RequestMethod.POST})
 	public String toIndex() {
 		return "index.jsp";
 	}
@@ -50,7 +50,7 @@ public class PageController {
 	 * 信息中心V2
 	 * @return
 	 */
-	@RequestMapping("/index2")
+	@RequestMapping(value="/index2",method={RequestMethod.GET,RequestMethod.POST})
 	public String toIndex2() {
 		return "index2.jsp";
 	}

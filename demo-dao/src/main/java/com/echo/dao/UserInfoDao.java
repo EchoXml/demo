@@ -1,6 +1,7 @@
 package com.echo.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.echo.model.UserInfo;
 
@@ -11,7 +12,7 @@ public interface UserInfoDao {
 	 * @param username 要查询的用户名
 	 * @return 
 	 */
-	Integer queryByUserName(String username);
+	UserInfo queryByUserName(String username);
 	
 	/**
 	 * 根据传入对象中的用户名密码匹配是否存在对应的用户信息
@@ -44,5 +45,19 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	int delUserById(Long userId);
+	
+	/**
+	 * 获取用户权限列表
+	 * @param username 用户名
+	 * @return
+	 */
+	Set<String> getPermissions(String username);
+	
+	/**
+	 * 获取用户角色列表
+	 * @param username 用户名
+	 * @return
+	 */
+	Set<String> getRoles(String username);
 
 }
