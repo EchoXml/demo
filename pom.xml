@@ -197,6 +197,5 @@
   	<module>demo-dao</module>
   	<module>demo-service</module>
   	<module>demo-util</module>
-    <module>demo-shiro</module>
   </modules>
 </project>
