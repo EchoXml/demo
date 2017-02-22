@@ -94,7 +94,7 @@
 					class="fa fa-weibo"></i>使用微博注册</a>
 			</div>
 
-			<a href="<%=basePath%>page/login" class="text-center">我已有账号</a>
+			<a href="<%=basePath%>page/login" class="text-center">我已有账号 </a>
 		</div>
 		<!-- /.form-box -->
 	</div>
