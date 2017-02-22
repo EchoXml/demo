@@ -21,7 +21,7 @@ public class UserInfoServiceImpl  implements UserInfoService{
 	@Override
 	public String checkUserNameExsit(String username) {
 		UserInfo check=userInfoDao.queryByUserName(username);
-		if (check==null) {//数据库已存在该用户名
+		if (check!=null) {//数据库已存在该用户名
 			return "{\"isExsit\":true,\"msg\":\"该用户名已存在\"}";
 		}
 		return "{\"isExsit\":false,\"msg\":\"该用户名可以被使用\"}";

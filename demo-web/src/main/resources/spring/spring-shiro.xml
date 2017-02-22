@@ -36,10 +36,12 @@
 	    <property name="filterChainDefinitions">  
 	        <value>
 	        	/page/login=anon
+	        	/page/register=anon
+	        	/page/register=anon
 	        	/user/ajax/login.do=anon
 	        	/page/index*=authc
-	        	/page/booklist=perms["book:select"]
-	        	/page/userlist=perms["user:select"]
+	        	/page/booklist=authc,perms["book:select"]
+	        	/page/userlist=authc,perms["user:select"]
 	        </value>  
 	    </property>
 	</bean>  

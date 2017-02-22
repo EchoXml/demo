@@ -48,7 +48,7 @@
 		<div class="register-box-body">
 			<p class="login-box-msg">会员注册</p>
 
-			<form action="index.html" method="post">
+			<form action="<%=basePath%>user/register.do" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" name="nickname" class="form-control"
 						placeholder="昵称"> <span
@@ -69,17 +69,17 @@
 						placeholder="确认密码" > <span
 						class="glyphicon glyphicon-log-in form-control-feedback"></span>
 				</div>
-				<div class="row" id="msg" style="text-align: center"></div>
+				<div class="row" id="msg" style="text-align: center"><font size="1" color="red">${requestScope.msg }</font></div>
 				<div class="row">
 					<div class="col-xs-8">
-						<div class="checkbox icheck">
-							<label> <input type="checkbox" onclick="enAbleBtn();" > 我同意 <a href="#">《用户注册条款》</a>
+						<div class="checkbox icheck" >
+							<label> <input type="checkbox" id="agree" /> 我同意 <a href="javascript:void(0);">《用户注册条款》</a>
 							</label>
 						</div>
 					</div>
 					<!-- /.col -->
 					<div class="col-xs-4">
-						<button id="btnRegister" type="button" onclick="doRegister();" disabled
+						<button id="btnRegister" type="submit" onclick="doRegister();" disabled=false
 							class="btn btn-primary btn-block btn-flat">注册</button>
 					</div>
 					<!-- /.col -->
@@ -88,13 +88,13 @@
 
 			<div class="social-auth-links text-center">
 				<p>- OR -</p>
-				<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i
-					class="fa fa-qq"></i>使用QQ注册</a> <a href="#"
+				<a href="javascript:rgByQQ();" class="btn btn-block btn-social btn-facebook btn-flat"><i
+					class="fa fa-qq"></i>使用QQ注册</a> <a href="javascript:rgByWeibo();"
 					class="btn btn-block btn-social btn-google btn-flat"><i
 					class="fa fa-weibo"></i>使用微博注册</a>
 			</div>
 
-			<a href="<%=basePath%>user/login" class="text-center">我已有账号</a>
+			<a href="<%=basePath%>page/login" class="text-center">我已有账号</a>
 		</div>
 		<!-- /.form-box -->
 	</div>
@@ -113,36 +113,18 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
+    
+    $("#agree").on('ifToggled', function(event){
+    	enAbleBtn();
+    });
   });
   
   /*检验数据格式是否正确  */
 	function doRegister(){
 		if(!enAbleBtn()){
-			return;
+			return false;
 		}
-		$.ajax({
-			url:'<%=basePath%>user/ajax/register.do',
-			type:'get',
-			dataType:'json',
-			data:{
-				'username':username,
-				'password':password,
-				'nickname':nickname,
-			},
-			success:function(data){
-				//判断是否注册成功
-				if(data.success==true){
-					console.info("注册成功");
-					location.href="<%=basePath%>page/login";
-				}else{
-					alert("注册失败！请及时与管理员联系！");	
-					console.info("注册失败");
-				}
-			},
-			error:function(data){
-				alert("error:"+data);	
-			}
-		});
+		$("form").submit();
 		
 	} 
   	//激活注册按钮
@@ -150,25 +132,39 @@
   		var username=$("input[name='username']").val();
 		var password=$("input[name='password']").val();
 		var nickname=$("input[name='nickname']").val();
+		var isAgree=document.getElementById("agree").checked;
 		var eg=/^\w{6,15}$/;
 		var msg=$("#msg");
+		var btn=$("#btnRegister");
 		if(!eg.test(username)){
 			msg.text("请输入正确格式的用户名！").css("color","red").css("font-size","12px");
-			$("#btnRegister").attr("disabled");
+			btn.attr("disabled");
 			return false;
 		}
 		if(password.length<6){
 			msg.text("请输入长度不小于6位的密码！").css("color","red").css("font-size","12px");
-			$("#btnRegister").attr("disabled");
+			btn.attr("disabled");
 			return false;
 		}
 		if(!checkPassword()){
-			$("#btnRegister").attr("disabled");
+			btn.attr("disabled");
 			return false;
 		}
 		
-		$("#btnRegister").removeAttr("disabled");
-		return true;
+		if(undefined==btn.attr("disabled")){
+			btn.attr("disabled","disabled");
+			return false;
+		}else{
+			if(isAgree==true){
+				btn.removeAttr("disabled");
+				return true;
+			}else{
+				btn.attr("disabled","disabled");
+				return false;
+			}
+		}
+		
+	
 		
 	}
   
@@ -177,6 +173,7 @@
 		var password=$("input[name='password']").val();
 		var repassword=$("input[name='repassword']").val();
 		if (password==repassword) {
+			$("#msg").text("");
 			return true;
 		}
 		$("#msg").text("两次密码输入不一致！").css("color","red").css("font-size","12px");
@@ -196,6 +193,7 @@
 			url:'<%=basePath%>user/ajax/checkUsername',
 				type : 'get',
 				dataType : 'json',
+				async: false ,
 				data : {
 					'username' : username
 				},
@@ -206,12 +204,15 @@
 					console.info("isExsit:" + data.isExsit);
 					if (data.isExsit == true) {
 						msg.css("color", "red");
+						return false;
 					} else {
 						msg.css("color", "blue");
+						return true;
 					}
 				},
 				error : function(data) {
-					alert("error" + data);
+					msg.text("服务器异常！").css("font-size", "12px");
+					return false;
 				}
 			});
 		}

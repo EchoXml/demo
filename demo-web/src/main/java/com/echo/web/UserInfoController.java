@@ -96,15 +96,22 @@ public class UserInfoController {
 	 * @param userInfo
 	 * @return
 	 */
-	@RequestMapping(value="/ajax/register.do",method={RequestMethod.GET,RequestMethod.POST})
-	@ResponseBody
-	public Result<RegisterStateEnum> doRegister(UserInfo userInfo) {
+	@RequestMapping(value="/register.do",method={RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView doRegister(UserInfo userInfo) {
 		if (userInfo.getStatus()==null) {
 			userInfo.setStatus(1);
 		}
+		ModelAndView m=new ModelAndView();
 		Md5Pwd(userInfo);
 		Result<RegisterStateEnum> result=userInfoService.register(userInfo);
-		return result;
+		if (result.isSuccess()) {
+			m.addObject("msg", "<script>alert('注册成功！');</script>");
+			m.setViewName("forward:/page/login");
+		}else{
+			m.addObject("msg", "注册失败！");
+			m.setViewName("forward:/page/register");
+		}
+		return m;
 	}
 	
 	/**

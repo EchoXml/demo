@@ -76,7 +76,7 @@
     <!-- /.social-auth-links -->
 
     <a href="#">忘记密码</a><br>
-    <a href="<%=basePath%>user/register" class="text-center">注册成为会员</a>
+    <a href="<%=basePath%>page/register" class="text-center">注册成为会员</a>
 
   </div>
   <!-- /.login-box-body -->
