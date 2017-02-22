@@ -1,7 +1,6 @@
 package com.echo.web.shiro;
 
 import java.io.IOException;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,7 +12,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.echo.model.UserInfo;
 import com.echo.service.UserInfoService;
 import com.echo.util.EncryptionUtil;
@@ -55,7 +53,7 @@ public class MyRealm extends AuthorizingRealm {
 		return null;
 	}
 	
-	private void Md5Pwd(UserInfo userInfo) {
+	public void Md5Pwd(UserInfo userInfo) {
 		PropertiesUtil propertiesUtil;
 		try {
 			//密码加密验证

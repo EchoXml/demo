@@ -60,8 +60,8 @@ public class PageController {
 	 * @param model
 	 * @return
 	 */
-    @RequestMapping(value = "/bookList", method = {RequestMethod.POST,RequestMethod.GET})
-	public String bookList(Model model){
+    @RequestMapping(value = "/booklist", method = {RequestMethod.POST,RequestMethod.GET})
+	public String booklist(Model model){
         return "bookList.jsp";
 	}
     
@@ -70,8 +70,8 @@ public class PageController {
 	 * @param model
 	 * @return
 	 */
-    @RequestMapping(value = "/userList", method = {RequestMethod.POST,RequestMethod.GET})
-	public String userList(Model model){
+    @RequestMapping(value = "/userlist", method = {RequestMethod.POST,RequestMethod.GET})
+	public String userlist(Model model){
         return "userList.jsp";
 	}
     

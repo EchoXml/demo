@@ -72,10 +72,10 @@
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">2</span>
+              <span class="label label-success">1</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">2条未读消息</li>
+              <li class="header">1条未读消息</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -92,18 +92,6 @@
                     </a>
                   </li>
                   <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        AdminLTE Design Team
-                        <small><i class="fa fa-clock-o"></i> 2 小时</small>
-                      </h4>
-                    	<p>第二条未读消息</p>
-                    </a>
-                  </li>
                 </ul>
               </li>
               <li class="footer"><a href="#">查看所有消息</a></li>
@@ -113,22 +101,16 @@
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">3</span>
+              <span class="label label-warning">2</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">你有3条通知</li>
+              <li class="header">你有2条通知</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   <li>
                     <a href="#">
                       <i class="fa fa-users text-aqua"></i> 5名新会员加入
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> 很长一段的说明在这里可能不适合
-第页，然后可能会导致设计问题
                     </a>
                   </li>
                   <li>
@@ -145,10 +127,10 @@
           <li class="dropdown tasks-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
+              <span class="label label-danger">3</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">你有9个任务</li>
+              <li class="header">你有3个任务</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -189,20 +171,6 @@
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        让界面切换更加平滑
-                        <small class="pull-right">80%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">80% Complete</span>
                         </div>
                       </div>
                     </a>
@@ -306,19 +274,25 @@
           </ul>
           
         </li>
-        <!-- 用户信息管理 -->
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa  fa-users"></i> <span>用户管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="<%=basePath%>page/userList"><i class="fa fa-user"></i> 用户列表</a></li>
-          </ul>
+        <!-- 权限验证（user:select） -->
+        <shiro:hasPermission name="user:select">
+        	 <!-- 用户信息管理 -->
+	        <li class="active treeview">
+	          <a href="#">
+	            <i class="fa  fa-users"></i> <span>用户管理</span>
+	            <span class="pull-right-container">
+	              <i class="fa fa-angle-left pull-right"></i>
+	            </span>
+	          </a>
+	          <ul class="treeview-menu">
+	            <li class="active"><a href="<%=basePath%>page/userlist"><i class="fa fa-user"></i> 用户列表</a></li>
+	          </ul>
+	          </li>
+        </shiro:hasPermission>
+       
           
-        </li>
+       <!-- 权限验证（user:select） -->
+        <shiro:hasPermission name="book:select">
         <!-- 图书信息管理 -->
         <li class="active treeview">
           <a href="#">
@@ -328,10 +302,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<%=basePath%>page/bookList"><i class="fa  fa-book"></i> 图书列表</a></li>
+            <li class="active"><a href="<%=basePath%>page/booklist"><i class="fa  fa-book"></i> 图书列表</a></li>
           </ul>
-          
         </li>
+        </shiro:hasPermission>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -360,7 +334,7 @@
             <div class="inner">
               <h3>150</h3>
 
-              <p>新订单</p>
+              <p>今日图书预约量</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -368,29 +342,14 @@
             <a href="#" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>跳出率</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+       
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
               <h3>44</h3>
 
-              <p>用户注册数</p>
+              <p>今日用户注册数</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -409,6 +368,21 @@
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+         <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>20</h3>
+              <p>独立IP访问数</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
             </div>
             <a href="#" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -459,11 +433,9 @@
                 <p class="message">
                   <a href="#" class="name">
                     <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                    Mike Doe
+                 	   张朝阳
                   </a>
-                  I would like to meet you to discuss the latest news about
-                  the arrival of the new theme. They say it is going to be one the
-                  best themes on the market
+           		      已收到来信，身体安康，勿念。
                 </p>
                 <div class="attachment">
                   <h4>Attachments:</h4>
@@ -482,30 +454,12 @@
               <!-- chat item -->
               <div class="item">
                 <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
-
                 <p class="message">
                   <a href="#" class="name">
                     <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                    <shiro:principal />  
+                   	 李彦宏
                   </a>
-                  I would like to meet you to discuss the latest news about
-                  the arrival of the new theme. They say it is going to be one the
-                  best themes on the market
-                </p>
-              </div>
-              <!-- /.item -->
-              <!-- chat item -->
-              <div class="item">
-                <img src="dist/img/userzx.jpg" alt="user image" class="offline">
-
-                <p class="message">
-                  <a href="#" class="name">
-                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                    Susan Doe
-                  </a>
-                  I would like to meet you to discuss the latest news about
-                  the arrival of the new theme. They say it is going to be one the
-                  best themes on the market
+                  	期待再次相见。
                 </p>
               </div>
               <!-- /.item -->
@@ -561,76 +515,11 @@
                     <i class="fa fa-trash-o"></i>
                   </div>
                 </li>
-                <li>
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <input type="checkbox" value="">
-                  <span class="text">让主题响应</span>
-                  <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
-                  <div class="tools">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
-                <li>
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <input type="checkbox" value="">
-                  <span class="text">让主题像星星一样闪耀</span>
-                  <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
-                  <div class="tools">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
-                <li>
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <input type="checkbox" value="">
-                  <span class="text">让主题像星星一样闪耀</span>
-                  <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
-                  <div class="tools">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
-                <li>
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <input type="checkbox" value="">
-                  <span class="text">Check your messages and notifications</span>
-                  <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
-                  <div class="tools">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
-                <li>
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <input type="checkbox" value="">
-                  <span class="text">让主题像星星一样闪耀</span>
-                  <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
-                  <div class="tools">
-                    <i class="fa fa-edit"></i>
-                    <i class="fa fa-trash-o"></i>
-                  </div>
-                </li>
               </ul>
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix no-border">
-              <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+              <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i>添加项</button>
             </div>
           </div>
           <!-- /.box -->
@@ -812,24 +701,6 @@
                   </div>
                   <div class="progress xs">
                     <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
                   </div>
                 </div>
                 <!-- /.col -->

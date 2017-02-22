@@ -5,6 +5,7 @@
 			+ path + "/";
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,9 @@
 <script type="text/javascript"></script>
 <c:if test="${not empty addBookMsg }">
 	<script type="text/javascript">alert("${addBookMsg}");</script>
-	<%request.removeAttribute("addBookMsg"); %>
+	<%
+		request.removeAttribute("addBookMsg");
+	%>
 </c:if>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -66,10 +69,10 @@
 						<!-- Messages: style can be found in dropdown.less-->
 						<li class="dropdown messages-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-envelope-o"></i> <span class="label label-success">2</span>
+								class="fa fa-envelope-o"></i> <span class="label label-success">1</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">2条未读消息</li>
+								<li class="header">1条未读消息</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -87,17 +90,6 @@
 										</a>
 										</li>
 										<!-- end message -->
-										<li><a href="#">
-												<div class="pull-left">
-													<img src="dist/img/user3-128x128.jpg" class="img-circle"
-														alt="User Image">
-												</div>
-												<h4>
-													AdminLTE Design Team <small><i
-														class="fa fa-clock-o"></i> 2 小时</small>
-												</h4>
-												<p>第二条未读消息</p>
-										</a></li>
 									</ul>
 								</li>
 								<li class="footer"><a href="#">查看所有消息</a></li>
@@ -105,18 +97,15 @@
 						<!-- Notifications: style can be found in dropdown.less -->
 						<li class="dropdown notifications-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-bell-o"></i> <span class="label label-warning">3</span>
+								class="fa fa-bell-o"></i> <span class="label label-warning">2</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">你有3条通知</li>
+								<li class="header">你有2条通知</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
 										<li><a href="#"> <i class="fa fa-users text-aqua"></i>
 												5名新会员加入
-										</a></li>
-										<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
-												很长一段的说明在这里可能不适合 第页，然后可能会导致设计问题
 										</a></li>
 										<li><a href="#"> <i class="fa fa-user text-red"></i>你修改了用户名
 										</a></li>
@@ -127,10 +116,10 @@
 						<!-- Tasks: style can be found in dropdown.less -->
 						<li class="dropdown tasks-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-flag-o"></i> <span class="label label-danger">9</span>
+								class="fa fa-flag-o"></i> <span class="label label-danger">3</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">你有9个任务</li>
+								<li class="header">你有3个任务</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -179,21 +168,6 @@
 										</a>
 										</li>
 										<!-- end task item -->
-										<li>
-											<!-- Task item --> <a href="#">
-												<h3>
-													让界面切换更加平滑 <small class="pull-right">80%</small>
-												</h3>
-												<div class="progress xs">
-													<div class="progress-bar progress-bar-yellow"
-														style="width: 80%" role="progressbar" aria-valuenow="20"
-														aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only">80% Complete</span>
-													</div>
-												</div>
-										</a>
-										</li>
-										<!-- end task item -->
 									</ul>
 								</li>
 								<li class="footer"><a href="#">查看所有任务</a></li>
@@ -202,14 +176,16 @@
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
 								src="dist/img/userzx.jpg" class="user-image" alt="User Image">
-								<span class="hidden-xs">${loginUser.nickname}</span>
+								<span class="hidden-xs"><shiro:principal /> </span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header"><img src="dist/img/userzx.jpg"
 									class="img-circle" alt="User Image">
+
 									<p>
-										${loginUser.nickname} - 系统管理员 <small>注册日期 ${loginUser.createDateStr}</small>
+										<shiro:principal />
+										- 系统管理员 <small>注册日期 2012.12.12</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
@@ -244,7 +220,6 @@
 			</nav>
 		</header>
 		<!-- Left side column. contains the logo and sidebar -->
-		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
@@ -254,8 +229,11 @@
 						<img src="dist/img/userzx.jpg" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>${loginUser.nickname}</p>
-						<a href="javascript:void(0);"><i class="fa fa-circle text-success"></i> 在线</a>
+						<p>
+							<shiro:principal />
+						</p>
+						<a href="javascript:void(0);"><i
+							class="fa fa-circle text-success"></i> 在线</a>
 					</div>
 				</div>
 				<!-- search form -->
@@ -281,32 +259,44 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="<%=basePath%>page/index"><i class="fa fa-circle-o"></i>
-									信息中心 v1</a></li>
+							<li><a href="<%=basePath%>page/index"><i
+									class="fa fa-circle-o"></i> 信息中心 v1</a></li>
 							<li><a href="<%=basePath%>page/index2"><i
 									class="fa fa-circle-o"></i> 信息中心 v2</a></li>
 						</ul></li>
 					<!-- 用户信息管理 -->
-					<li class="active treeview"><a href="#"> <i class="fa  fa-users"></i>
-							<span>用户管理</span> <span class="pull-right-container"> <i
-								class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-						<ul class="treeview-menu">
-							<li class="active"><a href="<%=basePath%>page/userList"><i
-									class="fa fa-user"></i> 用户列表</a></li>
-						</ul></li>
-					<!-- 用户信息管理 -->
-					<li class="treeview"><a href="#"> <i
-							class="fa  fa-book"></i> <span>图书管理</span> <span
+					<shiro:hasPermission name="user:select">
+					<li class="active treeview"><a href="#"> <i
+							class="fa  fa-users"></i> <span>用户管理</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li class=""><a href="<%=basePath%>page/bookList"><i
-									class="fa  fa-book"></i>图书列表</a></li>
+							<li class="active"><a href="<%=basePath%>page/userlist"><i
+									class="fa fa-user"></i> 用户列表</a></li>
 						</ul></li>
+						</shiro:hasPermission>
+					<!-- 图书信息管理 -->
+					<shiro:hasPermission name="book:select">
+						<li class="treeview">
+						<a href="#">
+						 		<i class="fa  fa-book"></i>
+								<span>图书管理</span> 
+								<span class="pull-right-container"> 
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+						</a>
+							<ul class="treeview-menu">
+								<li class="">
+									<a href="<%=basePath%>page/booklist">
+										<i	class="fa  fa-book"></i>
+										图书列表
+									</a>
+								</li>
+							</ul>
+						</li>
+					</shiro:hasPermission>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -320,7 +310,8 @@
 					数据表格 <small>用户列表</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="<%=basePath%>page/index"><i class="fa fa-dashboard"></i> 主页</a></li>
+					<li><a href="<%=basePath%>page/index"><i
+							class="fa fa-dashboard"></i> 主页</a></li>
 					<li><a href="<%=basePath%>page/userList">用户管理</a></li>
 					<li class="active">用户列表</li>
 				</ol>
@@ -349,11 +340,13 @@
 											<th>操作</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<td><a href="javascript:add();">新增用户</a></td>
-										</tr>
-									</tfoot>
+									<shiro:hasPermission name="user:add">
+										<tfoot>
+											<tr>
+												<td><a href="javascript:add();">新增用户</a></td>
+											</tr>
+										</tfoot>
+									</shiro:hasPermission>
 								</table>
 							</div>
 							<!-- /.box-body -->
@@ -554,48 +547,59 @@
 	<!-- ./wrapper -->
 
 	<!-- 模态框（Modal） -->
-		<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-			<div class="modal-dialog" role="document">
-				<form action="<%=basePath%>user/addUser.do" id="formUser" method="post">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="titleUser">新增用户</h4>
-						</div>
-						<div class="modal-body">
+	<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<form action="<%=basePath%>user/addUser.do" id="formUser"
+				method="post">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="titleUser">新增用户</h4>
+					</div>
+					<div class="modal-body">
 
-							<div class="form-group">
-								<label for="recipient-name" class="control-label">用户名：</label>
-								<input type="text" class="form-control" name="username"  id="username"  required="required">
-							</div>
-							<div class="form-group">
-								<label for="message-text" class="control-label" >密码:</label>
-								<input class="form-control" name="password" id="password"  required="required"></input>
-							</div>
-							<div class="form-group">
-								<label for="message-text" class="control-label" >昵称:</label>
-								<input class="form-control" name="nickname" id="nickname"  required="required"></input>
-							</div>
-							<div class="form-group">
-								<label for="message-text" class="control-label" >状态:</label>
-								<select class="form-control" name="status" id="status"  required="required">
-									<option value="1">正常</option>
-									<option value="-1">禁用</option>
-									<option value="-2">异常</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="message-text" class="control-label" id="msg"></label>
-							</div>
+						<div class="form-group">
+							<label for="recipient-name" class="control-label">用户名：</label> <input
+								type="text" class="form-control" name="username" id="username"
+								required="required">
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-							<button type="submit" disabled="disabled" id="btnUser" class="btn btn-primary">新增</button>
+						<div class="form-group">
+							<label for="message-text" class="control-label">密码:</label> <input
+								class="form-control" name="password" id="password"
+								required="required"></input>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">昵称:</label> <input
+								class="form-control" name="nickname" id="nickname"
+								required="required"></input>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">状态:</label> <select
+								class="form-control" name="status" id="status"
+								required="required">
+								<option value="1">正常</option>
+								<option value="-1">禁用</option>
+								<option value="-2">异常</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label" id="msg"></label>
 						</div>
 					</div>
-				</form>
-			</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="submit" disabled="disabled" id="btnUser"
+							class="btn btn-primary">新增</button>
+					</div>
+				</div>
+			</form>
+			
 		</div>
+	</div>
 
 	<!-- jQuery 2.2.3 -->
 	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -648,38 +652,6 @@
 	    	$('#addUserModal').modal('show');
 	    }
 	    
-	   <%--  /*检验用户名是否可以被注册*/
-		function checkUsername() {
-			var username=$("#username").val();
-			var eg=/^\w{6,15}$/;
-			var msg=$("#msg");
-			if(!eg.test(username)){
-				$("#btnUser").attr("disabled","disabled");
-				msg.text("请输入正确的用户名！").css("color","red").css("font-size","12px");
-				return false;
-			}
-			$.ajax({
-				url:'<%=basePath%>user/ajax/checkUsername',
-					type : 'get',
-					dataType : 'json',
-					data : {
-						'username' : username
-					},
-					success : function(data) {
-						msg.text(data.msg).css("font-size", "12px");
-						if (data.isExsit == true) {
-							msg.css("color", "red");
-							$("#btnUser").attr("disabled");
-						} else {
-							msg.css("color", "blue");
-							$("#btnUser").removeAttr("disabled");
-						}
-					},
-					error : function(data) {
-						alert("error" + data);
-					}
-				});
-			} --%>
 	    
 	    //新增用户
 	    function add() {
@@ -755,8 +727,8 @@
 						 //   指定第最后一列
 				        "targets": 7,
 				        "render": function(data, type, row, meta) {
-				        	var result="<a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.password+"\",\""+data.nickname+"\","+data.status+")' ></a>";
+				        	var result="<shiro:hasPermission name='user:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+");' ></a></shiro:hasPermission>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='user:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.password+"\",\""+data.nickname+"\","+data.status+")' ></a></shiro:hasPermission>";
 				            return result;
 				           /*   */
 				        }

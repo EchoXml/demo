@@ -5,6 +5,7 @@
 			+ path + "/";
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -66,10 +67,10 @@
 						<!-- Messages: style can be found in dropdown.less-->
 						<li class="dropdown messages-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-envelope-o"></i> <span class="label label-success">2</span>
+								class="fa fa-envelope-o"></i> <span class="label label-success">1</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">2条未读消息</li>
+								<li class="header">1条未读消息</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -87,17 +88,6 @@
 										</a>
 										</li>
 										<!-- end message -->
-										<li><a href="#">
-												<div class="pull-left">
-													<img src="dist/img/user3-128x128.jpg" class="img-circle"
-														alt="User Image">
-												</div>
-												<h4>
-													AdminLTE Design Team <small><i
-														class="fa fa-clock-o"></i> 2 小时</small>
-												</h4>
-												<p>第二条未读消息</p>
-										</a></li>
 									</ul>
 								</li>
 								<li class="footer"><a href="#">查看所有消息</a></li>
@@ -105,18 +95,15 @@
 						<!-- Notifications: style can be found in dropdown.less -->
 						<li class="dropdown notifications-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-bell-o"></i> <span class="label label-warning">3</span>
+								class="fa fa-bell-o"></i> <span class="label label-warning">2</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">你有3条通知</li>
+								<li class="header">你有2条通知</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
 										<li><a href="#"> <i class="fa fa-users text-aqua"></i>
 												5名新会员加入
-										</a></li>
-										<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
-												很长一段的说明在这里可能不适合 第页，然后可能会导致设计问题
 										</a></li>
 										<li><a href="#"> <i class="fa fa-user text-red"></i>你修改了用户名
 										</a></li>
@@ -127,10 +114,10 @@
 						<!-- Tasks: style can be found in dropdown.less -->
 						<li class="dropdown tasks-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-flag-o"></i> <span class="label label-danger">9</span>
+								class="fa fa-flag-o"></i> <span class="label label-danger">3</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">你有9个任务</li>
+								<li class="header">你有3个任务</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
@@ -179,21 +166,6 @@
 										</a>
 										</li>
 										<!-- end task item -->
-										<li>
-											<!-- Task item --> <a href="#">
-												<h3>
-													让界面切换更加平滑 <small class="pull-right">80%</small>
-												</h3>
-												<div class="progress xs">
-													<div class="progress-bar progress-bar-yellow"
-														style="width: 80%" role="progressbar" aria-valuenow="20"
-														aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only">80% Complete</span>
-													</div>
-												</div>
-										</a>
-										</li>
-										<!-- end task item -->
 									</ul>
 								</li>
 								<li class="footer"><a href="#">查看所有任务</a></li>
@@ -202,7 +174,7 @@
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
 								src="dist/img/userzx.jpg" class="user-image" alt="User Image">
-								<span class="hidden-xs">${loginUser.nickname}</span>
+								<span class="hidden-xs"><shiro:principal /> </span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
@@ -210,7 +182,8 @@
 									class="img-circle" alt="User Image">
 
 									<p>
-										${loginUser.nickname} - 系统管理员 <small>注册日期 2012.12.12</small>
+										<shiro:principal />
+										- 系统管理员 <small>注册日期 2012.12.12</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
@@ -245,7 +218,6 @@
 			</nav>
 		</header>
 		<!-- Left side column. contains the logo and sidebar -->
-		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
@@ -255,7 +227,7 @@
 						<img src="dist/img/userzx.jpg" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>${loginUser.nickname}</p>
+						<p><shiro:principal /></p>
 						<a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
 					</div>
 				</div>
@@ -287,6 +259,7 @@
 							<li><a href="<%=basePath%>page/index2"><i
 									class="fa fa-circle-o"></i> 信息中心 v2</a></li>
 						</ul></li>
+					<shiro:hasPermission name="user:select">
 					<!-- 用户信息管理 -->
 					<li class="treeview"><a href="#"> <i class="fa  fa-users"></i>
 							<span>用户管理</span> <span class="pull-right-container"> <i
@@ -294,20 +267,23 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li class="active"><a href="<%=basePath%>page/userList"><i
+							<li class="active"><a href="<%=basePath%>page/userlist"><i
 									class="fa fa-user"></i> 用户列表</a></li>
 						</ul></li>
+						</shiro:hasPermission>
 					<!-- 图书信息管理 -->
-					<li class="active treeview"><a href="#"> <i
-							class="fa  fa-book"></i> <span>图书管理</span> <span
-							class="pull-right-container"> <i
-								class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-						<ul class="treeview-menu">
-							<li class="active"><a href="<%=basePath%>page/bookList"><i
-									class="fa  fa-book"></i> 图书列表</a></li>
-						</ul></li>
+					<shiro:hasPermission name="book:select">
+						<li class="active treeview"><a href="#"> <i
+								class="fa  fa-book"></i> <span>图书管理</span> <span
+								class="pull-right-container"> <i
+									class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+							<ul class="treeview-menu">
+								<li class="active"><a href="<%=basePath%>page/booklist"><i
+										class="fa  fa-book"></i> 图书列表</a></li>
+							</ul></li>
+					</shiro:hasPermission>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -322,7 +298,7 @@
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="<%=basePath%>page/index"><i class="fa fa-dashboard"></i> 主页</a></li>
-					<li><a href="<%=basePath%>page/bookList">图书管理</a></li>
+					<li><a href="<%=basePath%>page/booklist">图书管理</a></li>
 					<li class="active">图书列表</li>
 				</ol>
 			</section>
@@ -347,11 +323,13 @@
 											<th>操作</th>
 										</tr>
 									</thead>
+									<shiro:hasPermission name="book:add">
 									<tfoot>
 										<tr>
 											<td><a href="javascript:add();">新增图书</a></td>
 										</tr>
 									</tfoot>
+									</shiro:hasPermission>
 								</table>
 							</div>
 							<!-- /.box-body -->
@@ -694,8 +672,8 @@
 						 //   指定第最后一列
 				        "targets": 4,
 				        "render": function(data, type, row, meta) {
-				        	var result="<a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a>";
+				        	var result="<shiro:hasPermission name='book:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a></shiro:hasPermission >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='book:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a></shiro:hasPermission >";
 				            return result;
 				        }
 					}],

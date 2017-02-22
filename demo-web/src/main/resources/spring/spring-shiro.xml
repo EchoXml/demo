@@ -12,9 +12,6 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">    
-   
-
-	
 	<!-- 自定义Realm -->
 	<bean id="myRealm" class="com.echo.web.shiro.MyRealm" />
 	  
@@ -37,8 +34,8 @@
 	        <value>
 	        	/page/login=anon
 	        	/page/register=anon
-	        	/page/register=anon
-	        	/user/ajax/login.do=anon
+	        	/user/register.do=anon
+	        	/user/login.do=anon
 	        	/page/index*=authc
 	        	/page/booklist=authc,perms["book:select"]
 	        	/page/userlist=authc,perms["user:select"]
