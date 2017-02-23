@@ -2,10 +2,12 @@ package com.echo.web.druid;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.druid.pool.DruidDataSourceStatLogger;
 import com.alibaba.druid.pool.DruidDataSourceStatLoggerAdapter;
 import com.alibaba.druid.pool.DruidDataSourceStatValue;
-import com.alibaba.druid.stat.JdbcSqlStat;
 import com.alibaba.druid.stat.JdbcSqlStatValue;
 import com.google.gson.Gson;
 
@@ -16,10 +18,17 @@ import com.google.gson.Gson;
  */
 public class StatLogger extends DruidDataSourceStatLoggerAdapter   implements DruidDataSourceStatLogger{
 	
-	public static List<JdbcSqlStatValue> sqlList;
+	private Logger logger=LoggerFactory.getLogger(this.getClass());
 	
-	public  void log(DruidDataSourceStatValue statValue) {
+	//保存SQL状态
+	public static List<JdbcSqlStatValue> sqlList=null;
+	
+	public void log(DruidDataSourceStatValue statValue) {
+		
 		sqlList=statValue.getSqlList();
+		
+		System.err.println("已给sqllist设置值");
 	}
+
 
 }

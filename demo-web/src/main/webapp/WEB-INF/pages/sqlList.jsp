@@ -658,12 +658,10 @@
 				        "targets": 1,
 				        "render": function(data, type, row, meta) {
 				        	var sql=data.sql;
-				        	console.log(sql);
-				        	var subSql=sql.replace("\n", "").substring(0,25);
-				        	console.log(subSql);
+				        	var subSql=sql.substring(0,25);
 				        	//未做超出隐藏
 				        	var result='<a title="'+sql+'" href="javascript:void(0);">'+subSql+'</a>';
-				            return result;
+				            return result; 
 				        }
 					}],
 					"order" : [ [ 1, 'asc' ] ]

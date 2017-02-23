@@ -1,5 +1,4 @@
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,7 +15,6 @@ import com.alibaba.druid.filter.config.ConfigTools;
 public class BaseTest {
 	
 	public static void main(String[] args) throws Exception {
-		
 	}
 
 }

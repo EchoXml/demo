@@ -1,7 +1,11 @@
 package com.echo.web;
 
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,21 +48,25 @@ public class BookController {
 		return books;
 	}
 	
-	//获取获取图书信息
+	//获取图书预约信息
 	@RequestMapping("/ajax/getAppointments")
 	@ResponseBody
 	public List<Appointment> getAppointments(){
+		Subject currUser=SecurityUtils.getSubject();
+		
+		//Integer userId=currUser.isPermitted("book:apoint")?currUser.getPrincipal()
+		
 		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
 		logger.info("获取到的预约信息："+new Gson().toJson(appointments));
 		return appointments;
 	}
 	
+	//添加图书
 	@RequestMapping(value="/addBook.do",method = {RequestMethod.POST,RequestMethod.GET})
 	private ModelAndView addBook(String name,int number){
 		Integer insert=bookService.addBook(name, number);
 		ModelAndView m=new ModelAndView();
 		if (insert==1) {
-			logger.info("添加图书成功！");
 			m.addObject("addBookMsg", "添加成功！");
 		}else{
 			m.addObject("addBookMsg", "服务器异常！");
@@ -77,6 +85,7 @@ public class BookController {
         return new Result<AppointExcuetion>(true, execution);
     }
     
+    //删除图书
     @RequestMapping(value = "/ajax/delBook/{bookId}", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     private Result<DelStateEnum> del(@PathVariable("bookId") Long bookId) {

@@ -572,9 +572,11 @@
 	<!-- page script -->
 	<script>
 		function del(userId,bookId){
-	    	if(result){
-	    		var url="<%=basePath%>book/ajax/delAppoint/"+id;
-		    	$.get(url,function(data){
+	    		var url="<%=basePath%>appointment/ajax/del";
+		    	$.post(url, {
+		    	    'userId':userId,
+		    	    'bookId':bookId
+		    	  },function(data){
 		    		console.info(JSON.stringify(data));
 		    		if(data.success==true){
 		    			window.location.reload();
@@ -582,7 +584,6 @@
 		    			alert("删除失败！");
 		    		}
 		    	});
-	    	}
 	    }
 	    
 	    

@@ -13,7 +13,7 @@ import com.echo.service.BookService;
  * @author Echo
  *
  */
-@Component
+
 public class BookJob {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

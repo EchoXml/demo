@@ -15,7 +15,6 @@ public class Appointment implements Serializable {
 	
 	private Date appointTime;
 	
-	private String appointTimeStr;
 	
 	 // 多对一的复合属性
     private Book book;// 图书实体
@@ -58,7 +57,6 @@ public class Appointment implements Serializable {
 
 	public void setAppointtTime(Date appointTime) {
 		this.appointTime = appointTime;
-		setAppointTimeStr();
 	}
 
 
@@ -71,18 +69,10 @@ public class Appointment implements Serializable {
 	}
 
 
-	public String getAppointTimeStr() {
-		return appointTimeStr;
-	}
-
-	public void setAppointTimeStr() {
-		this.appointTimeStr=DateUtil.unixTimestampToDate(appointTime.getTime());
-	}
 
 	@Override
 	public String toString() {
-		return "Appointment [bookId=" + bookId + ", userId=" + userId + ", appointTime=" + appointTime
-				+ ", appointTimeStr=" + appointTimeStr + ", book=" + book + ", userInfo=" + userInfo + "]";
+		return "Appointment [bookId=" + bookId + ", userId=" + userId + ", appointTime=" + appointTime+", book=" + book + ", userInfo=" + userInfo + "]";
 	}
     
     

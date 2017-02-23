@@ -196,7 +196,7 @@
 
                 <p>
                   <shiro:principal />   - 系统管理员
-                  <small>注册日期  2012.12.12</small>
+                  <small>注册日期  ${sessionScope.currUser.createTimeStr }</small>
                 </p>
               </li>
               <!-- Menu Body -->

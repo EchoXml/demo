@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.echo.dao.AppointmentDao;
+import com.echo.enums.DelStateEnum;
 import com.echo.model.Appointment;
 import com.echo.service.AppointmentService;
 
@@ -26,8 +27,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public int delAppointById(Long bookId, Long userId) {
-		return appointmentDao.delAppointById(bookId, userId);
+	public DelStateEnum delAppointById(Long bookId, Long userId) {
+		int delete=appointmentDao.delAppointById(bookId, userId);
+		if (delete==1) {
+			return DelStateEnum.SUCCESS;
+		}else{
+			return DelStateEnum.FIAID;
+		}
 	}
 
 }
