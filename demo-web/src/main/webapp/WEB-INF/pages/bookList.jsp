@@ -282,7 +282,15 @@
 							<ul class="treeview-menu">
 								<li class="active"><a href="<%=basePath%>page/booklist"><i
 										class="fa  fa-book"></i> 图书列表</a></li>
-							</ul></li>
+							</ul>
+							<ul class="treeview-menu">
+					            <li class="">
+					            	<a href="<%=basePath%>page/appointmentlist">
+					            		<i class="fa   fa-hand-grab-o"></i> 预约记录
+					            	</a>
+					            </li>
+					         </ul>
+							</li>
 					</shiro:hasPermission>
 				</ul>
 			</section>
@@ -672,8 +680,9 @@
 						 //   指定第最后一列
 				        "targets": 4,
 				        "render": function(data, type, row, meta) {
-				        	var result="<shiro:hasPermission name='book:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a></shiro:hasPermission >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='book:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a></shiro:hasPermission >";
+				        	var result="<shiro:hasPermission name='book:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</shiro:hasPermission >"+
+				        		"<shiro:hasPermission name='book:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</shiro:hasPermission >"+
+				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='book:apoint'><a title='预约' class='glyphicon glyphicon-hand-up' href='javascript:apoint("+data.bookId+")' ></a></shiro:hasPermission >";
 				            return result;
 				        }
 					}],

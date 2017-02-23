@@ -261,7 +261,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">导航栏</li>
-        <li class="active treeview">
+        <li class=" treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>仪表板</span>
             <span class="pull-right-container">
@@ -269,7 +269,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<%=basePath %>page/index"><i class="fa fa-circle-o"></i> 信息中心 v1</a></li>
+            <li class=""><a href="<%=basePath %>page/index"><i class="fa fa-circle-o"></i> 信息中心 v1</a></li>
             <li><a href="<%=basePath %>page/index2"><i class="fa fa-circle-o"></i> 信息中心 v2</a></li>
           </ul>
           
@@ -277,7 +277,7 @@
         <!-- 权限验证（user:select） -->
         <shiro:hasPermission name="user:select">
         	 <!-- 用户信息管理 -->
-	        <li class="active treeview">
+	        <li class=" treeview">
 	          <a href="#">
 	            <i class="fa  fa-users"></i> <span>用户管理</span>
 	            <span class="pull-right-container">
@@ -285,16 +285,16 @@
 	            </span>
 	          </a>
 	          <ul class="treeview-menu">
-	            <li class="active"><a href="<%=basePath%>page/userlist"><i class="fa fa-user"></i> 用户列表</a></li>
+	            <li class=""><a href="<%=basePath%>page/userlist"><i class="fa fa-user"></i> 用户列表</a></li>
 	          </ul>
 	          </li>
         </shiro:hasPermission>
        
           
-       <!-- 权限验证（user:select） -->
+       <!-- 权限验证（book:select） -->
         <shiro:hasPermission name="book:select">
         <!-- 图书信息管理 -->
-        <li class="active treeview">
+        <li class=" treeview">
           <a href="#">
             <i class="fa  fa-book"></i> <span>图书管理</span>
             <span class="pull-right-container">
@@ -302,7 +302,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<%=basePath%>page/booklist"><i class="fa  fa-book"></i> 图书列表</a></li>
+            <li class=""><a href="<%=basePath%>page/booklist"><i class="fa  fa-book"></i> 图书列表</a></li>
+          </ul>
+           <ul class="treeview-menu">
+            <li class=""><a href="<%=basePath%>page/appointmentlist"><i class="fa   fa-hand-grab-o"></i> 预约记录</a></li>
           </ul>
         </li>
         </shiro:hasPermission>

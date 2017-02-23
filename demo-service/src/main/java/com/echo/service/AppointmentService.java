@@ -12,6 +12,21 @@ public interface AppointmentService {
 	/**
      * 获取对应图书编号的借阅记录
      */
-    List<Appointment> queryAppointmentsByBookId(@Param("bookId") long bookId);
+    List<Appointment> queryAppointmentsByBookId(@Param("bookId") Long bookId);
+    
+    /**
+     * 获取对应用户编号的借阅记录
+     * @param userId
+     * @return
+     */
+    List<Appointment> queryAppointmentsByUserId(@Param("userId") Long userId);
+    
+    
+    /**
+     * 删除对应预约记录
+     * @param appointId
+     * @return
+     */
+    int delAppointById(@Param("bookId") Long bookId, @Param("userId") Long userId);
 
 }

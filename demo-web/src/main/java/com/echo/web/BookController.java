@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.echo.dto.AppointExcuetion;
 import com.echo.dto.Result;
 import com.echo.enums.DelStateEnum;
+import com.echo.model.Appointment;
 import com.echo.model.Book;
 import com.echo.model.UserInfo;
+import com.echo.service.AppointmentService;
 import com.echo.service.BookService;
 import com.google.gson.Gson;
 
@@ -29,6 +30,8 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private AppointmentService appointmentService;
 	
 
 	
@@ -41,6 +44,15 @@ public class BookController {
 		return books;
 	}
 	
+	//获取获取图书信息
+	@RequestMapping("/ajax/getAppointments")
+	@ResponseBody
+	public List<Appointment> getAppointments(){
+		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
+		logger.info("获取到的预约信息："+new Gson().toJson(appointments));
+		return appointments;
+	}
+	
 	@RequestMapping(value="/addBook.do",method = {RequestMethod.POST,RequestMethod.GET})
 	private ModelAndView addBook(String name,int number){
 		Integer insert=bookService.addBook(name, number);
@@ -51,19 +63,17 @@ public class BookController {
 		}else{
 			m.addObject("addBookMsg", "服务器异常！");
 		}
-		 m.setViewName("forward:/page/bookList");
+		 m.setViewName("forward:/page/booklist");
 		return m;
 		
 	}
 
     @RequestMapping(value = "/ajax/{bookId}/appoint.do", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    private Result<AppointExcuetion> appoint(@PathVariable("bookId") Long bookId,HttpSession session) {
-    	UserInfo userInfo=(UserInfo) session.getAttribute("loginUser");
-        if (userInfo==null) {
-            return new Result<>(false, "请先完成登录操作！");
-        }
-        AppointExcuetion execution = bookService.appoint(bookId, new Long(userInfo.getUserId()));
+    private Result<AppointExcuetion> appoint(@PathVariable("bookId") Long bookId) {
+    	//获取登录用户Id(未完成)
+    	long userId=0;
+        AppointExcuetion execution = bookService.appoint(bookId, userId);
         return new Result<AppointExcuetion>(true, execution);
     }
     
@@ -89,7 +99,7 @@ public class BookController {
 		}else{
 			m.addObject("updateMsg", "修改失败！");
 		}
-        m.setViewName("forward:/page/bookList");
+        m.setViewName("forward:/page/booklist");
         return m;
        
     }

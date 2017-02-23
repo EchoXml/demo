@@ -16,8 +16,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentDao appointmentDao;
 	
 	@Override
-	public List<Appointment> queryAppointmentsByBookId(long bookId) {
+	public List<Appointment> queryAppointmentsByBookId(Long bookId) {
 		return appointmentDao.queryAppointmentsByBookId(bookId);
+	}
+
+	@Override
+	public List<Appointment> queryAppointmentsByUserId(Long userId) {
+		return appointmentDao.queryAppointmentsByUserId(userId);
+	}
+
+	@Override
+	public int delAppointById(Long bookId, Long userId) {
+		return appointmentDao.delAppointById(bookId, userId);
 	}
 
 }

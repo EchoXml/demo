@@ -45,21 +45,21 @@
     <update id="updateUser" parameterType="userinfo">
     	update userinfo
     	<set>
-    		<if test="#{username}!=null">
+    		<if test="username!=null">
     		username=#{username},
     		</if>
-    		<if test="#{nickname}!=null">
+    		<if test="nickname!=null">
     		nickname=#{nickname},
     		</if>
-    		<if test="#{password}!=null">
+    		<if test="password!=null">
     		password=#{password},
     		</if>
-    		<if test="#{username}!=null">
+    		<if test="username!=null">
     		status=#{status}
     		</if>
     	</set>
     	<where>
-    		<if test="#{userId}!=null">
+    		<if test="userId!=null">
     		user_id=#{userId}
     		</if>
     	</where>

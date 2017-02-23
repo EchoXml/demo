@@ -75,6 +75,15 @@ public class PageController {
         return "userList.jsp";
 	}
     
+    /**
+	 * 跳转预约列表界面
+	 * @return
+	 */
+    @RequestMapping(value = "/appointmentlist", method = {RequestMethod.POST,RequestMethod.GET})
+	public String appointList(){
+        return "appointList.jsp";
+	}
+    
 	@RequestMapping(value="/test",method = {RequestMethod.POST,RequestMethod.GET})
 	public String test(){
 		return "test.jsp";

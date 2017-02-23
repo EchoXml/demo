@@ -15,7 +15,7 @@ public interface AppointmentDao {
      * @param studentId
      * @return 插入的行数
      */
-    int insertAppointment(@Param("bookId") long bookId, @Param("studentId") long studentId);
+    int insertAppointment(@Param("bookId") Long bookId, @Param("studentId") Long studentId);
 
     /**
      * 通过主键查询预约图书记录，并且携带图书实体
@@ -24,11 +24,25 @@ public interface AppointmentDao {
      * @param studentId
      * @return
      */
-    Appointment queryByKeyWithBook(@Param("bookId") long bookId, @Param("studentId") long studentId);
+    Appointment queryByKeyWithBook(@Param("bookId") Long bookId, @Param("userId") Long userId);
     
     /**
      * 获取对应图书编号的借阅记录
      */
-    List<Appointment> queryAppointmentsByBookId(@Param("bookId") long bookId);
+    List<Appointment> queryAppointmentsByBookId(@Param("bookId") Long bookId);
+    
+    /**
+     * 获取对应用户编号的借阅记录
+     * @param userId
+     * @return
+     */
+    List<Appointment> queryAppointmentsByUserId(@Param("userId") Long userId);
+    
+    /**
+     * 删除对应预约记录
+     * @param appointId
+     * @return
+     */
+    int delAppointById(@Param("bookId") Long bookId, @Param("userId") Long userId);
 
 }
