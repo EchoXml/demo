@@ -6,6 +6,7 @@
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -579,23 +580,8 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- page script -->
 	<script>
-		function del(userId,bookId){
-	    	if(result){
-	    		var url="<%=basePath%>book/ajax/delAppoint/"+id;
-		    	$.get(url,function(data){
-		    		console.info(JSON.stringify(data));
-		    		if(data.success==true){
-		    			window.location.reload();
-		    		}else{
-		    			alert("删除失败！");
-		    		}
-		    	});
-	    	}
-	    }
-	    
-	    
 	$(function() {
-	    $.get("<%=basePath%>book/ajax/getAppointments", function(data) {
+	    $.get("<%=basePath%>system/ajax/getSqls", function(data) {
 				console.info(JSON.stringify(data));
 				var t = $("#userTable").DataTable({
 					"language" : { //表格国际化
@@ -634,30 +620,50 @@
 					"data" : data,
 					"columns" : [ {
 						"data" : null
-					}, {
-						"data" : "bookId"
-					}, {
-						"data" : "book.name"
-					}, {
-						"data" : "userInfo.username"
-					}, {
-						"data" : "userInfo.nickname"
-					}, {
-						"data" : "appointTimeStr"
-					}, {
+					},{
 						"data" : null
-					} ],
+					},{
+						"data" : "data.ExecuteCount"
+					},{
+						"data" : "data.TotalTime"
+					},{
+						"data" : "executeSuccessCount"
+					},{
+						"data" : "data.InTransactionCount"
+					},{
+						"data" : "data.ErrorCount"
+					},{
+						"data" : "data.EffectedRowCount"
+					},{
+						"data" : "data.FetchRowCount"
+					},{
+						"data" : "data.RunningCount"
+					},{
+						"data" : "data.ConcurrentMax"
+					},{
+						"data" : "data.Histogram"
+					},{
+						"data" : "data.ExecuteAndResultHoldTimeHistogram"
+					},{
+						"data" : "data.FetchRowCountHistogram"
+					},{
+						"data" : "data.EffectedRowCountHistogram"
+					}],
 					"columnDefs" : [ {
 						"searchable" : false,
 						"orderable" : false,
 						"targets" : 0
 					} ,{
-						 //   指定第最后一列
-				        "targets": 6,
+						 //   指定第2列
+				        "targets": 1,
 				        "render": function(data, type, row, meta) {
-				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>";
+				        	var sql=data.sql;
+				        	console.log(sql);
+				        	var subSql=sql.replace("\n", "").substring(0,25);
+				        	console.log(subSql);
+				        	//未做超出隐藏
+				        	var result='<a title="'+sql+'" href="javascript:void(0);">'+subSql+'</a>';
 				            return result;
-				           /*   */
 				        }
 					}],
 					"order" : [ [ 1, 'asc' ] ]
@@ -675,6 +681,7 @@
 				;
 			});
 		});
+	
 	
 
 	</script>
