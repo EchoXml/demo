@@ -271,6 +271,20 @@
 									class="fa fa-user"></i> 用户列表</a></li>
 						</ul></li>
 						</shiro:hasPermission>
+						 <!-- 系统管理 -->
+						<shiro:hasAnyRoles name="admin,superadmin">
+					        <li class=" treeview">
+					          <a href="#">
+					            <i class="fa   fa-send"></i> <span>系统管理</span>
+					            <span class="pull-right-container">
+					              <i class="fa fa-angle-left pull-right"></i>
+					            </span>
+					          </a>
+					          <ul class="treeview-menu">
+					            <li class=""><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
+					          </ul>
+					          </li>
+						</shiro:hasAnyRoles>
 					<!-- 图书信息管理 -->
 					<shiro:hasPermission name="book:select">
 						<li class="active treeview"><a href="#"> <i

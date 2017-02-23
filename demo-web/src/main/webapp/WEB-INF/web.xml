@@ -44,9 +44,16 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	 <servlet>
+	      <servlet-name>DruidStatView</servlet-name>
+	      <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	      <servlet-name>DruidStatView</servlet-name>
+	      <url-pattern>/druid/*</url-pattern>
+	  </servlet-mapping>
  <!-- 如果是用mvn命令生成的xml，需要修改servlet版本为3.1 -->
 	<!-- 配置DispatcherServlet -->
-	
 	<!-- 添加对springmvc的支持 -->
 	<servlet>
 		<servlet-name>seckill-dispatcher</servlet-name>

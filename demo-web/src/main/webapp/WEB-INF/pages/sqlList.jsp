@@ -13,7 +13,7 @@
 <base href="<%=basePath%>resources/adminlte/">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>用户列表</title>
+<title>SQL监控页</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -259,21 +259,20 @@
 						</ul></li>
 					<!-- 用户信息管理 -->
 					<shiro:hasPermission name="user:select">
-					<li class="active treeview"><a href="#"> <i
+					<li class="treeview"><a href="#"> <i
 							class="fa  fa-users"></i> <span>用户管理</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li class="active"><a href="<%=basePath%>page/userlist"><i
+							<li class=""><a href="<%=basePath%>page/userlist"><i
 									class="fa fa-user"></i> 用户列表</a></li>
 						</ul></li>
-						
 						</shiro:hasPermission>
+						 <!-- 系统管理 -->
 						<shiro:hasAnyRoles name="admin,superadmin">
-							  <!-- 系统管理 -->
-					        <li class=" treeview">
+					        <li class="active treeview">
 					          <a href="#">
 					            <i class="fa   fa-send"></i> <span>系统管理</span>
 					            <span class="pull-right-container">
@@ -281,13 +280,13 @@
 					            </span>
 					          </a>
 					          <ul class="treeview-menu">
-					            <li class=""><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
+					            <li class="active"><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
 					          </ul>
 					          </li>
 						</shiro:hasAnyRoles>
 					<!-- 图书信息管理 -->
 					<shiro:hasPermission name="book:select">
-						<li class="treeview">
+						<li class=" treeview">
 						<a href="#">
 						 		<i class="fa  fa-book"></i>
 								<span>图书管理</span> 
@@ -324,13 +323,13 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					数据表格 <small>用户列表</small>
+					数据表格 <small>SQL监控</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="<%=basePath%>page/index"><i
 							class="fa fa-dashboard"></i> 主页</a></li>
-					<li><a href="<%=basePath%>page/userlist">用户管理</a></li>
-					<li class="active">用户列表</li>
+					<li><a href="<%=basePath%>page/sqllist">系统管理</a></li>
+					<li class="active">SQL监控</li>
 				</ol>
 			</section>
 
@@ -340,30 +339,30 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">用户列表</h3>
+								<h3 class="box-title">SQL监控列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
 								<table id="userTable" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th>序号</th>
-											<th>用户编号</th>
-											<th>用户名</th>
-											<th>密码</th>
-											<th>昵称</th>
-											<th>注册时间</th>
-											<th>状态</th>
-											<th>操作</th>
+											<th></th>
+											<th>SQL语句</th>
+											<th>执行数</th>
+											<th>执行时间</th>
+											<th>最慢</th>
+											<th>事务中</th>
+											<th>错误数</th>
+											<th>更新行数</th>
+											<th>读取行数</th>
+											<th>执行中</th>
+											<th>最大并发数</th>
+											<th>执行时间分布</th>
+											<th>执行+SR分布</th>
+											<th>读取行分布</th>
+											<th>更新行分布</th>
 										</tr>
 									</thead>
-									<shiro:hasPermission name="user:add">
-										<tfoot>
-											<tr>
-												<td><a href="javascript:add();">新增用户</a></td>
-											</tr>
-										</tfoot>
-									</shiro:hasPermission>
 								</table>
 							</div>
 							<!-- /.box-body -->
@@ -563,61 +562,6 @@
 	</div>
 	<!-- ./wrapper -->
 
-	<!-- 模态框（Modal） -->
-	<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel">
-		<div class="modal-dialog" role="document">
-			<form action="<%=basePath%>user/addUser.do" id="formUser"
-				method="post">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="titleUser">新增用户</h4>
-					</div>
-					<div class="modal-body">
-
-						<div class="form-group">
-							<label for="recipient-name" class="control-label">用户名：</label> <input
-								type="text" class="form-control" name="username" id="username"
-								required="required">
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label">密码:</label> <input
-								class="form-control" name="password" id="password"
-								required="required"></input>
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label">昵称:</label> <input
-								class="form-control" name="nickname" id="nickname"
-								required="required"></input>
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label">状态:</label> <select
-								class="form-control" name="status" id="status"
-								required="required">
-								<option value="1">正常</option>
-								<option value="-1">禁用</option>
-								<option value="-2">异常</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label" id="msg"></label>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="submit" disabled="disabled" id="btnUser"
-							class="btn btn-primary">新增</button>
-					</div>
-				</div>
-			</form>
-			
-		</div>
-	</div>
-
 	<!-- jQuery 2.2.3 -->
 	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
@@ -635,11 +579,9 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- page script -->
 	<script>
-		function del(id){
-	    	console.log("删除的ID:"+id);
-	    	var result=confirm("确认删除该用户?该操作无法撤销！");
+		function del(userId,bookId){
 	    	if(result){
-	    		var url="<%=basePath%>user/ajax/delUser/"+id;
+	    		var url="<%=basePath%>book/ajax/delAppoint/"+id;
 		    	$.get(url,function(data){
 		    		console.info(JSON.stringify(data));
 		    		if(data.success==true){
@@ -648,41 +590,12 @@
 		    			alert("删除失败！");
 		    		}
 		    	});
-	    		console.log("删除");
-	    	}else{
-	    		console.log("撤销");
 	    	}
 	    }
 	    
-		/* 更改既有用户信息  */
-	    function update(id,name,password,nickname,status){
-	    	console.log("更新的ID:"+id);
-	    	var url="<%=basePath%>user/"+id+"/updateUser.do";
-	    	$('#formUser').attr("action",url);
-	    	$("#titleUser").text("修改用户");
-	    	$("#btnUser").val("修改");
-	    	$("#msg").text("");
-	    	$("#username").val(name).attr("readonly","readonly");
-	    	$("#password").val(password);
-	    	$("#nickname").val(nickname);
-			$("#status").val(status);
-	    	$('#addUserModal').modal('show');
-	    }
 	    
-	    
-	    //新增用户
-	    function add() {
-	    	var url="<%=basePath%>user/addUser.do";
-	    	$('#formUser').attr("action",url);
-	    	$("#titleUser").text("新增用户");
-	    	$("#btnUser").val("新增");
-	    	$("#username").val("").removeAttr("disabled");
-	    	$("#password").val("");
-	    	$("#nickname").val("");
-	    	$('#addUserModal').modal('show');
-		}
 	$(function() {
-	    $.get("<%=basePath%>user/ajax/getUsers", function(data) {
+	    $.get("<%=basePath%>book/ajax/getAppointments", function(data) {
 				console.info(JSON.stringify(data));
 				var t = $("#userTable").DataTable({
 					"language" : { //表格国际化
@@ -722,17 +635,15 @@
 					"columns" : [ {
 						"data" : null
 					}, {
-						"data" : "userId"
+						"data" : "bookId"
 					}, {
-						"data" : "username"
+						"data" : "book.name"
 					}, {
-						"data" : "password"
+						"data" : "userInfo.username"
 					}, {
-						"data" : "nickname"
+						"data" : "userInfo.nickname"
 					}, {
-						"data" : "createDateStr"
-					}, {
-						"data" : "statusStr"
+						"data" : "appointTimeStr"
 					}, {
 						"data" : null
 					} ],
@@ -742,10 +653,9 @@
 						"targets" : 0
 					} ,{
 						 //   指定第最后一列
-				        "targets": 7,
+				        "targets": 6,
 				        "render": function(data, type, row, meta) {
-				        	var result="<shiro:hasPermission name='user:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+");' ></a></shiro:hasPermission>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='user:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.password+"\",\""+data.nickname+"\","+data.status+")' ></a></shiro:hasPermission>";
+				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>";
 				            return result;
 				           /*   */
 				        }

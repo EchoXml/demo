@@ -290,6 +290,20 @@
 	          </li>
         </shiro:hasPermission>
        
+       <shiro:hasAnyRoles name="admin,superadmin">
+				  <!-- 系统管理 -->
+		        <li class=" treeview">
+		          <a href="#">
+		            <i class="fa   fa-send"></i> <span>系统管理</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		            <li class=""><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
+		          </ul>
+		          </li>
+		</shiro:hasAnyRoles>
           
        <!-- 权限验证（book:select） -->
         <shiro:hasPermission name="book:select">

@@ -84,6 +84,15 @@ public class PageController {
         return "appointList.jsp";
 	}
     
+    /**
+	 * 跳转SQL语句监控列表界面
+	 * @return
+	 */
+    @RequestMapping(value = "/sqllist", method = {RequestMethod.POST,RequestMethod.GET})
+	public String sqlList(){
+        return "sqlList.jsp";
+	}
+    
 	@RequestMapping(value="/test",method = {RequestMethod.POST,RequestMethod.GET})
 	public String test(){
 		return "test.jsp";
