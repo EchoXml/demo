@@ -635,7 +635,7 @@
 					}, {
 						"data" : "userInfo.nickname"
 					}, {
-						"data" : "appointTimeStr"
+						"data" : null
 					}, {
 						"data" : null
 					} ],
@@ -648,6 +648,15 @@
 				        "targets": 6,
 				        "render": function(data, type, row, meta) {
 				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>";
+				            return result;
+				           /*   */
+				        }
+					},
+			        	{
+						 //   指定第最后一列
+				        "targets": 5,
+				        "render": function(data, type, row, meta) {
+				        	var result=getMyDate(data.appointTime);
 				            return result;
 				           /*   */
 				        }
@@ -667,6 +676,26 @@
 				;
 			});
 		});
+	
+	//获得年月日      得到日期oTime  
+    function getMyDate(str){  
+        var oDate = new Date(str),  
+        oYear = oDate.getFullYear(),  
+        oMonth = oDate.getMonth()+1,  
+        oDay = oDate.getDate(),  
+        oHour = oDate.getHours(),  
+        oMin = oDate.getMinutes(),  
+        oSen = oDate.getSeconds(),  
+        oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间  
+        return oTime;  
+    };  
+    //补0操作  
+    function getzf(num){  
+        if(parseInt(num) < 10){  
+            num = '0'+num;  
+        }  
+        return num;  
+    }  
 	
 
 	</script>
