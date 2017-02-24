@@ -179,7 +179,7 @@
 
 									<p>
 										<shiro:principal />
-										- 系统管理员 <small>注册日期 2012.12.12</small>
+										- 系统管理员 <small>注册日期 ${sessionScope.currUser.createDateStr }</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">

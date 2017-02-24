@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.echo.dto.Result;
@@ -51,9 +52,9 @@ public class UserInfoController {
 		ModelAndView m=new ModelAndView();
 		try{
 			subject.login(token);
-			Session session=subject.getSession();
+			HttpSession session=request.getSession();
 			session.setAttribute("currUser", userInfoService.getUserInfoByUserName(userInfo.getUsername()));
-			session.setTimeout(30*60*1000);
+			session.setMaxInactiveInterval(30*60*60);
 			m.setViewName("redirect:/page/index");
 		}catch(Exception e){
 			e.printStackTrace();
@@ -85,9 +86,11 @@ public class UserInfoController {
 	 * 注销操作
 	 */
 	@RequestMapping(value="/logout.do")
-	public String doLogout(){
+	public String doLogout(SessionStatus session){
+		session.setComplete();
 		Subject subject=SecurityUtils.getSubject();
 		subject.logout();
+		
 		return "login.jsp";
 	}
 	
