@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.echo.dao.AppointmentDao;
+import com.echo.dto.AppointExcuetion;
 import com.echo.enums.DelStateEnum;
 import com.echo.model.Appointment;
 import com.echo.service.AppointmentService;
@@ -35,5 +36,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return DelStateEnum.FIAID;
 		}
 	}
+
 
 }

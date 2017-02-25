@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.echo.dto.AppointExcuetion;
 import com.echo.enums.DelStateEnum;
 import com.echo.model.Appointment;
 
@@ -30,4 +31,5 @@ public interface AppointmentService {
      */
     DelStateEnum delAppointById(@Param("bookId") Long bookId, @Param("userId") Long userId);
 
+    
 }

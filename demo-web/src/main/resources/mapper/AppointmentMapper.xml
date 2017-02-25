@@ -24,7 +24,7 @@
 		INNER JOIN book b ON a.book_id = b.book_id
 		WHERE
 		a.book_id = #{bookId}
-		AND a.student_id = #{userId}
+		AND a.user_id = #{userId}
 	</select>
 	
 	
@@ -46,6 +46,8 @@
 		a.book_id,
 		a.user_id,
 		a.appoint_time,
+		a.state,
+		a.return_time,
 		b.book_id "book.book_id",
 		b.`name` "book.name",
 		b.number "book.number",

@@ -42,7 +42,7 @@
 	style="background: url('../js/bg_login.jpg') no-repeat; background-size: cover;">
 	<div class="register-box">
 		<div class="register-logo">
-			<a href="javascript:void(0);"><b style="font-size: 18px;">图书管理系统</b></a>
+			<a href="javascript:void(0);"><b style="font-size: 18px;">管理系统</b></a>
 		</div>
 
 		<div class="register-box-body">

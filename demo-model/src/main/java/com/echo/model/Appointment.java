@@ -3,7 +3,6 @@ package com.echo.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.echo.util.DateUtil;
 
 public class Appointment implements Serializable {
 
@@ -15,6 +14,10 @@ public class Appointment implements Serializable {
 	
 	private Date appointTime;
 	
+	//归还日期
+	private Date returnTime;
+	//状态
+	private int state;
 	
 	 // 多对一的复合属性
     private Book book;// 图书实体
@@ -69,10 +72,26 @@ public class Appointment implements Serializable {
 	}
 
 
+	public Date getReturnTime() {
+		return returnTime;
+	}
+
+	public void setReturnTime(Date returnTime) {
+		this.returnTime = returnTime;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
 
 	@Override
 	public String toString() {
-		return "Appointment [bookId=" + bookId + ", userId=" + userId + ", appointTime=" + appointTime+", book=" + book + ", userInfo=" + userInfo + "]";
+		return "Appointment [bookId=" + bookId + ", userId=" + userId + ", appointTime=" + appointTime + ", returnTime="
+				+ returnTime + ", state=" + state + ", book=" + book + ", userInfo=" + userInfo + "]";
 	}
     
     

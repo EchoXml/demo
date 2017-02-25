@@ -9,7 +9,6 @@ import com.alibaba.druid.pool.DruidDataSourceStatLogger;
 import com.alibaba.druid.pool.DruidDataSourceStatLoggerAdapter;
 import com.alibaba.druid.pool.DruidDataSourceStatValue;
 import com.alibaba.druid.stat.JdbcSqlStatValue;
-import com.google.gson.Gson;
 
 /**
  * 自定义Logger实现监控数据的采集
@@ -27,7 +26,6 @@ public class StatLogger extends DruidDataSourceStatLoggerAdapter   implements Dr
 		
 		sqlList=statValue.getSqlList();
 		
-		System.err.println("已给sqllist设置值");
 	}
 
 

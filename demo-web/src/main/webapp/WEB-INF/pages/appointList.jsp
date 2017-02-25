@@ -352,6 +352,8 @@
 											<th>预约用户</th>
 											<th>昵称</th>
 											<th>预约时间</th>
+											<th>状态</th>
+											<th>归还时间</th>
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -585,6 +587,22 @@
 		    		}
 		    	});
 	    }
+		
+		//归还图书
+		function returnBook(userId,bookId){
+    		var url="<%=basePath%>appointment/ajax/returnBook";
+	    	$.post(url, {
+	    	    'userId':userId,
+	    	    'bookId':bookId
+	    	  },function(data){
+	    		console.info(JSON.stringify(data));
+	    		if(data.success==true){
+	    			window.location.reload();
+	    		}else{
+	    			alert("还书失败！");
+	    		}
+	    	});
+	   }
 	    
 	    
 	$(function() {
@@ -602,7 +620,7 @@
 						"search" : "搜索:",
 						"searchPlaceholder" : "搜索...",
 						"url" : "",
-						"emptyTable" : "表中数据为空",
+						"emptyTable" : "您未曾预约过任何图书，赶紧预约吧。",
 						"loadingRecords" : "载入中...",
 						"infoThousands" : ",",
 						"paginate" : {
@@ -639,6 +657,10 @@
 						"data" : null
 					}, {
 						"data" : null
+					} , {
+						"data" : null
+					} , {
+						"data" : null
 					} ],
 					"columnDefs" : [ {
 						"searchable" : false,
@@ -646,18 +668,40 @@
 						"targets" : 0
 					} ,{
 						 //   指定第最后一列
-				        "targets": 6,
+						"search" : 'applied',
+						"order" : 'applied',
+				        "targets": 8,
 				        "render": function(data, type, row, meta) {
-				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>";
+				        	
+				        	var rtn=data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.userId+","+data.bookId+");'></a>":"";
+				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>"
+				        			+rtn;
 				            return result;
 				           /*   */
 				        }
 					},
 			        	{
-						 //   指定第最后一列
+						 //   指定第预约时间列
 				        "targets": 5,
 				        "render": function(data, type, row, meta) {
 				        	var result=getMyDate(data.appointTime);
+				            return result;
+				           /*   */
+				        }
+					},{
+						 //   指定状态列
+				        "targets": 6,
+				        "render": function(data, type, row, meta) {
+				        	console.log(data.state);
+				        	var result=data.state==1?"未归还":"已归还";
+				            return result;
+				           /*   */
+				        }
+					},{
+						 //   指定归还时间列
+				        "targets": 7,
+				        "render": function(data, type, row, meta) {
+				        	var result=getMyDate(data.returnTime);
 				            return result;
 				           /*   */
 				        }
@@ -680,6 +724,7 @@
 	
 	//获得年月日      得到日期oTime  
     function getMyDate(str){  
+		if(str==null) return null;
         var oDate = new Date(str),  
         oYear = oDate.getFullYear(),  
         oMonth = oDate.getMonth()+1,  

@@ -632,10 +632,30 @@
 	    	var url="<%=basePath%>book/addBook.do";
 	    	$('#formBook').attr("action",url);
 	    	$("#titleBook").text("新增图书");
-	    	$("#btnBook").val("新增");
+	    	$("#btnBook").text("新增");
 	    	$("#bookName").val("");
 	    	$("#bookNum").val("");
 	    	$('#bookModal').modal('show');
+		}
+	    
+	    //预约图书
+	    function appoint(bookId){
+	    	var url="<%=basePath%>book/ajax/addAppoint";
+	    	$.post(url,{
+	    		"bookId":bookId
+	    	},function(data){
+	    		//console.log(JSON.stringify(data));
+	    		//系统正常
+	    		if(data.success){
+	    			alert(data.data.stateInfo);
+					if(data.data.state!=-1)
+	    			window.location.reload();
+	    		}else{
+	    			//系统错误
+	    			alert("系统异常！");
+	    		}
+	    		
+	    	});
 		}
 	$(function() {
 	    $.get("<%=basePath%>book/ajax/getBooks", function(data) {
@@ -696,7 +716,7 @@
 				        "render": function(data, type, row, meta) {
 				        	var result="<shiro:hasPermission name='book:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.bookId+");' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</shiro:hasPermission >"+
 				        		"<shiro:hasPermission name='book:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.bookId+",\""+data.name+"\","+data.number+")' ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</shiro:hasPermission >"+
-				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='book:apoint'><a title='预约' class='glyphicon glyphicon-hand-up' href='javascript:apoint("+data.bookId+")' ></a></shiro:hasPermission >";
+				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='book:apoint'><a title='预约' class='glyphicon glyphicon-hand-up' href='javascript:appoint("+data.bookId+")' ></a></shiro:hasPermission >";
 				            return result;
 				        }
 					}],

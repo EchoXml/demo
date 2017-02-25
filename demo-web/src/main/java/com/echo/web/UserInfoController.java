@@ -162,6 +162,11 @@ public class UserInfoController {
 		ModelAndView m=new ModelAndView();
 		userInfo.setUserId(userId);
 		userInfo.setUsername(null);
+		if (userInfo.getPassword().equals("******")) {
+			userInfo.setPassword(null);
+		}else{
+			Md5Pwd(userInfo);
+		}
 		Integer result=userInfoService.updateUser(userInfo);
 		if (result==1) {
 			m.addObject("msg", "更新成功！");

@@ -33,10 +33,10 @@ public interface BookService {
 	/**
 	 * 预约图书
 	 * @param bookId
-	 * @param studentId
+	 * @param userId
 	 * @return 返回预约执行结果dto
 	 */
-	AppointExcuetion appoint(Long bookId,Long studentId);
+	AppointExcuetion appoint(Long bookId,Long usertId);
 	
 	/**
 	 * 增加馆藏

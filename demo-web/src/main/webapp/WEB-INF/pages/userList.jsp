@@ -591,7 +591,7 @@
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">昵称:</label> <input
-								class="form-control" name="nickname" id="nickname"
+								class="form-control" name="nickname" id="nickname" onblur="javascript:enableBtn();"
 								required="required"></input>
 						</div>
 						<div class="form-group">
@@ -609,7 +609,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="submit" disabled="disabled" id="btnUser"
+						<button type="submit" id="btnUser"
 							class="btn btn-primary">新增</button>
 					</div>
 				</div>
@@ -655,15 +655,15 @@
 	    }
 	    
 		/* 更改既有用户信息  */
-	    function update(id,name,password,nickname,status){
+	    function update(id,name,nickname,status){
 	    	console.log("更新的ID:"+id);
 	    	var url="<%=basePath%>user/"+id+"/updateUser.do";
 	    	$('#formUser').attr("action",url);
 	    	$("#titleUser").text("修改用户");
-	    	$("#btnUser").val("修改");
+	    	$("#btnUser").text("修改");
 	    	$("#msg").text("");
 	    	$("#username").val(name).attr("readonly","readonly");
-	    	$("#password").val(password);
+	    	$("#password").val("******");
 	    	$("#nickname").val(nickname);
 			$("#status").val(status);
 	    	$('#addUserModal').modal('show');
@@ -745,8 +745,15 @@
 				        "targets": 7,
 				        "render": function(data, type, row, meta) {
 				        	var result="<shiro:hasPermission name='user:delete'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+");' ></a></shiro:hasPermission>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='user:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.password+"\",\""+data.nickname+"\","+data.status+")' ></a></shiro:hasPermission>";
+				        		"&nbsp;&nbsp;&nbsp;<shiro:hasPermission name='user:update'><a title='编辑该项' class='edit glyphicon glyphicon-edit' href='javascript:update("+data.userId+",\""+data.username+"\",\""+data.nickname+"\","+data.status+")' ></a></shiro:hasPermission>";
 				            return result;
+				           /*   */
+				        }
+					},{
+						 //   指定密码列
+				        "targets": 3,
+				        "render": function(data, type, row, meta) {
+				            return "******";
 				           /*   */
 				        }
 					}],

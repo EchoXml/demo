@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.echo.dto.AppointExcuetion;
 import com.echo.dto.Result;
+import com.echo.enums.AppointStateEnum;
 import com.echo.enums.DelStateEnum;
+import com.echo.exception.RepeatAppointExcepition;
 import com.echo.model.Appointment;
 import com.echo.model.Book;
 import com.echo.model.UserInfo;
@@ -51,12 +53,14 @@ public class BookController {
 	//获取图书预约信息
 	@RequestMapping("/ajax/getAppointments")
 	@ResponseBody
-	public List<Appointment> getAppointments(){
-		Subject currUser=SecurityUtils.getSubject();
+	public List<Appointment> getAppointments(HttpSession session){
+		UserInfo currUser=(UserInfo) session.getAttribute("currUser");
 		
-		//Integer userId=currUser.isPermitted("book:apoint")?currUser.getPrincipal()
+		Subject subject=SecurityUtils.getSubject();
 		
-		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
+		Long userId=subject.isPermitted("book:apoint")?currUser.getUserId():null;
+		
+		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(userId);
 		logger.info("获取到的预约信息："+new Gson().toJson(appointments));
 		return appointments;
 	}
@@ -75,15 +79,29 @@ public class BookController {
 		return m;
 		
 	}
-
-    @RequestMapping(value = "/ajax/{bookId}/appoint.do", method = {RequestMethod.POST,RequestMethod.GET})
+	
+    /**
+     * 预约图书
+     * @param bookId
+     * @return
+     */
+    @RequestMapping(value = "/ajax/addAppoint", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    private Result<AppointExcuetion> appoint(@PathVariable("bookId") Long bookId) {
-    	//获取登录用户Id(未完成)
-    	long userId=0;
-        AppointExcuetion execution = bookService.appoint(bookId, userId);
+    private Result<AppointExcuetion> appoint(Long bookId,HttpSession session) {
+    	UserInfo currUser=(UserInfo) session.getAttribute("currUser");
+    	Long userId=currUser.getUserId();
+        AppointExcuetion execution;
+		try {
+			execution = bookService.appoint(bookId, userId);
+		} catch (RepeatAppointExcepition e) {
+			 return new Result<AppointExcuetion>(true, new AppointExcuetion(bookId, AppointStateEnum.REPEAT_APPOINT));
+		} catch (Exception e) {
+			 return new Result<AppointExcuetion>(false, new AppointExcuetion(bookId, AppointStateEnum.INNER_ERROR));
+		}
         return new Result<AppointExcuetion>(true, execution);
+       
     }
+
     
     //删除图书
     @RequestMapping(value = "/ajax/delBook/{bookId}", method = {RequestMethod.POST,RequestMethod.GET})
@@ -99,6 +117,7 @@ public class BookController {
     }
     
     
+    //修改图书
     @RequestMapping(value = "/{bookId}/updateBook.do", method = {RequestMethod.POST,RequestMethod.GET})
     private ModelAndView updateBook(@PathVariable("bookId") Long bookId,String name,int number) {
         int update = bookService.updateBook(bookId, name, number);
