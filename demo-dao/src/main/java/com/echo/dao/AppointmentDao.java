@@ -23,9 +23,9 @@ public interface AppointmentDao {
      * @param bookId
      * @param userId
      * @return
-     */
+     
     Appointment queryByKeyWithBook(@Param("bookId") Long bookId, @Param("userId") Long userId);
-    
+    */
     /**
      * 获取对应图书编号的借阅记录
      */
@@ -44,5 +44,12 @@ public interface AppointmentDao {
      * @return
      */
     int delAppointById(@Param("bookId") Long bookId, @Param("userId") Long userId);
+    
+    /**
+     * 更新对应的预约记录
+     * @param appointment
+     * @return
+     */
+    Integer updateAppoint(Appointment appointment);
 
 }

@@ -26,7 +26,7 @@ public class AppointExcuetion {
 		super();
 	}
 
-	//预约失败的构造器
+/*	//预约失败的构造器
 	public AppointExcuetion(Long bookId, AppointStateEnum appointStateEnum) {
 		super();
 		this.bookId = bookId;
@@ -42,6 +42,16 @@ public class AppointExcuetion {
 		this.stateInfo=appointStateEnum.getStateInfo();
 		this.appointment = appointment;
 	}
+	*/
+	//构造器
+		public AppointExcuetion(Long bookId, AppointStateEnum appointStateEnum) {
+			super();
+			this.bookId = bookId;
+			this.state=appointStateEnum.getState();
+			this.stateInfo=appointStateEnum.getStateInfo();
+		}
+
+
 
 	public Long getBookId() {
 		return bookId;

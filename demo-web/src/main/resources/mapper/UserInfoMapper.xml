@@ -33,7 +33,7 @@
 	<!-- 新增一条用户记录 -->
     <insert id="addUserInfo" parameterType="userinfo">
     	INSERT into userinfo(username,password,nickname,status) 
-    	values(#{username},#{password},#{nickname},status)
+    	values(#{username},#{password},#{nickname},#{status})
     </insert>
     
     <!-- 删除指定编号的用户记录 -->

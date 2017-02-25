@@ -553,6 +553,7 @@
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
+
 	</div>
 	<!-- ./wrapper -->
 
@@ -589,11 +590,12 @@
 	    }
 		
 		//归还图书
-		function returnBook(userId,bookId){
+		function returnBook(userId,bookId,appointTime){
     		var url="<%=basePath%>appointment/ajax/returnBook";
 	    	$.post(url, {
 	    	    'userId':userId,
-	    	    'bookId':bookId
+	    	    'bookId':bookId,
+	    	    'appointTime':appointTime
 	    	  },function(data){
 	    		console.info(JSON.stringify(data));
 	    		if(data.success==true){
@@ -673,7 +675,8 @@
 				        "targets": 8,
 				        "render": function(data, type, row, meta) {
 				        	
-				        	var rtn=data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.userId+","+data.bookId+");'></a>":"";
+				        	var rtn=(data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.userId+","+data.bookId+","+data.appointTime+");'></a>":"");
+				        	console.log(rtn);
 				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>"
 				        			+rtn;
 				            return result;

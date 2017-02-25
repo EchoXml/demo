@@ -54,14 +54,16 @@ public class Appointment implements Serializable {
 		super();
 	}
 
+	
+
+
 	public Date getAppointTime() {
 		return appointTime;
 	}
 
-	public void setAppointtTime(Date appointTime) {
+	public void setAppointTime(Date appointTime) {
 		this.appointTime = appointTime;
 	}
-
 
 	public UserInfo getUserInfo() {
 		return userInfo;

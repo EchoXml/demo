@@ -59,8 +59,8 @@ public class BookServiceImpl implements BookService {
 				if (insert <= 0) {// 重复预约
 					throw new RepeatAppointExcepition();
 				} else {// 预约成功
-					Appointment appointment = appintmentDao.queryByKeyWithBook(bookId, userId);
-					return new AppointExcuetion(bookId, appointment, AppointStateEnum.SUCCESS);
+					//Appointment appointment = appintmentDao.queryByKeyWithBook(bookId, userId);
+					return new AppointExcuetion(bookId, AppointStateEnum.SUCCESS);
 				}
 
 			}
