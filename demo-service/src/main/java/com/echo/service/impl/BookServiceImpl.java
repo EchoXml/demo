@@ -50,6 +50,16 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public AppointExcuetion appoint(@Param("bookId")Long bookId, @Param("userId") Long userId) {
 		try {
+			//判断该用户该图书是否存在已借阅未归还记录，存在的话则不允许借阅
+			Appointment appointment=new Appointment();
+			appointment.setUserId(userId);
+			appointment.setBookId(bookId);
+			appointment.setState(1);
+			int hasCount=appintmentDao.queryByAppointment(appointment);
+			if (hasCount==1) {
+				logger.info("存在已借阅未归还记录");
+				return new AppointExcuetion(bookId, AppointStateEnum.HasOne_APPOINT);
+			}
 			// 减少库存
 			int update = bookDao.reduceNumber(bookId);
 			if (update <= 0) {// 库存不足

@@ -34,6 +34,28 @@
 		from appointment
 		where book_id=#{bookId}
 	</select>
+	<!-- 根据参数对象的值获查询数据库中是否有对应的记录 -->
+	<select id="queryByAppointment" resultType="int">
+		select count(1)
+		from appointment	
+		<where>
+			<if test="returnTime!=null">
+				return_Time=#{returnTime}
+			</if>
+			<if test="state!=null">
+				and state=#{state}
+			</if>
+			<if test="userId!=null">
+				and user_Id=#{userId}
+			</if>
+			<if test="bookId!=null">
+				and book_id=#{bookId}
+			</if>
+			<if test="appointTime!=null">
+				and appoint_Time=#{appointTime}
+			</if>
+		</where>
+	</select>
 	
 	<!--删除对应预约记录  -->
 	<delete id="delAppointById">

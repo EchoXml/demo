@@ -676,9 +676,9 @@
 				        "render": function(data, type, row, meta) {
 				        	
 				        	var rtn=(data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.userId+","+data.bookId+","+data.appointTime+");'></a>":"");
-				        	console.log(rtn);
+				        	//console.log(rtn);
 				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>"
-				        			+rtn;
+				        			+"<shiro:hasPermission name='book:appoint'>"+rtn+"</shiro:hasPermission>";
 				            return result;
 				           /*   */
 				        }
@@ -695,7 +695,7 @@
 						 //   指定状态列
 				        "targets": 6,
 				        "render": function(data, type, row, meta) {
-				        	console.log(data.state);
+				        	
 				        	var result=data.state==1?"未归还":"已归还";
 				            return result;
 				           /*   */

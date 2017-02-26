@@ -51,5 +51,12 @@ public interface AppointmentDao {
      * @return
      */
     Integer updateAppoint(Appointment appointment);
+    
+    /**
+     * 根据对应的预约对象查询是否有对应的记录
+     * @param appointment
+     * @return
+     */
+    Integer queryByAppointment(Appointment appointment);
 
 }
