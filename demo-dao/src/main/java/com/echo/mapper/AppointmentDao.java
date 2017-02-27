@@ -1,4 +1,4 @@
-package com.echo.dao;
+package com.echo.mapper;
 
 import java.util.List;
 

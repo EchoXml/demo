@@ -54,7 +54,7 @@ public class UserInfoController {
 			subject.login(token);
 			HttpSession session=request.getSession();
 			session.setAttribute("currUser", userInfoService.getUserInfoByUserName(userInfo.getUsername()));
-			session.setMaxInactiveInterval(30*60*60);
+			session.setMaxInactiveInterval(30*60*1000);
 			m.setViewName("redirect:/page/index");
 		}catch(Exception e){
 			e.printStackTrace();

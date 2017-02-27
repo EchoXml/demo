@@ -26,7 +26,7 @@ public class BookJob {
 	@Scheduled(cron = "0 */10 * * * ?")
 	public void printInfo(){
 		logger.info("定时任务开启");
-		logger.info("图书总信息如下："+bookService.getBookRec());
+		//logger.info("图书总信息如下："+bookService.getBookRec());
 	}
 
 }

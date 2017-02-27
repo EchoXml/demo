@@ -39,7 +39,6 @@ public class BookController {
 	@Autowired
 	private AppointmentService appointmentService;
 	
-
 	
 	//获取获取图书信息
 	@RequestMapping("/ajax/getBooks")
@@ -56,10 +55,14 @@ public class BookController {
 	public List<Appointment> getAppointments(HttpSession session){
 		UserInfo currUser=(UserInfo) session.getAttribute("currUser");
 		
+		logger.debug("当前登录的用户："+currUser);
 		Subject subject=SecurityUtils.getSubject();
-		
-		Long userId=subject.isPermitted("book:apoint")?currUser.getUserId():null;
-		
+		logger.info("shiro中的用户信息："+subject.getPrincipal());
+		//问题记录：服务重启后Shiro中的认证不清空
+		Long userId=null;
+		if (subject!=null) {
+			userId=subject.isPermitted("book:appoint")?currUser.getUserId():null;
+		}
 		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(userId);
 		logger.info("获取到的预约信息："+new Gson().toJson(appointments));
 		return appointments;

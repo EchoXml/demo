@@ -1,54 +1,40 @@
 package com.echo.model;
 
-import java.io.Serializable;
+import javax.persistence.*;
 
-public class BookRec implements Serializable {
+@Table(name = "book_rec")
+public class BookRec {
+    @Column(name = "bookNum")
+    private Long booknum;
 
-	private static final long serialVersionUID = 1L;
-	
-	private Integer bookNum;
-	
-	
-	private Integer bookSum;
+    @Column(name = "bookSum")
+    private Long booksum;
 
+    /**
+     * @return bookNum
+     */
+    public Long getBooknum() {
+        return booknum;
+    }
 
-	public Integer getBookNum() {
-		return bookNum;
-	}
+    /**
+     * @param booknum
+     */
+    public void setBooknum(Long booknum) {
+        this.booknum = booknum;
+    }
 
+    /**
+     * @return bookSum
+     */
+    public Long getBooksum() {
+        return booksum;
+    }
 
-	public void setBookNum(Integer bookNum) {
-		this.bookNum = bookNum;
-	}
-
-
-	public Integer getBookSum() {
-		return bookSum;
-	}
-
-
-	public void setBookSum(Integer bookSum) {
-		this.bookSum = bookSum;
-	}
-
-
-	public BookRec(Integer bookNum, Integer bookSum) {
-		super();
-		this.bookNum = bookNum;
-		this.bookSum = bookSum;
-	}
-
-
-	public BookRec() {
-		super();
-	}
-
-
-	@Override
-	public String toString() {
-		return "BookRec [bookNum=" + bookNum + ", bookSum=" + bookSum + "]";
-	}
-
-	
-
+    /**
+     * @param booksum
+     */
+    public void setBooksum(Long booksum) {
+        this.booksum = booksum;
+    }
 }

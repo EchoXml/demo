@@ -30,7 +30,7 @@ public interface AppointmentService {
      * @param appointId
      * @return
      */
-    DelStateEnum delAppointById(@Param("bookId") Long bookId, @Param("userId") Long userId);
+    DelStateEnum delAppointById(Long appointmentId);
     
     /**
      * 更新对应的预约记录

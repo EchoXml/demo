@@ -329,7 +329,7 @@
 					<li><a href="<%=basePath%>page/index"><i
 							class="fa fa-dashboard"></i> 主页</a></li>
 					<li><a href="<%=basePath%>page/appointlist">预约管理</a></li>
-					<li class="active">用户列表</li>
+					<li class="active">预约列表</li>
 				</ol>
 			</section>
 
@@ -574,11 +574,10 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- page script -->
 	<script>
-		function del(userId,bookId){
+		function del(appointmentId){
 	    		var url="<%=basePath%>appointment/ajax/del";
 		    	$.post(url, {
-		    	    'userId':userId,
-		    	    'bookId':bookId
+		    	    'appointmentId':appointmentId
 		    	  },function(data){
 		    		console.info(JSON.stringify(data));
 		    		if(data.success==true){
@@ -590,11 +589,10 @@
 	    }
 		
 		//归还图书
-		function returnBook(userId,bookId,appointTime){
+		function returnBook(appointmentId,appointTime){
     		var url="<%=basePath%>appointment/ajax/returnBook";
 	    	$.post(url, {
-	    	    'userId':userId,
-	    	    'bookId':bookId,
+	    	    'appointmentId':appointmentId,
 	    	    'appointTime':appointTime
 	    	  },function(data){
 	    		console.info(JSON.stringify(data));
@@ -646,7 +644,7 @@
 					},
 					"data" : data,
 					"columns" : [ {
-						"data" : null
+						"data" : "appointmentId"
 					}, {
 						"data" : "bookId"
 					}, {
@@ -674,10 +672,9 @@
 						"order" : 'applied',
 				        "targets": 8,
 				        "render": function(data, type, row, meta) {
-				        	
-				        	var rtn=(data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.userId+","+data.bookId+","+data.appointTime+");'></a>":"");
+				        	var rtn=(data.state==1?"<a title='归还' class='glyphicon glyphicon-hand-left' href='javascript:returnBook("+data.appointmentId+","+data.appointTime+");'></a>":"");
 				        	//console.log(rtn);
-				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.userId+","+data.bookId+");' ></a></shiro:hasPermission>"
+				        	var result="<shiro:hasPermission name='appoint:del'><a title='删除' class='delete glyphicon glyphicon-remove-sign' href='javascript:del("+data.appointmentId+");' ></a></shiro:hasPermission>"
 				        			+"<shiro:hasPermission name='book:appoint'>"+rtn+"</shiro:hasPermission>";
 				            return result;
 				           /*   */
@@ -712,16 +709,6 @@
 					"order" : [ [ 1, 'asc' ] ]
 				});
 
-				//给表格多加一列索引
-				t.on('order.dt search.dt', function() {
-					t.column(0, {
-						search : 'applied',
-						order : 'applied'
-					}).nodes().each(function(cell, i) {
-						cell.innerHTML = i + 1;
-					});
-				}).draw();
-				;
 			});
 		});
 	

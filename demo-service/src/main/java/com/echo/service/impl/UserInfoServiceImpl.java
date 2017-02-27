@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.echo.dao.UserInfoDao;
+import com.echo.mapper.UserInfoMapper;
 import com.echo.dto.Result;
 import com.echo.enums.RegisterStateEnum;
 import com.echo.model.UserInfo;
@@ -15,12 +15,15 @@ import com.echo.service.UserInfoService;
 @Service
 public class UserInfoServiceImpl  implements UserInfoService{
 
+	
 	@Autowired
-	private UserInfoDao userInfoDao;
+	private UserInfoMapper userInfoMapper;
 	
 	@Override
 	public String checkUserNameExsit(String username) {
-		UserInfo check=userInfoDao.queryByUserName(username);
+		UserInfo userInfo=new UserInfo();
+		userInfo.setUsername(username);
+		UserInfo check=userInfoMapper.selectOne(userInfo);
 		if (check!=null) {//数据库已存在该用户名
 			return "{\"isExsit\":true,\"msg\":\"该用户名已存在\"}";
 		}
@@ -29,12 +32,12 @@ public class UserInfoServiceImpl  implements UserInfoService{
 
 	@Override
 	public UserInfo login(UserInfo userInfo) {
-		return userInfoDao.queryByNameAndPwd(userInfo);
+		return userInfoMapper.selectOne(userInfo);
 	}
 
 	@Override
 	public Result<RegisterStateEnum> register(UserInfo userInfo) {
-		Integer insert=userInfoDao.addUserInfo(userInfo);
+		Integer insert=userInfoMapper.insertSelective(userInfo);
 		Result<RegisterStateEnum> result=null;
 		if (insert==1) {
 			result=new Result<RegisterStateEnum>(true);
@@ -48,32 +51,34 @@ public class UserInfoServiceImpl  implements UserInfoService{
 
 	@Override
 	public List<UserInfo> getAllUser() {
-		return userInfoDao.getAllUser();
+		return userInfoMapper.selectAll();
 	}
 
 	@Override
 	public int updateUser(UserInfo userInfo) {
-		return userInfoDao.updateUser(userInfo);
+		return userInfoMapper.updateByPrimaryKeySelective(userInfo);
 	}
 
 	@Override
 	public int delUserById(Long userId) {
-		return userInfoDao.delUserById(userId);
+		return userInfoMapper.deleteByPrimaryKey(userId);
 	}
 
 	@Override
 	public UserInfo getUserInfoByUserName(String username) {
-		return userInfoDao.queryByUserName(username);
+		UserInfo userInfo=new UserInfo();
+		userInfo.setUsername(username);
+		return userInfoMapper.selectOne(userInfo);
 	}
 
 	@Override
 	public Set<String> getPermissions(String username) {
-		return userInfoDao.getPermissions(username);
+		return userInfoMapper.getPermissions(username);
 	}
 
 	@Override
 	public Set<String> getRoles(String username) {
-		return userInfoDao.getRoles(username);
+		return userInfoMapper.getRoles(username);
 	}
 
 

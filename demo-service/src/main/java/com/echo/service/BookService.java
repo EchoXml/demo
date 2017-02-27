@@ -59,12 +59,6 @@ public interface BookService {
     
     
     /**
-     * 获取库存图书信息
-     * @return
-     */
-    BookRec getBookRec();
-    
-    /**
      * 更新图书信息
      */
     int updateBook(@Param("bookId") Long bookId,String name,int number);

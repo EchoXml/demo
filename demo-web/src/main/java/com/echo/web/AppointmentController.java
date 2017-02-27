@@ -30,8 +30,8 @@ public class AppointmentController {
 	 */
     @RequestMapping(value = "/ajax/del", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    private Result<DelStateEnum> del(Long bookId,Long userId) {
-        DelStateEnum del = appointmentService.delAppointById(bookId, userId);
+    private Result<DelStateEnum> del(Long appointmentId) {
+        DelStateEnum del = appointmentService.delAppointById(appointmentId);
         if (del==DelStateEnum.SUCCESS) {
         	return new Result<DelStateEnum>(true, del);
 		}else{
@@ -48,13 +48,12 @@ public class AppointmentController {
 	 */
     @RequestMapping(value = "/ajax/returnBook", method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    private Result<String> returnBook(Long bookId,Long userId,Long appointTime) {
+    private Result<String> returnBook(Long appointmentId,Long appointTime) {
     	Appointment appointment=new Appointment();
     	appointment.setAppointTime(DateUtil.parse(DateUtil.unixTimestampToDate(appointTime)));
     	appointment.setReturnTime(new Date());
     	appointment.setState(2);
-    	appointment.setBookId(bookId);
-    	appointment.setUserId(userId);
+    	appointment.setAppointmentId(appointmentId);
     	return appointmentService.updateAppoint(appointment);
        
     }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.mapper.AppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.echo.model.Appointment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="appointment_id" jdbcType="BIGINT" property="appointmentId" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="appoint_time" jdbcType="TIMESTAMP" property="appointTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="return_time" jdbcType="TIMESTAMP" property="returnTime" />
+  </resultMap>
+  
+  	<!-- 根据userId查询所有预约信息 -->
+	<select id="queryAppointmentsByUserId" resultType="appointment">
+		SELECT
+		a.appointment_Id,
+		a.book_id,
+		a.user_id,
+		a.appoint_time,
+		a.state,
+		a.return_time,
+		b.book_id "book.book_id",
+		b.`name` "book.name",
+		b.number "book.number",
+		u.username "userInfo.username",
+		u.nickname "userInfo.nickname"
+		FROM
+		appointment a
+		INNER JOIN book b ON a.book_id = b.book_id inner join user_info u on u.user_id=a.user_id
+			<if test="userId!=null">
+			<where>
+				a.user_id=#{userId}
+			</where>
+			</if>
+	</select>
+</mapper>

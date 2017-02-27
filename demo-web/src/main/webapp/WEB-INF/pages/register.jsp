@@ -147,14 +147,17 @@
 			return false;
 		}
 		if(!checkPassword()){
-			btn.attr("disabled");
+			btn.attr("disabled","disabled");
 			return false;
 		}
 		
-		if(undefined==btn.attr("disabled")){
+		/* if(undefined==btn.attr("disabled")||false==btn.attr("disabled")){
+			console.log(btn.attr("disabled"));
+			console.log(undefined==btn.attr("disabled"));
+			console.log(false==btn.attr("disabled"));
 			btn.attr("disabled","disabled");
 			return false;
-		}else{
+		}else{ */
 			if(isAgree==true){
 				btn.removeAttr("disabled");
 				return true;
@@ -162,7 +165,7 @@
 				btn.attr("disabled","disabled");
 				return false;
 			}
-		}
+		/* } */
 		
 	
 		

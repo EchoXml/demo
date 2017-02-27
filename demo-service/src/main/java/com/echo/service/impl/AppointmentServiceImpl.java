@@ -5,32 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.echo.dao.AppointmentDao;
-import com.echo.dto.AppointExcuetion;
+import com.echo.mapper.AppointmentMapper;
 import com.echo.dto.Result;
 import com.echo.enums.DelStateEnum;
 import com.echo.model.Appointment;
 import com.echo.service.AppointmentService;
 
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
+
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
-	private AppointmentDao appointmentDao;
+	private AppointmentMapper appointmentMapper;
 	
 	@Override
 	public List<Appointment> queryAppointmentsByBookId(Long bookId) {
-		return appointmentDao.queryAppointmentsByBookId(bookId);
+		Appointment example=new Appointment();
+		example.setBookId(bookId);
+		return appointmentMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<Appointment> queryAppointmentsByUserId(Long userId) {
-		return appointmentDao.queryAppointmentsByUserId(userId);
+		return appointmentMapper.queryAppointmentsByUserId(userId);
 	}
 
 	@Override
-	public DelStateEnum delAppointById(Long bookId, Long userId) {
-		int delete=appointmentDao.delAppointById(bookId, userId);
+	public DelStateEnum delAppointById(Long appointmentId) {
+		int delete=appointmentMapper.deleteByPrimaryKey(appointmentId);
 		if (delete==1) {
 			return DelStateEnum.SUCCESS;
 		}else{
@@ -41,7 +45,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Override
 	public Result<String> updateAppoint(Appointment appointment) {
-		int update=appointmentDao.updateAppoint(appointment);
+		int update=appointmentMapper.updateByPrimaryKeySelective(appointment);
 		Result<String> result=new Result<>();
 		if (update==1) {
 			result=new Result<>(true);

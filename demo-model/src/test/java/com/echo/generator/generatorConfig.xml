@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+    <property name="javaFileEncoding" value="UTF-8"/>
+    
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+      <property name="caseSensitive" value="false"/>
+    </plugin>
+
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://localhost:3306/demo"
+                    userId="root"
+                    password="123456">
+    </jdbcConnection>
+
+	<!-- model实体类 -->
+    <javaModelGenerator targetPackage="com.echo.model" targetProject="D:\Developer\Eclipse4EE\demo\demo-model\src\main\java"/>
+
+	<!-- mapper xml配置文件 -->
+    <sqlMapGenerator targetPackage="com.echo.mapper" targetProject="D:\Developer\Eclipse4EE\demo\demo-dao\src\main\resources"/>
+
+	<!-- mapper接口文件 -->
+    <javaClientGenerator targetPackage="com.echo.mapper" targetProject="D:\Developer\Eclipse4EE\demo\demo-dao\src\main\java" type="XMLMAPPER"/>
+
+    <table tableName="%" >
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+    </table>
+  </context>
+</generatorConfiguration>

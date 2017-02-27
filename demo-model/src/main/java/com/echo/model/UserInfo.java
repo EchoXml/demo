@@ -1,100 +1,183 @@
 package com.echo.model;
 
-import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
 import com.echo.util.DateUtil;
 
-public class UserInfo implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Table(name = "user_info")
+public class UserInfo {
+    /**
+     * 用户ID
+     */
+    @Id
+    @Column(name = "user_id")
+    private Long userId;
 
-	private Long userId;
+    /**
+     * 用户名
+     */
+    private String username;
 
-	private String username;
+    /**
+     * 密码
+     */
+    private String password;
 
-	private String password;
+    /**
+     * 昵称
+     */
+    private String nickname;
 
-	private String nickname;
+    /**
+     * 状态
+     */
+    private Integer status;
 
-	private Integer status;
-	
-	private Date createDate;
-	
+    /**
+     * 创建时间
+     */
+    @Column(name = "create_date")
+    private Date createDate;
+    @Transient
 	private String createDateStr;
 	
+	@Transient
 	private String statusStr;
-	
-	private Integer roleId;
 
-	public Long getUserId() {
-		return userId;
-	}
+    /**
+     * 所属角色
+     */
+    @Column(name = "role_id")
+    private Integer roleId;
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    /**
+     * 获取用户ID
+     *
+     * @return user_id - 用户ID
+     */
+    public Long getUserId() {
+        return userId;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * 设置用户ID
+     *
+     * @param userId 用户ID
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * 获取用户名
+     *
+     * @return username - 用户名
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * 设置用户名
+     *
+     * @param username 用户名
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * 获取密码
+     *
+     * @return password - 密码
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    /**
+     * 设置密码
+     *
+     * @param password 密码
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    /**
+     * 获取昵称
+     *
+     * @return nickname - 昵称
+     */
+    public String getNickname() {
+        return nickname;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    /**
+     * 设置昵称
+     *
+     * @param nickname 昵称
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-		setStatusStr();
-	}
+    /**
+     * 获取状态
+     *
+     * @return status - 状态
+     */
+    public Integer getStatus() {
+        return status;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    /**
+     * 设置状态
+     *
+     * @param status 状态
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+        setStatusStr();
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-		setCreateDateStr();
-	}
-	
-	public UserInfo() {
-	}
+    /**
+     * 获取创建时间
+     *
+     * @return create_date - 创建时间
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public UserInfo(Long userId, String username, String password, String nickname, Integer status,
-			Date createDate) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.password = password;
-		this.nickname = nickname;
-		this.status = status;
-		this.createDate = createDate;
-	}
+    /**
+     * 设置创建时间
+     *
+     * @param createDate 创建时间
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+        setCreateDateStr();
+    }
 
-	@Override
-	public String toString() {
-		return "UserInfo [userId=" + userId + ", username=" + username + ", password=" + password + ", nickname="
-				+ nickname + ", status=" + status + ", createDate=" + createDate + "]";
-	}
+    /**
+     * 获取所属角色
+     *
+     * @return role_id - 所属角色
+     */
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    /**
+     * 设置所属角色
+     *
+     * @param roleId 所属角色
+     */
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
 	public String getCreateDateStr() {
 		return this.createDateStr;
@@ -125,16 +208,5 @@ public class UserInfo implements Serializable {
 		}
 		
 	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-	
-	
-	
 
 }

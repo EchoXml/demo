@@ -22,4 +22,5 @@
 		<typeAlias alias="appointment" type="com.echo.model.Appointment" />
 		<typeAlias alias="bookrec" type="com.echo.model.BookRec" />
 	</typeAliases>
+	
 </configuration>

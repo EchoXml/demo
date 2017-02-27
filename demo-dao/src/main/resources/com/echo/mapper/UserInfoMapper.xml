@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.echo.model.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+  
+   <!-- 获取用户角色 -->
+    <select id="getRoles" parameterType="String" resultType="String">
+		select r.role_name from user_info u,role r 
+		where u.role_id=r.role_id and u.username=#{username}
+	</select>
+	<!-- 获取用户权限 -->
+	<select id="getPermissions" parameterType="String" resultType="String">
+		select p.permission_name from user_info u,permission p 
+		where u.role_id=p.role_id
+		and u.username=#{username}
+	</select>
+  
+</mapper>

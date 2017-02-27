@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.echo.dao.AppointmentDao;
-import com.echo.dao.BookDao;
+import com.echo.mapper.*;
 import com.echo.dto.AppointExcuetion;
 import com.echo.model.Appointment;
 import com.echo.model.Book;
@@ -26,18 +25,18 @@ public class BookServiceImpl implements BookService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private BookDao bookDao;
+	private BookMapper bookMapper;
 	@Autowired
-	private AppointmentDao appintmentDao;
+	private AppointmentMapper appointmentMapper;
 
 	@Override
 	public Book getBookById(Long id) {
-		return bookDao.queryById(id);
+		return bookMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public List<Book> getAllBooks() {
-		return bookDao.queryAll(0, 999);
+		return bookMapper.selectAll();
 	}
 
 	
@@ -55,17 +54,20 @@ public class BookServiceImpl implements BookService {
 			appointment.setUserId(userId);
 			appointment.setBookId(bookId);
 			appointment.setState(1);
-			int hasCount=appintmentDao.queryByAppointment(appointment);
+			int hasCount=appointmentMapper.selectCount(appointment);
 			if (hasCount==1) {
 				logger.info("存在已借阅未归还记录");
 				return new AppointExcuetion(bookId, AppointStateEnum.HasOne_APPOINT);
 			}
 			// 减少库存
-			int update = bookDao.reduceNumber(bookId);
+			int update =bookMapper.reduceNumber(bookId);
 			if (update <= 0) {// 库存不足
 				return new AppointExcuetion(bookId, AppointStateEnum.NO_NUMBER);
 			} else {// 执行预约操作
-				int insert = appintmentDao.insertAppointment(bookId, userId);
+				Appointment record=new Appointment();
+				record.setBookId(bookId);
+				record.setUserId(userId);
+				int insert = appointmentMapper.insertSelective(record);
 				if (insert <= 0) {// 重复预约
 					throw new RepeatAppointExcepition();
 				} else {// 预约成功
@@ -83,18 +85,21 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public int addNumber() {
-		return bookDao.addNumber();
+		return bookMapper.addNumber();
 	}
 
 	@Override
 	public int addBook(String name, int number) {
-		return bookDao.addBook(name, number);
+		Book book=new Book();
+		book.setName(name);
+		book.setNumber(number);
+		return bookMapper.insertSelective(book);
 	}
 
 	@Override
 	public DelStateEnum delBook(Long bookId) {
 		try {
-			int del = bookDao.delBook(bookId);
+			int del = bookMapper.deleteByPrimaryKey(bookId);
 			if (del == 1) {
 				return DelStateEnum.SUCCESS;
 			} else {
@@ -106,14 +111,14 @@ public class BookServiceImpl implements BookService {
 		
 	}
 
-	@Override
-	public BookRec getBookRec() {
-		return bookDao.getBookRec();
-	}
 
 	@Override
 	public int updateBook(Long bookId, String name, int number) {
-		return bookDao.updateBook(bookId, name, number);
+		Book book=new Book();
+		book.setBookId(bookId);
+		book.setName(name);
+		book.setNumber(number);
+		return bookMapper.updateByPrimaryKeySelective(book);
 	}
 
 
