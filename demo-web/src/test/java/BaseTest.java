@@ -1,4 +1,4 @@
-import java.util.List;
+/*import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -14,9 +14,9 @@ import com.echo.mapper.UserInfoMapper;
 import com.echo.model.City;
 import com.echo.service.UserInfoService;
 
-/**
+*//**
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
- */
+ *//*
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml"})
 public class BaseTest {
@@ -48,4 +48,4 @@ public class BaseTest {
 	
 	
 
-}
+}*/
