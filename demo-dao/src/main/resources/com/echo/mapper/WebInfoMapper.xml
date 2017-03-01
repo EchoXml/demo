@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.mapper.WebInfoMapper">
+  <resultMap id="BaseResultMap" type="com.echo.model.WebInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="rec_date" jdbcType="DATE" property="recDate" />
+    <result column="user_register_num" jdbcType="INTEGER" property="userRegisterNum" />
+    <result column="rec_ip" jdbcType="INTEGER" property="recIp" />
+    <result column="rec_book_return" jdbcType="INTEGER" property="recBookReturn" />
+    <result column="rec_book_appoint" jdbcType="INTEGER" property="recBookAppoint" />
+    <result column="rec_uv" jdbcType="INTEGER" property="recUv" />
+  </resultMap>
+</mapper>

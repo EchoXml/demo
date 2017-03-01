@@ -51,7 +51,7 @@
 	<div class="wrapper">
 		<header class="main-header">
 			<!-- Logo -->
-			<a href="<%=basePath%>user/index" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<a href="<%=basePath%>page/index" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>后</b>台</span> <!-- logo for regular state and mobile devices -->
 				<span class="logo-lg"><b>管理</b>后台</span>
 			</a>
@@ -281,8 +281,11 @@
 					            </span>
 					          </a>
 					          <ul class="treeview-menu">
-					            <li class=""><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
+					           		 <li class=""><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
 					          </ul>
+								<ul class="treeview-menu">
+									<li class=""><a href="<%=basePath%>page/visitlist"><i class="fa  fa-user-secret"></i> 访客信息</a></li>
+								</ul>
 					          </li>
 						</shiro:hasAnyRoles>
 					<!-- 图书信息管理 -->
@@ -563,11 +566,11 @@
 						<div class="modal-body">
 
 							<div class="form-group">
-								<label for="recipient-name" class="control-label">图书名称：</label>
+								<label for="bookName" class="control-label">图书名称：</label>
 								<input type="text" id="bookName" class="form-control" name="name" required="required">
 							</div>
 							<div class="form-group">
-								<label for="message-text" class="control-label" >馆藏数量:</label>
+								<label for="bookNum" class="control-label" >馆藏数量:</label>
 								<input class="form-control" id="bookNum" type="number" name="number" min="1" required="required"></input>
 							</div>
 
@@ -710,6 +713,10 @@
 						"searchable" : false,
 						"orderable" : false,
 						"targets" : 0
+					} ,{
+						"searchable" : false,
+						"orderable" : false,
+						"targets" : 4
 					} ,{
 						 //   指定第最后一列
 				        "targets": 4,

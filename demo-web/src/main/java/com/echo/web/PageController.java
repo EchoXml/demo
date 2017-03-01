@@ -2,12 +2,18 @@ package com.echo.web;
 
 import java.util.List;
 
+import com.echo.service.WebInfoService;
+import com.echo.util.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.echo.model.Book;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 页面跳转控制
@@ -17,6 +23,11 @@ import com.echo.model.Book;
 @RequestMapping("page")
 @Controller
 public class PageController {
+
+	@Autowired
+	private WebInfoService webInfoService;
+
+	private Logger logger= LoggerFactory.getLogger(this.getClass());
 	
 	/**
 	 * 跳转登录界面
@@ -42,8 +53,13 @@ public class PageController {
 	 * @return
 	 */
 	@RequestMapping(value="/index",method={RequestMethod.GET,RequestMethod.POST})
-	public String toIndex() {
-		return "index.jsp";
+	public ModelAndView toIndex() {
+		ModelAndView m=new ModelAndView();
+		m.setViewName("index.jsp");
+		String date=DateUtil.getNowTime("yyyy-MM-dd");
+		logger.debug("当前日期："+date);
+		m.addObject("webInfo",webInfoService.getWebInfoByDate(date));
+		return m;
 	}
 	
 	/**
@@ -85,12 +101,21 @@ public class PageController {
 	}
     
     /**
+	 * 跳转访客记录列表界面
+	 * @return
+	 */
+    @RequestMapping(value = "/visitlist", method = {RequestMethod.POST,RequestMethod.GET})
+	public String visitList(){
+        return "visitList.jsp";
+	}
+
+	/**
 	 * 跳转SQL语句监控列表界面
 	 * @return
 	 */
-    @RequestMapping(value = "/sqllist", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/sqllist", method = {RequestMethod.POST,RequestMethod.GET})
 	public String sqlList(){
-        return "sqlList.jsp";
+		return "sqlList.jsp";
 	}
     
 	@RequestMapping(value="/test",method = {RequestMethod.POST,RequestMethod.GET})

@@ -1,6 +1,7 @@
-/*import java.util.List;
+import java.util.List;
 import java.util.Set;
 
+import com.echo.service.CityService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,24 +15,25 @@ import com.echo.mapper.UserInfoMapper;
 import com.echo.model.City;
 import com.echo.service.UserInfoService;
 
-*//**
+/**
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
- *//*
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml"})
 public class BaseTest {
-	
-	@Autowired
-	private CityMapper cityMapper;
-	
+
+    @Autowired
+    private CityService cityService;
+
 	@Autowired
 	private UserInfoService userInfoService;
 	
 	private Logger logger=LoggerFactory.getLogger(this.getClass());
-	
+
 	@Test
 	public void testGetAllCity(){
-		List<City> cities=cityMapper.selectAll();
+		List<City> cities=cityService.getCitiesByPage(0,5);
+
 		for (City city : cities) {
 			System.out.println(city);
 		}
@@ -48,4 +50,4 @@ public class BaseTest {
 	
 	
 
-}*/
+}

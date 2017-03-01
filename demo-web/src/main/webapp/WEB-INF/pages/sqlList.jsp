@@ -47,7 +47,7 @@
 	<div class="wrapper">
 		<header class="main-header">
 			<!-- Logo -->
-			<a href="<%=basePath%>user/index" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<a href="<%=basePath%>page/index" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>后</b>台</span> <!-- logo for regular state and mobile devices -->
 				<span class="logo-lg"><b>管理</b>后台</span>
 			</a>
@@ -283,6 +283,9 @@
 					          <ul class="treeview-menu">
 					            <li class="active"><a href="<%=basePath%>page/sqllist"><i class="fa  fa-database"></i> SQL监控</a></li>
 					          </ul>
+								<ul class="treeview-menu">
+									<li class=""><a href="<%=basePath%>page/visitlist"><i class="fa  fa-user-secret"></i> 访客信息</a></li>
+								</ul>
 					          </li>
 						</shiro:hasAnyRoles>
 					<!-- 图书信息管理 -->
