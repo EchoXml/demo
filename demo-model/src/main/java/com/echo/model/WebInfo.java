@@ -142,4 +142,16 @@ public class WebInfo {
     public void setRecUv(Integer recUv) {
         this.recUv = recUv;
     }
+
+    @Override
+    public String toString() {
+        return "WebInfo{" +
+                "recDate=" + recDate +
+                ", userRegisterNum=" + userRegisterNum +
+                ", recIp=" + recIp +
+                ", recBookReturn=" + recBookReturn +
+                ", recBookAppoint=" + recBookAppoint +
+                ", recUv=" + recUv +
+                '}';
+    }
 }

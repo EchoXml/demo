@@ -23,5 +23,11 @@ public interface WebInfoService {
      */
     public WebInfo getWebInfoByDate(String date);
 
+    /**
+     * 根据当前日期生成近期对应的记录
+     * @return
+     */
+    public int addWebInfo(Date date);
+
 
 }

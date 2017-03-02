@@ -4,6 +4,7 @@ import com.echo.mapper.WebInfoMapper;
 import com.echo.model.WebInfo;
 import com.echo.service.WebInfoService;
 import com.echo.util.DateUtil;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,13 @@ public class WebInfoServiceImpl implements WebInfoService {
     @Override
     public WebInfo getWebInfoByDate(String date) {
         return webInfoMapper.selectByPrimaryKey(DateUtil.parse(date,"yyyy-MM-dd"));
+    }
+
+    @Override
+    public int addWebInfo(Date date) {
+        WebInfo webInfo=new WebInfo();
+
+        webInfo.setRecDate(date);
+        return webInfoMapper.insertSelective(webInfo);
     }
 }
