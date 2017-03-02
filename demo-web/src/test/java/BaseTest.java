@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.Set;
 
+import com.alibaba.druid.filter.config.ConfigTools;
 import com.echo.service.CityService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,11 @@ public class BaseTest {
 		for (String string : permission) {
 			logger.debug(string);
 		}
+	}
+
+	@Test
+	public  void  testPassword() throws Exception {
+		logger.info("密码是："+ConfigTools.encrypt("123456"));
 	}
 	
 	

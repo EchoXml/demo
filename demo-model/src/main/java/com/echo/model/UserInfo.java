@@ -51,6 +51,20 @@ public class UserInfo {
     @Column(name = "role_id")
     private Integer roleId;
 
+    public String getHeadPath() {
+        return headPath;
+    }
+
+    public void setHeadPath(String headPath) {
+        this.headPath = headPath;
+    }
+
+    /**
+     * 头像路径
+     */
+    @Column(name = "head_path")
+    private  String headPath;
+
     /**
      * 获取用户ID
      *

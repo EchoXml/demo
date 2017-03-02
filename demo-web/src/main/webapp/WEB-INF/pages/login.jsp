@@ -13,7 +13,8 @@
 	<base href="<%=basePath%>resources/adminlte/">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>后台登录</title>
+  <meta property="wb:webmaster" content="25ae4f63da6882ff" />
+  <title>杂类管理系统--登录</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->

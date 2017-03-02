@@ -72,7 +72,7 @@
 										<li>
 											<!-- start message --> <a href="#">
 												<div class="pull-left">
-													<img src="dist/img/userzx.jpg" class="img-circle"
+													<img src="../${sessionScope.currUser.headPath}" class="img-circle"
 														alt="User Image">
 												</div>
 												<h4>
@@ -168,12 +168,12 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								src="dist/img/userzx.jpg" class="user-image" alt="User Image">
+								src="../${sessionScope.currUser.headPath}" class="user-image" alt="User Image">
 								<span class="hidden-xs"><shiro:principal /> </span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img src="dist/img/userzx.jpg"
+								<li class="user-header"><img src="../${sessionScope.currUser.headPath}"
 									class="img-circle" alt="User Image">
 
 									<p>
@@ -219,7 +219,7 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="dist/img/userzx.jpg" class="img-circle" alt="User Image">
+						<img src="../${sessionScope.currUser.headPath}" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
 						<p>
@@ -583,22 +583,22 @@
 					<div class="modal-body">
 
 						<div class="form-group">
-							<label for="recipient-name" class="control-label">用户名：</label> <input
+							<label for="username" class="control-label">用户名：</label> <input
 								type="text" class="form-control" name="username" id="username"
 								required="required">
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="control-label">密码:</label> <input
+							<label for="password" class="control-label">密码:</label> <input
 								class="form-control" name="password" id="password"
-								required="required"></input>
+								required="required"/>
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="control-label">昵称:</label> <input
+							<label for="nickname" class="control-label">昵称:</label> <input
 								class="form-control" name="nickname" id="nickname" onblur="javascript:enableBtn();"
-								required="required"></input>
+								required="required"/>
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="control-label">状态:</label> <select
+							<label for="status" class="control-label">状态:</label> <select
 								class="form-control" name="status" id="status"
 								required="required">
 								<option value="1">正常</option>
@@ -607,7 +607,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="control-label" id="msg"></label>
+							<label class="control-label" id="msg"></label>
 						</div>
 					</div>
 					<div class="modal-footer">

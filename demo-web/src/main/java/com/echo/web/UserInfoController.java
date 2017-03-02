@@ -1,12 +1,16 @@
 package com.echo.web;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.echo.util.DateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -14,11 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.echo.dto.Result;
@@ -41,8 +46,7 @@ public class UserInfoController {
 	/**
 	 * 执行登录操作
 	 * @param userInfo
-	 * @param model
-	 * @param response
+	 * @param request
 	 */
 	@RequestMapping(value="/login.do",method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView doLogin(UserInfo userInfo,HttpServletRequest request){
@@ -63,8 +67,7 @@ public class UserInfoController {
 		}
 		logger.info(userInfo.getUsername()+"\t"+userInfo.getPassword());
 		return m;
-	
-		
+
 	}
 
 
@@ -96,7 +99,6 @@ public class UserInfoController {
 	
 	/**
 	 * 注册
-	 * @param response
 	 * @param userInfo
 	 * @return
 	 */
@@ -175,6 +177,58 @@ public class UserInfoController {
 		}
 		m.setViewName("forward:/page/userlist");
 		return m;
+	}
+
+	@RequestMapping(value="/selfUpdate.do",method=RequestMethod.POST)
+	public ModelAndView selfUpdate(UserInfo userInfo,MultipartFile headFile,HttpServletRequest request) {
+		ModelAndView m=new ModelAndView();
+		int update=0;	//保存修改结果
+		//判断是否有文件上传
+		//有的话进行类型判断，无则不修改头像信息
+		if(headFile.isEmpty()){
+			logger.info("未有修改图片信息！");
+			//更新用户信息
+			update=userInfoService.updateUser(userInfo);
+		}else {
+			//得到上传的文件名
+			String fileName = headFile.getOriginalFilename();
+			//获取文件后缀名
+			String suffix=fileName.substring(fileName.lastIndexOf("."));
+			//判断文件类型是否正确
+			boolean fileTypeTrue=Arrays.asList(".jpg",".png",".gif",".jpeg").contains(suffix);
+			//是正确的图片格式进行保存操作，否则返回错误信息
+			if (fileTypeTrue){	//保存头像图片
+				//得到服务器项目发布运行所在地址
+				String address= request.getSession().getServletContext().getRealPath("resources/upload/head");
+				File pathFile=new File(address);
+				//如果路径不存在，则创建所有对应目录
+				if (!pathFile.exists()){
+					pathFile.mkdirs();
+				}
+				// 此处未使用UUID来生成唯一标识,用日期做为标识
+				String path = address+File.separator+DateUtil.getNowTime("yyyyMMddHHmmss")+ fileName;
+				logger.info("头像位置："+path);
+				//把文件上传至path的路径
+				File localFile = new File(path);
+				try {
+					headFile.transferTo(localFile);
+					//保存头像路径
+					userInfo.setHeadPath("upload/head/"+DateUtil.getNowTime("yyyyMMddHHmmss")+ fileName);
+					//更新用户信息
+					update=userInfoService.updateUser(userInfo);
+					//刷新session中的user对象
+					request.getSession().setAttribute("currUser",userInfoService.getUserInfoByUserName(userInfo.getUsername()));
+				} catch (IOException e) {
+					e.printStackTrace();
+					m.addObject("msg","文件读写异常！修改未进行！");
+				}
+			}else{
+				m.addObject("msg","头像类型格式不被支持，请上传jpg,png,jpeg,gif类型的图片！");
+			}
+
+		}
+		m.setViewName("forward:/page/index");
+		return  m;
 	}
 	
 
