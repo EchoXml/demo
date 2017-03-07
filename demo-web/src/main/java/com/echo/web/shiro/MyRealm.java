@@ -42,7 +42,7 @@ public class MyRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String username=(String)token.getPrincipal();
-		UserInfo userInfo=userInfoService.getUserInfoByUserName(username);
+		UserInfo userInfo=userInfoService.getUserInfoByUserName(username,1);
 		if (userInfo!=null) {
 			AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(userInfo.getUsername(),userInfo.getPassword(),"echo");
 			return authcInfo;
@@ -51,17 +51,5 @@ public class MyRealm extends AuthorizingRealm {
 		return null;
 	}
 	
-	public void Md5Pwd(UserInfo userInfo) {
-		PropertiesUtil propertiesUtil;
-		try {
-			//密码加密验证
-			propertiesUtil = new PropertiesUtil("project.properties");
-			String salt=propertiesUtil.getValue("salt");
-			userInfo.setPassword(EncryptionUtil.md5(userInfo.getPassword(), salt));
-		} catch (IOException e) {
-			logger.info("项目配置文件未找到！");
-			e.printStackTrace();
-		}
-	}
 
 }

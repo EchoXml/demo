@@ -816,7 +816,7 @@
                             <input type="hidden" name="userId" value="${sessionScope.currUser.userId}"/>
 							<div class="form-group">
 								<label for="username" class="control-label">用户名：</label>
-								<input type="text" name="username" id="username" value="${sessionScope.currUser.username}" class="form-control" disabled="disabled" required="required"/>
+								<input type="text" name="username" id="username" value="${sessionScope.currUser.username}" class="form-control" readonly="readonly" required="required"/>
 							</div>
 							<div class="form-group">
 								<label for="nickname" class="control-label" >昵称：</label>

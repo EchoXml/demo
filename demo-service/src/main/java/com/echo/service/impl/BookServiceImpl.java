@@ -29,6 +29,9 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private AppointmentMapper appointmentMapper;
 
+	@Autowired
+	private  BookRecMapper bookRecMapper;
+
 	@Override
 	public Book getBookById(Long id) {
 		return bookMapper.selectByPrimaryKey(id);
@@ -119,6 +122,11 @@ public class BookServiceImpl implements BookService {
 		book.setName(name);
 		book.setNumber(number);
 		return bookMapper.updateByPrimaryKeySelective(book);
+	}
+
+	@Override
+	public BookRec getBookRec() {
+		return bookRecMapper.selectAll().get(0) ;
 	}
 
 

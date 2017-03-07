@@ -50,19 +50,19 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value="/login.do",method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView doLogin(UserInfo userInfo,HttpServletRequest request){
-		Md5Pwd(userInfo);
+		userInfo.setPassword(EncryptionUtil.Md5Str(userInfo.getPassword()));
 		Subject subject=SecurityUtils.getSubject();
 		UsernamePasswordToken token=new UsernamePasswordToken(userInfo.getUsername(), userInfo.getPassword());
 		ModelAndView m=new ModelAndView();
 		try{
 			subject.login(token);
 			HttpSession session=request.getSession();
-			session.setAttribute("currUser", userInfoService.getUserInfoByUserName(userInfo.getUsername()));
+			session.setAttribute("currUser", userInfoService.getUserInfoByUserName(userInfo.getUsername(),null));
 			session.setMaxInactiveInterval(30*60*1000);
 			m.setViewName("redirect:/page/index");
 		}catch(Exception e){
 			e.printStackTrace();
-			request.setAttribute("msg", "用户名或者密码错误！");
+			request.setAttribute("msg", "用户名或者密码错误或者账户异常！");
 			m.setViewName("forward:/page/login");
 		}
 		logger.info(userInfo.getUsername()+"\t"+userInfo.getPassword());
@@ -71,18 +71,7 @@ public class UserInfoController {
 	}
 
 
-	private void Md5Pwd(UserInfo userInfo) {
-		PropertiesUtil propertiesUtil;
-		try {
-			//密码加密验证
-			propertiesUtil = new PropertiesUtil("project.properties");
-			String salt=propertiesUtil.getValue("salt");
-			userInfo.setPassword(EncryptionUtil.md5(userInfo.getPassword(), salt));
-		} catch (IOException e) {
-			logger.info("项目配置文件未找到！");
-			e.printStackTrace();
-		}
-	}
+
 	
 	
 	/**
@@ -108,7 +97,7 @@ public class UserInfoController {
 			userInfo.setStatus(1);
 		}
 		ModelAndView m=new ModelAndView();
-		Md5Pwd(userInfo);
+        userInfo.setPassword(EncryptionUtil.Md5Str(userInfo.getPassword()));
 		Result<RegisterStateEnum> result=userInfoService.register(userInfo);
 		if (result.isSuccess()) {
 			m.addObject("msg", "<script>alert('注册成功！');</script>");
@@ -127,7 +116,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value="/addUser.do",method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView addUser(UserInfo userInfo) {
-		Md5Pwd(userInfo);
+        userInfo.setPassword(EncryptionUtil.Md5Str(userInfo.getPassword()));
 		ModelAndView m=new ModelAndView();
 		Result<RegisterStateEnum> result=userInfoService.register(userInfo);
 		if (result.isSuccess()) {
@@ -167,7 +156,7 @@ public class UserInfoController {
 		if (userInfo.getPassword().equals("******")) {
 			userInfo.setPassword(null);
 		}else{
-			Md5Pwd(userInfo);
+            userInfo.setPassword(EncryptionUtil.Md5Str(userInfo.getPassword()));
 		}
 		Integer result=userInfoService.updateUser(userInfo);
 		if (result==1) {
@@ -217,7 +206,7 @@ public class UserInfoController {
 					//更新用户信息
 					update=userInfoService.updateUser(userInfo);
 					//刷新session中的user对象
-					request.getSession().setAttribute("currUser",userInfoService.getUserInfoByUserName(userInfo.getUsername()));
+					request.getSession().setAttribute("currUser",userInfoService.getUserInfoByUserName(userInfo.getUsername(),null));
 				} catch (IOException e) {
 					e.printStackTrace();
 					m.addObject("msg","文件读写异常！修改未进行！");

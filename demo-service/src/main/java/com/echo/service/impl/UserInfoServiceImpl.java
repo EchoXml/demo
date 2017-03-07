@@ -30,7 +30,8 @@ public class UserInfoServiceImpl  implements UserInfoService{
 		return "{\"isExsit\":false,\"msg\":\"该用户名可以被使用\"}";
 	}
 
-	@Override
+
+    @Override
 	public UserInfo login(UserInfo userInfo) {
 		return userInfoMapper.selectOne(userInfo);
 	}
@@ -65,8 +66,10 @@ public class UserInfoServiceImpl  implements UserInfoService{
 	}
 
 	@Override
-	public UserInfo getUserInfoByUserName(String username) {
+	public UserInfo getUserInfoByUserName(String username,Integer state) {
 		UserInfo userInfo=new UserInfo();
+		if (state!=null)
+			userInfo.setStatus(state);
 		userInfo.setUsername(username);
 		return userInfoMapper.selectOne(userInfo);
 	}

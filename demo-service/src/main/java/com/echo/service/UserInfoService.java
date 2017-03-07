@@ -23,9 +23,10 @@ public interface UserInfoService {
 	/**
 	 * 检查用户名是否存在
 	 * @param username 用户名
+	 * @param state 状态
 	 * @return
 	 */
-	UserInfo getUserInfoByUserName(String username);
+	UserInfo getUserInfoByUserName(String username,Integer state);
 	
 	/**
 	 * 用户登录操作
@@ -72,6 +73,5 @@ public interface UserInfoService {
 	 * @return
 	 */
 	Set<String> getRoles(String username);
-	
-	
+
 }

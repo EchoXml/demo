@@ -36,7 +36,7 @@ public interface BookService {
 	 * @param userId
 	 * @return 返回预约执行结果dto
 	 */
-	AppointExcuetion appoint(Long bookId,Long usertId);
+	AppointExcuetion appoint(Long bookId,Long userId);
 	
 	/**
 	 * 增加馆藏
@@ -62,7 +62,11 @@ public interface BookService {
      * 更新图书信息
      */
     int updateBook(@Param("bookId") Long bookId,String name,int number);
-    
+
+	/**
+	 * 获取图书总记录
+	 */
+    BookRec getBookRec();
   
 
 

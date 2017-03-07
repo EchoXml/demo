@@ -20,6 +20,8 @@ import com.echo.mapper.UserInfoMapper;
 import com.echo.model.City;
 import com.echo.service.UserInfoService;
 
+import javax.xml.ws.Endpoint;
+
 /**
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
  */
@@ -81,9 +83,8 @@ public class BaseTest {
 		}else{
 			logger.info("无需新增！");
 		}
-
-
 	}
+
 	
 	
 }

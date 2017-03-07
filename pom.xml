@@ -230,18 +230,37 @@
 			<artifactId>shiro-web</artifactId>
 			<version>1.2.4</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>1.2.4</version>
 		</dependency>
-		</dependencies>
-  <modules>
-  	<module>demo-model</module>
-  	<module>demo-web</module>
-  	<module>demo-dao</module>
-  	<module>demo-service</module>
-  	<module>demo-util</module>
-  </modules>
+		<!--实现webservice所需-->
+	  <!-- 添加cxf支持  -->
+	  <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-core -->
+		  <dependency>
+			  <groupId>org.apache.cxf</groupId>
+			  <artifactId>cxf-core</artifactId>
+			  <version>3.1.10</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>org.apache.cxf</groupId>
+			  <artifactId>cxf-rt-frontend-jaxws</artifactId>
+			  <version>3.1.10</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>org.apache.cxf</groupId>
+			  <artifactId>cxf-rt-transports-http</artifactId>
+			  <version>3.1.10</version>
+		  </dependency>
+  	</dependencies>
+	  <modules>
+		<module>demo-model</module>
+		<module>demo-web</module>
+		<module>demo-dao</module>
+		<module>demo-service</module>
+		<module>demo-util</module>
+	  </modules>
 </project>
