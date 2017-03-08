@@ -64,7 +64,7 @@ public class BookController {
 			userId=subject.isPermitted("book:appoint")?currUser.getUserId():null;
 		}
 		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(userId);
-		logger.info("获取到的预约信息："+new Gson().toJson(appointments));
+		//logger.info("获取到的预约信息："+new Gson().toJson(appointments));
 		return appointments;
 	}
 	

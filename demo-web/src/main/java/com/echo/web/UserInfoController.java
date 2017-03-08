@@ -49,14 +49,19 @@ public class UserInfoController {
 	 * @param request
 	 */
 	@RequestMapping(value="/login.do",method={RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView doLogin(UserInfo userInfo,HttpServletRequest request){
+	public ModelAndView doLogin(UserInfo userInfo,HttpServletRequest request,boolean rememberMe){
 		userInfo.setPassword(EncryptionUtil.Md5Str(userInfo.getPassword()));
 		Subject subject=SecurityUtils.getSubject();
+		logger.info("是否选中记住我："+rememberMe);
+		//subject
 		UsernamePasswordToken token=new UsernamePasswordToken(userInfo.getUsername(), userInfo.getPassword());
+		//设置rememeber是否开启
+		token.setRememberMe(rememberMe);
 		ModelAndView m=new ModelAndView();
 		try{
 			subject.login(token);
 			HttpSession session=request.getSession();
+			logger.info("用户对象："+userInfoService.getUserInfoByUserName(userInfo.getUsername(),null));
 			session.setAttribute("currUser", userInfoService.getUserInfoByUserName(userInfo.getUsername(),null));
 			session.setMaxInactiveInterval(30*60*1000);
 			m.setViewName("redirect:/page/index");
@@ -65,7 +70,7 @@ public class UserInfoController {
 			request.setAttribute("msg", "用户名或者密码错误或者账户异常！");
 			m.setViewName("forward:/page/login");
 		}
-		logger.info(userInfo.getUsername()+"\t"+userInfo.getPassword());
+
 		return m;
 
 	}

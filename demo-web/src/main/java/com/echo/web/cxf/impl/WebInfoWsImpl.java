@@ -18,8 +18,6 @@ public class WebInfoWsImpl implements WebInfoWs {
     @Autowired
     private WebInfoService webInfoService;
 
-
-
     @Override
     public String getWebInfoToday() {
         Gson gson=new Gson();

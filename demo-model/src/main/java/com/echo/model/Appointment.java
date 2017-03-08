@@ -162,4 +162,18 @@ public class Appointment {
     public void setReturnTime(Date returnTime) {
         this.returnTime = returnTime;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "userInfo=" + userInfo +
+                ", book=" + book +
+                ", appointmentId=" + appointmentId +
+                ", bookId=" + bookId +
+                ", userId=" + userId +
+                ", appointTime=" + appointTime +
+                ", state=" + state +
+                ", returnTime=" + returnTime +
+                '}';
+    }
 }

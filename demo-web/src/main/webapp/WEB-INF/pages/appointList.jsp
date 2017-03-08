@@ -342,14 +342,14 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">预约列表</h3>
+								<h3 class="box-title">预约列表 <button onclick="exportExcel();" class="btn-sm info">导出Excel</button></h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
 								<table id="userTable" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th>序号</th>
+											<th>预约编号</th>
 											<th>书号</th>
 											<th>书名</th>
 											<th>预约用户</th>
@@ -577,6 +577,7 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- page script -->
 	<script>
+		var dataInfo="";
 		function del(appointmentId){
 	    		var url="<%=basePath%>appointment/ajax/del";
 		    	$.post(url, {
@@ -611,6 +612,7 @@
 	$(function() {
 	    $.get("<%=basePath%>book/ajax/getAppointments", function(data) {
 				console.info(JSON.stringify(data));
+				dataInfo=JSON.stringify(data);
 				var t = $("#userTable").DataTable({
 					"language" : { //表格国际化
 						"processing" : "处理中...",
@@ -738,9 +740,22 @@
             num = '0'+num;  
         }  
         return num;  
-    }  
-	
+    }
 
+    function  exportExcel() {
+		var url="<%=basePath%>appointment/export";
+        location.href=url;
+	/*	$.post(url, {
+			'data':dataInfo
+		},function(data){
+			console.info(JSON.stringify(data));
+			if(data.success==true){
+				alert("导出成功！");
+			}else{
+				alert("导出失败！");
+			}
+		});*/
+	}
 	</script>
 </body>
 </html>

@@ -73,4 +73,13 @@ public class Book {
     public void setNumber(Integer number) {
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                '}';
+    }
 }

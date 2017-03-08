@@ -1,6 +1,5 @@
 package com.echo.web.shiro;
 
-import java.io.IOException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -14,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.echo.model.UserInfo;
 import com.echo.service.UserInfoService;
-import com.echo.util.EncryptionUtil;
-import com.echo.util.PropertiesUtil;
 
 public class MyRealm extends AuthorizingRealm {
 	
@@ -44,7 +41,7 @@ public class MyRealm extends AuthorizingRealm {
 		String username=(String)token.getPrincipal();
 		UserInfo userInfo=userInfoService.getUserInfoByUserName(username,1);
 		if (userInfo!=null) {
-			AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(userInfo.getUsername(),userInfo.getPassword(),"echo");
+			AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(userInfo.getUsername(),userInfo.getPassword(),userInfo.getUsername());
 			return authcInfo;
 		}
 		logger.info("用户验证未通过！");

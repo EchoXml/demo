@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.echo.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Table(name = "user_info")
 public class UserInfo {
@@ -161,6 +162,7 @@ public class UserInfo {
      *
      * @return create_date - 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateDate() {
         return createDate;
     }
@@ -223,4 +225,19 @@ public class UserInfo {
 		
 	}
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", status=" + status +
+                ", createDate=" + createDate +
+                ", createDateStr='" + createDateStr + '\'' +
+                ", statusStr='" + statusStr + '\'' +
+                ", roleId=" + roleId +
+                ", headPath='" + headPath + '\'' +
+                '}';
+    }
 }

@@ -1,12 +1,17 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import com.alibaba.druid.filter.config.ConfigTools;
+import com.echo.model.Appointment;
+import com.echo.model.Book;
 import com.echo.model.WebInfo;
-import com.echo.service.CityService;
-import com.echo.service.WebInfoService;
+import com.echo.service.*;
+import com.echo.util.CommonUtil;
 import com.echo.util.DateUtil;
+import com.echo.util.EncryptionUtil;
+import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -18,7 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.echo.mapper.CityMapper;
 import com.echo.mapper.UserInfoMapper;
 import com.echo.model.City;
-import com.echo.service.UserInfoService;
 
 import javax.xml.ws.Endpoint;
 
@@ -31,6 +35,13 @@ public class BaseTest {
 
 	@Autowired
 	private WebInfoService webInfoService;
+
+
+	@Autowired
+	private BookService bookService;
+
+	@Autowired
+	private AppointmentService appointmentService;
 
     @Autowired
     private CityService cityService;
@@ -83,6 +94,25 @@ public class BaseTest {
 		}else{
 			logger.info("无需新增！");
 		}
+	}
+
+	@Test
+	public void testBase64Password(){
+		logger.info("加密后的密码："+ EncryptionUtil.encBase64("echo"));
+	}
+
+	@Test
+	public  void testGson(){
+		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
+		Gson gson=new Gson();
+		String jsonStr=gson.toJson(appointments);
+
+		List<Appointment> apps= CommonUtil.jsonToList(jsonStr,Appointment.class);
+
+
+		logger.debug(jsonStr);
+
+
 	}
 
 	
