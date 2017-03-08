@@ -45,7 +45,7 @@ public class DateUtil {
      
     /**
      * 两个时间比较
-     * @param date
+     * @param date1
      * @return
      */
     public static int compareDateWithNow(Date date1){
@@ -56,7 +56,7 @@ public class DateUtil {
      
     /**
      * 两个时间比较(时间戳比较)
-     * @param date
+     * @param date1
      * @return
      */
     public static int compareDateWithNow(long date1){
@@ -100,7 +100,7 @@ public class DateUtil {
      
     /**
      * 将指定的日期转换成Unix时间戳
-     * @param String date 需要转换的日期 yyyy-MM-dd HH:mm:ss
+     * @param  date 需要转换的日期 yyyy-MM-dd HH:mm:ss
      * @return long 时间戳
      */
     public static long dateToUnixTimestamp(String date) {
@@ -112,10 +112,35 @@ public class DateUtil {
         }
         return timestamp;
     }
-     
+
+    /**
+     * 将指定的日期转换成字符串
+     * @param  date 需要转换的日期 yyyy-MM-dd HH:mm:ss
+     * @return 如果参数值为null，返回空值
+     */
+    public static String dateToStr(Date date) {
+        if (date==null) return  "";
+        long timestamp = date.getTime();
+        return unixTimestampToDate(timestamp);
+    }
+
+    /**
+     * 将指定的日期转换成字符串
+     * @param  date 需要转换的日期 yyyy-MM-dd HH:mm:ss
+     * @param pattern 日期格式
+     * @return 如果参数值为null，返回空值
+     */
+    public static String dateToStr(Date date,String pattern) {
+        if (date==null) return  "";
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        String dateStr=df.format(date);
+        return dateStr;
+    }
+
+
     /**
      * 将指定的日期转换成Unix时间戳
-     * @param String date 需要转换的日期 yyyy-MM-dd
+     * @param  date 需要转换的日期 yyyy-MM-dd
      * @return long 时间戳
      */
     public static long dateToUnixTimestamp(String date, String dateFormat) {
@@ -136,11 +161,12 @@ public class DateUtil {
         long timestamp = new Date().getTime();
         return timestamp;
     }
-     
+
+
      
     /**
      * 将Unix时间戳转换成日期
-     * @param long timestamp 时间戳
+     * @param  timestamp 时间戳
      * @return String 日期字符串
      */
     public static String unixTimestampToDate(long timestamp) {
@@ -148,6 +174,8 @@ public class DateUtil {
         sd.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sd.format(new Date(timestamp));
     }
+
+
 }
 
 
