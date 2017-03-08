@@ -80,17 +80,13 @@ public class AppointmentController {
        
     }
     @RequestMapping(value = "/export", method = {RequestMethod.POST,RequestMethod.GET})
-    @ResponseBody
-    public Result<String> export(String data, HttpServletResponse response) throws UnsupportedEncodingException {
+    public void export(String data, HttpServletResponse response) throws UnsupportedEncodingException {
         // 只是让浏览器知道要保存为什么文件而已，真正的文件还是在流里面的数据，你设定一个下载类型并不会去改变流里的内容。
         //而实际上只要你的内容正确，文件后缀名之类可以随便改，就算你指定是下载excel文件，下载时我也可以把他改成pdf等。
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode("图书预约记录"+DateUtil.getNowTime("yyyy-MM-dd")+".xls", "UTF-8"));
         logger.info(data);
-        List<Appointment> apps=appointmentService.queryAppointmentsByUserId(null);
-        String jsonStr=gson.toJson(apps);
-
-        List<Appointment> appointments= CommonUtil.jsonToList(jsonStr,Appointment.class);
+        List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
        // TypeToken<List<Appointment>> listType = new TypeToken<List<Appointment>>() {};
         // TypeToken<>(){} --> (protected)抽象类 --> 记住泛型的类型 --> new了TypeToken的匿名内部类
       //  List<Appointment> appointments= CommonUtil.jsonToList(data,Appointment.class);
@@ -135,16 +131,9 @@ public class AppointmentController {
             ost.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return  new Result<>(false);
         }
-        return  new Result<>(true);
     }
     
-    
-    
-
-	
-	
 
 	
 }

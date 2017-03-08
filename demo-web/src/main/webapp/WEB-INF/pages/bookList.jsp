@@ -334,7 +334,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">图书列表</h3>
+								<h3 class="box-title">图书列表<button onclick="exportExcel();" class="btn-sm info">导出Excel</button></h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -742,6 +742,11 @@
 				;
 			});
 		});
+
+		function  exportExcel() {
+			var url="<%=basePath%>book/export";
+			location.href=url;
+		}
 	</script>
 </body>
 </html>

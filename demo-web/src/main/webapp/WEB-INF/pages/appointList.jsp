@@ -745,16 +745,6 @@
     function  exportExcel() {
 		var url="<%=basePath%>appointment/export";
         location.href=url;
-	/*	$.post(url, {
-			'data':dataInfo
-		},function(data){
-			console.info(JSON.stringify(data));
-			if(data.success==true){
-				alert("导出成功！");
-			}else{
-				alert("导出失败！");
-			}
-		});*/
 	}
 	</script>
 </body>
