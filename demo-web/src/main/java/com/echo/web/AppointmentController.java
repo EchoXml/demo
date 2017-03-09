@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.echo.model.UserInfo;
 import com.echo.util.CommonUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,8 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,7 @@ import com.echo.service.AppointmentService;
 import com.echo.util.DateUtil;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/appointment")
@@ -79,14 +83,30 @@ public class AppointmentController {
     	return appointmentService.updateAppoint(appointment);
        
     }
+
+    /**
+     * 导出成Excel文件
+     * @param data
+     * @param response
+     * @throws UnsupportedEncodingException
+     */
     @RequestMapping(value = "/export", method = {RequestMethod.POST,RequestMethod.GET})
-    public void export(String data, HttpServletResponse response) throws UnsupportedEncodingException {
+    public void export(HttpServletResponse response, HttpSession session) throws UnsupportedEncodingException {
         // 只是让浏览器知道要保存为什么文件而已，真正的文件还是在流里面的数据，你设定一个下载类型并不会去改变流里的内容。
         //而实际上只要你的内容正确，文件后缀名之类可以随便改，就算你指定是下载excel文件，下载时我也可以把他改成pdf等。
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode("图书预约记录"+DateUtil.getNowTime("yyyy-MM-dd")+".xls", "UTF-8"));
-        logger.info(data);
-        List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
+        UserInfo currUser=(UserInfo) session.getAttribute("currUser");
+
+        logger.debug("当前登录的用户："+currUser);
+        Subject subject= SecurityUtils.getSubject();
+        logger.info("shiro中的用户信息："+subject.getPrincipal());
+        //问题记录：服务重启后Shiro中的认证不清空
+        Long userId=null;
+        if (subject!=null) {
+            userId=subject.isPermitted("book:appoint")?currUser.getUserId():null;
+        }
+        List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(userId);
        // TypeToken<List<Appointment>> listType = new TypeToken<List<Appointment>>() {};
         // TypeToken<>(){} --> (protected)抽象类 --> 记住泛型的类型 --> new了TypeToken的匿名内部类
       //  List<Appointment> appointments= CommonUtil.jsonToList(data,Appointment.class);
