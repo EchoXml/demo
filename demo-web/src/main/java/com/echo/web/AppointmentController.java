@@ -14,11 +14,10 @@ import com.echo.util.CommonUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sun.deploy.net.HttpResponse;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -86,7 +85,7 @@ public class AppointmentController {
 
     /**
      * 导出成Excel文件
-     * @param data
+     * @param session
      * @param response
      * @throws UnsupportedEncodingException
      */
@@ -111,7 +110,7 @@ public class AppointmentController {
         // TypeToken<>(){} --> (protected)抽象类 --> 记住泛型的类型 --> new了TypeToken的匿名内部类
       //  List<Appointment> appointments= CommonUtil.jsonToList(data,Appointment.class);
         //定义一个工作簿
-        Workbook wb=new HSSFWorkbook();
+        HSSFWorkbook wb=new HSSFWorkbook();
         //创建一个sheet页
         Sheet sheet=wb.createSheet("图书预约信息");
         //创建标题行
@@ -124,8 +123,31 @@ public class AppointmentController {
         row.createCell(5).setCellValue("预约时间");
         row.createCell(6).setCellValue("状态");
         row.createCell(7).setCellValue("归还时间");
+
+
         // 定义样式
-        CellStyle cellStyle = wb.createCellStyle();
+        CellStyle titleCellStyle = wb.createCellStyle();
+        //设置水平文本居中
+        titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        //设置是否换行
+        titleCellStyle.setWrapText(false);
+        titleCellStyle.setFillBackgroundColor(HSSFColor.YELLOW.index);
+        //设置字体
+        HSSFFont font=  wb.createFont();
+        font.setColor(HSSFColor.BLUE.index);
+        font.setFontName("微软雅黑");
+        font.setBold(true);
+        titleCellStyle.setFont(font);
+        //设置宽度
+        sheet.setDefaultColumnWidth(25);
+        row.getCell(0).setCellStyle(titleCellStyle);
+        row.getCell(1).setCellStyle(titleCellStyle);
+        row.getCell(2).setCellStyle(titleCellStyle);
+        row.getCell(3).setCellStyle(titleCellStyle);
+        row.getCell(4).setCellStyle(titleCellStyle);
+        row.getCell(5).setCellStyle(titleCellStyle);
+        row.getCell(6).setCellStyle(titleCellStyle);
+        row.getCell(7).setCellStyle(titleCellStyle);
         // 格式化日期
         //cellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
         // 遍历输出
