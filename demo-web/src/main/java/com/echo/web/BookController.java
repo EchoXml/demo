@@ -20,6 +20,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class BookController {
 	@ResponseBody
 	public List<Appointment> getAppointments(HttpSession session){
 		UserInfo currUser=(UserInfo) session.getAttribute("currUser");
-		
+
 		logger.debug("当前登录的用户："+currUser);
 		Subject subject=SecurityUtils.getSubject();
 		logger.info("shiro中的用户信息："+subject.getPrincipal());

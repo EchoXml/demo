@@ -75,6 +75,18 @@ public class UserInfoServiceImpl  implements UserInfoService{
 	}
 
 	@Override
+	public UserInfo getUserInfo(String username) {
+		UserInfo userInfo=new UserInfo();
+		userInfo.setUsername(username);
+		return userInfoMapper.selectOne(userInfo);
+	}
+
+	@Override
+    public boolean removeCache(String username) {
+        return true;
+    }
+
+    @Override
 	public Set<String> getPermissions(String username) {
 		return userInfoMapper.getPermissions(username);
 	}

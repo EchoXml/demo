@@ -262,6 +262,19 @@
 		  <artifactId>poi</artifactId>
 		  <version>3.15</version>
 	  </dependency>
+	  <!--Ehcache-->
+      <dependency>
+          <groupId>net.sf.ehcache</groupId>
+          <artifactId>ehcache</artifactId>
+          <version>2.10.3</version>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.ehcache</groupId>
+          <artifactId>ehcache-core</artifactId>
+          <version>2.6.11</version>
+      </dependency>
+
+
 
   </dependencies>
 	  <modules>

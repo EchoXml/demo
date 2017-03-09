@@ -8,6 +8,8 @@ import com.echo.dto.AppointExcuetion;
 import com.echo.dto.Result;
 import com.echo.enums.DelStateEnum;
 import com.echo.model.Appointment;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 
 
 public interface AppointmentService {
@@ -22,21 +24,27 @@ public interface AppointmentService {
      * @param userId
      * @return
      */
+    @Cacheable(value="appointmentCache")
     List<Appointment> queryAppointmentsByUserId(@Param("userId") Long userId);
+
+    /**
+     * 移除对应的缓存记录
+     * @param isDo
+     */
+    @CacheEvict(value="appointmentCache",condition = "#isDo==true")
+    public void evict(boolean isDo);
     
     
     /**
      * 删除对应预约记录
-     * @param appointId
+     * @param appointmentId
      * @return
      */
     DelStateEnum delAppointById(Long appointmentId);
     
     /**
      * 更新对应的预约记录
-     * @param bookId
      * @param appointment
-     * @param userId 
      * @return
      */
 	Result<String>  updateAppoint(Appointment appointment);

@@ -24,12 +24,12 @@
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 过滤器，只记录INFO级别的日志 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
+            <level>DEBUG</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>d:/log/demo-web/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>d:/log/demo-web/logFile-DEBUG.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <append>true</append>

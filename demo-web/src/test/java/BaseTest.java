@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.alibaba.druid.filter.config.ConfigTools;
-import com.echo.model.Appointment;
-import com.echo.model.Book;
-import com.echo.model.WebInfo;
+import com.echo.model.*;
 import com.echo.service.*;
 import com.echo.util.CommonUtil;
 import com.echo.util.DateUtil;
@@ -22,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.echo.mapper.CityMapper;
 import com.echo.mapper.UserInfoMapper;
-import com.echo.model.City;
 
 import javax.xml.ws.Endpoint;
 
@@ -30,7 +27,7 @@ import javax.xml.ws.Endpoint;
  * 配置spring和junit整合，junit启动时加载springIOC容器 spring-test,junit
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml"})
+@ContextConfiguration({ "classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml","classpath:spring/spring-ehcache.xml"})
 public class BaseTest {
 
 	@Autowired
@@ -106,13 +103,24 @@ public class BaseTest {
 		List<Appointment> appointments=appointmentService.queryAppointmentsByUserId(null);
 		Gson gson=new Gson();
 		String jsonStr=gson.toJson(appointments);
-
 		List<Appointment> apps= CommonUtil.jsonToList(jsonStr,Appointment.class);
-
-
 		logger.debug(jsonStr);
+	}
 
 
+	@Test
+	public  void testCache(){
+		UserInfo userInfo=userInfoService.getUserInfoByUserName("zhangsan",1);
+		logger.info("第一次查询的用户信息："+userInfo);
+		//userInfoService.removeCache("zhangsan");
+        UserInfo userInfo1=userInfoService.getUserInfoByUserName("zhangsan",1);
+		logger.info("第二次查询的用户信息："+userInfo1);
+
+        UserInfo userInfo2=userInfoService.getUserInfo("zhangsan");
+        logger.info("调用CachePut所注解的方法查询的用户信息："+userInfo2);
+
+        UserInfo userInfo3=userInfoService.getUserInfoByUserName("zhangsan",1);
+        logger.info("再次查询用户信息："+userInfo3);
 	}
 
 	

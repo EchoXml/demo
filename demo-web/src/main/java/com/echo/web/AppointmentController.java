@@ -131,6 +131,7 @@ public class AppointmentController {
         titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
         //设置是否换行
         titleCellStyle.setWrapText(false);
+        //设置背景颜色
         titleCellStyle.setFillBackgroundColor(HSSFColor.YELLOW.index);
         //设置字体
         HSSFFont font=  wb.createFont();

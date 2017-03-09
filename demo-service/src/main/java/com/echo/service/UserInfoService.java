@@ -5,6 +5,9 @@ import java.util.Set;
 import com.echo.dto.Result;
 import com.echo.model.UserInfo;
 import com.echo.enums.RegisterStateEnum;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * 用户相关业务操作接口
@@ -26,8 +29,20 @@ public interface UserInfoService {
 	 * @param state 状态
 	 * @return
 	 */
+	@Cacheable(value = "userCache",key = "#username",condition = "#state==1")
 	UserInfo getUserInfoByUserName(String username,Integer state);
-	
+
+	/**
+	 * 重新检查用户名是否存在
+	 * @param username 用户名
+	 * @return
+	 */
+	@CachePut(value = "userCache",key = "#username")
+	UserInfo getUserInfo(String username);
+
+	@CacheEvict(value = "userCache",key = "#username")
+	public boolean removeCache(String username);
+
 	/**
 	 * 用户登录操作
 	 * @param userInfo

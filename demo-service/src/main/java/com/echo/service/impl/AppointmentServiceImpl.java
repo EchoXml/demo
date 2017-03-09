@@ -33,6 +33,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	public void evict(boolean isDo) {
+
+	}
+
+	@Override
 	public DelStateEnum delAppointById(Long appointmentId) {
 		int delete=appointmentMapper.deleteByPrimaryKey(appointmentId);
 		if (delete==1) {
