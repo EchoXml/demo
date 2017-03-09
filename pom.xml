@@ -283,5 +283,6 @@
 		<module>demo-dao</module>
 		<module>demo-service</module>
 		<module>demo-util</module>
-	  </modules>
+          <module>demo-weixin4j</module>
+      </modules>
 </project>
